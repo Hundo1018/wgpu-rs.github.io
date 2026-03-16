@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["replace_control_chars"],"struct":["DiagnosticBuffer","ShaderError"],"trait":["ErrorWrite","_ErrorWrite"],"type":["DiagnosticBufferInner"]};
+window.SIDEBAR_ITEMS = {"fn":["emit_to_writer","replace_control_chars"],"struct":["DiagnosticBuffer","ShaderError"],"trait":["ErrorWrite","_ErrorWrite"],"type":["DiagnosticBufferInner"]};

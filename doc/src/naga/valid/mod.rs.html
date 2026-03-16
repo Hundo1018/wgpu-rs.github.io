@@ -637,8 +637,8 @@
 <a href=#637 id=637 data-nosnippet>637</a>    </span><span class="kw">pub fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
 <a href=#638 id=638 data-nosnippet>638</a>        <span class="self">self</span>.types.clear();
 <a href=#639 id=639 data-nosnippet>639</a>        <span class="self">self</span>.layouter.clear();
-<a href=#640 id=640 data-nosnippet>640</a>        <span class="self">self</span>.location_mask.clear();
-<a href=#641 id=641 data-nosnippet>641</a>        <span class="self">self</span>.blend_src_mask.clear();
+<a href=#640 id=640 data-nosnippet>640</a>        <span class="self">self</span>.location_mask.make_empty();
+<a href=#641 id=641 data-nosnippet>641</a>        <span class="self">self</span>.blend_src_mask.make_empty();
 <a href=#642 id=642 data-nosnippet>642</a>        <span class="self">self</span>.ep_resource_bindings.clear();
 <a href=#643 id=643 data-nosnippet>643</a>        <span class="self">self</span>.switch_values.clear();
 <a href=#644 id=644 data-nosnippet>644</a>        <span class="self">self</span>.valid_expression_list.clear();

@@ -448,7 +448,7 @@
 <a href=#448 id=448 data-nosnippet>448</a>        </span><span class="kw">let </span>restricted_id = <span class="self">self</span>.gen_id();
 <a href=#449 id=449 data-nosnippet>449</a>        block.body.push(Instruction::ext_inst_gl_op(
 <a href=#450 id=450 data-nosnippet>450</a>            <span class="self">self</span>.writer.gl450_ext_inst_id,
-<a href=#451 id=451 data-nosnippet>451</a>            spirv::GLOp::UMin,
+<a href=#451 id=451 data-nosnippet>451</a>            spirv::GlslStd450Op::UMin,
 <a href=#452 id=452 data-nosnippet>452</a>            type_id,
 <a href=#453 id=453 data-nosnippet>453</a>            restricted_id,
 <a href=#454 id=454 data-nosnippet>454</a>            <span class="kw-2">&amp;</span>[input_id, limit_id],
@@ -582,7 +582,7 @@
 <a href=#582 id=582 data-nosnippet>582</a>        </span><span class="kw">let </span>restricted_coordinates_id = <span class="self">self</span>.gen_id();
 <a href=#583 id=583 data-nosnippet>583</a>        block.body.push(Instruction::ext_inst_gl_op(
 <a href=#584 id=584 data-nosnippet>584</a>            <span class="self">self</span>.writer.gl450_ext_inst_id,
-<a href=#585 id=585 data-nosnippet>585</a>            spirv::GLOp::UMin,
+<a href=#585 id=585 data-nosnippet>585</a>            spirv::GlslStd450Op::UMin,
 <a href=#586 id=586 data-nosnippet>586</a>            coordinates.type_id,
 <a href=#587 id=587 data-nosnippet>587</a>            restricted_coordinates_id,
 <a href=#588 id=588 data-nosnippet>588</a>            <span class="kw-2">&amp;</span>[coordinates.value_id, coordinate_limit_id],
@@ -925,7 +925,7 @@
 <a href=#925 id=925 data-nosnippet>925</a>            </span><span class="kw">let </span>clamped_coords_id = <span class="self">self</span>.gen_id();
 <a href=#926 id=926 data-nosnippet>926</a>            block.body.push(Instruction::ext_inst_gl_op(
 <a href=#927 id=927 data-nosnippet>927</a>                <span class="self">self</span>.writer.gl450_ext_inst_id,
-<a href=#928 id=928 data-nosnippet>928</a>                spirv::GLOp::NClamp,
+<a href=#928 id=928 data-nosnippet>928</a>                spirv::GlslStd450Op::NClamp,
 <a href=#929 id=929 data-nosnippet>929</a>                vec2f_type_id,
 <a href=#930 id=930 data-nosnippet>930</a>                clamped_coords_id,
 <a href=#931 id=931 data-nosnippet>931</a>                <span class="kw-2">&amp;</span>[coordinates.value_id, margin_left_id, margin_right_id],

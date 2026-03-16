@@ -197,10 +197,10 @@
 <a href=#197 id=197 data-nosnippet>197</a>    </span>Float64x3 = <span class="number">41</span>,
 <a href=#198 id=198 data-nosnippet>198</a>    <span class="doccomment">/// Four double-precision floats (f64). `vec4&lt;f32&gt;` in shaders. Requires [`Features::VERTEX_ATTRIBUTE_64BIT`].
 <a href=#199 id=199 data-nosnippet>199</a>    </span>Float64x4 = <span class="number">42</span>,
-<a href=#200 id=200 data-nosnippet>200</a>    <span class="doccomment">/// Three unsigned 10-bit integers and one 2-bit integer, packed into a 32-bit integer (u32). [0, 1024] converted to float [0, 1] `vec4&lt;f32&gt;` in shaders.
+<a href=#200 id=200 data-nosnippet>200</a>    <span class="doccomment">/// Three unsigned 10-bit integers and one 2-bit integer, packed into a 32-bit integer (u32). [0, 1023] and [0, 3] converted to float [0, 1] `vec4&lt;f32&gt;` in shaders.
 <a href=#201 id=201 data-nosnippet>201</a>    </span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, serde(rename = <span class="string">"unorm10-10-10-2"</span>))]
 <a href=#202 id=202 data-nosnippet>202</a>    </span>Unorm10_10_10_2 = <span class="number">43</span>,
-<a href=#203 id=203 data-nosnippet>203</a>    <span class="doccomment">/// Four unsigned 8-bit integers, packed into a 32-bit integer (u32). [0, 255] converted to float [0, 1] `vec4&lt;f32&gt;` in shaders.
+<a href=#203 id=203 data-nosnippet>203</a>    <span class="doccomment">/// Four unsigned 8-bit integers (u8) in BGRA. [0, 255] converted to float [0, 1] `vec4&lt;f32&gt;` RGBA in shaders.
 <a href=#204 id=204 data-nosnippet>204</a>    </span><span class="attr">#[cfg_attr(feature = <span class="string">"serde"</span>, serde(rename = <span class="string">"unorm8x4-bgra"</span>))]
 <a href=#205 id=205 data-nosnippet>205</a>    </span>Unorm8x4Bgra = <span class="number">44</span>,
 <a href=#206 id=206 data-nosnippet>206</a>}

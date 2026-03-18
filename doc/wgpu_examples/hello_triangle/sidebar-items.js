@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["main","run"]};
+window.SIDEBAR_ITEMS = {"enum":["AppState","TriangleAction"],"fn":["main","spawn"],"struct":["App","WgpuState"]};

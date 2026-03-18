@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["init_logger","run","start"],"struct":["EventLoopWrapper","ExampleContext","FrameCounter","SurfaceWrapper"],"trait":["Example"]};
+window.SIDEBAR_ITEMS = {"enum":["AppAction","AppState"],"fn":["init_logger","run","spawn","start"],"struct":["App","ExampleContext","FrameCounter","SurfaceWrapper"],"trait":["Example"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["main","run"],"struct":["Viewport","ViewportDesc"]};
+window.SIDEBAR_ITEMS = {"constant":["COLUMNS","ROWS","WINDOW_OFFSET","WINDOW_PADDING","WINDOW_SIZE","WINDOW_TITLEBAR"],"enum":["AppState"],"fn":["main"],"struct":["App","Viewport","ViewportDesc"]};

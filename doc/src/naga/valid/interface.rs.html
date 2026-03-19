@@ -258,7 +258,7 @@
 <a href=#258 id=258 data-nosnippet>258</a>                <span class="self">self</span>.built_ins.insert(canonical);
 <a href=#259 id=259 data-nosnippet>259</a>
 <a href=#260 id=260 data-nosnippet>260</a>                <span class="kw">let </span>required = <span class="kw">match </span>built_in {
-<a href=#261 id=261 data-nosnippet>261</a>                    Bi::ClipDistance =&gt; Capabilities::CLIP_DISTANCE,
+<a href=#261 id=261 data-nosnippet>261</a>                    Bi::ClipDistances =&gt; Capabilities::CLIP_DISTANCES,
 <a href=#262 id=262 data-nosnippet>262</a>                    Bi::CullDistance =&gt; Capabilities::CULL_DISTANCE,
 <a href=#263 id=263 data-nosnippet>263</a>                    <span class="comment">// Primitive index is allowed w/o any other extensions in any- and closest-hit shaders
 <a href=#264 id=264 data-nosnippet>264</a>                    </span>Bi::PrimitiveIndex <span class="kw">if </span>!<span class="macro">matches!</span>(ep.stage, St::AnyHit | St::ClosestHit) =&gt; {
@@ -304,7 +304,7 @@
 <a href=#304 id=304 data-nosnippet>304</a>                            &amp;&amp; !<span class="self">self</span>.output,
 <a href=#305 id=305 data-nosnippet>305</a>                        <span class="kw-2">*</span>ty_inner == Ti::Scalar(<span class="kw">crate</span>::Scalar::U32),
 <a href=#306 id=306 data-nosnippet>306</a>                    ),
-<a href=#307 id=307 data-nosnippet>307</a>                    Bi::ClipDistance | Bi::CullDistance =&gt; (
+<a href=#307 id=307 data-nosnippet>307</a>                    Bi::ClipDistances | Bi::CullDistance =&gt; (
 <a href=#308 id=308 data-nosnippet>308</a>                        (<span class="self">self</span>.stage == St::Vertex || <span class="self">self</span>.stage == St::Mesh) &amp;&amp; <span class="self">self</span>.output,
 <a href=#309 id=309 data-nosnippet>309</a>                        <span class="kw">match </span><span class="kw-2">*</span>ty_inner {
 <a href=#310 id=310 data-nosnippet>310</a>                            Ti::Array { base, size, .. } =&gt; {

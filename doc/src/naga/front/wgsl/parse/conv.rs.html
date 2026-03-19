@@ -99,7 +99,7 @@
 <a href=#99 id=99 data-nosnippet>99</a>        </span><span class="string">"vertex_index" </span>=&gt; <span class="kw">crate</span>::BuiltIn::VertexIndex,
 <a href=#100 id=100 data-nosnippet>100</a>        <span class="string">"instance_index" </span>=&gt; <span class="kw">crate</span>::BuiltIn::InstanceIndex,
 <a href=#101 id=101 data-nosnippet>101</a>        <span class="string">"view_index" </span>=&gt; <span class="kw">crate</span>::BuiltIn::ViewIndex,
-<a href=#102 id=102 data-nosnippet>102</a>        <span class="string">"clip_distances" </span>=&gt; <span class="kw">crate</span>::BuiltIn::ClipDistance,
+<a href=#102 id=102 data-nosnippet>102</a>        <span class="string">"clip_distances" </span>=&gt; <span class="kw">crate</span>::BuiltIn::ClipDistances,
 <a href=#103 id=103 data-nosnippet>103</a>        <span class="comment">// fragment
 <a href=#104 id=104 data-nosnippet>104</a>        </span><span class="string">"front_facing" </span>=&gt; <span class="kw">crate</span>::BuiltIn::FrontFacing,
 <a href=#105 id=105 data-nosnippet>105</a>        <span class="string">"frag_depth" </span>=&gt; <span class="kw">crate</span>::BuiltIn::FragDepth,
@@ -148,7 +148,7 @@
 <a href=#148 id=148 data-nosnippet>148</a>        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::UnknownBuiltin(span))),
 <a href=#149 id=149 data-nosnippet>149</a>    };
 <a href=#150 id=150 data-nosnippet>150</a>    <span class="kw">match </span>built_in {
-<a href=#151 id=151 data-nosnippet>151</a>        <span class="kw">crate</span>::BuiltIn::ClipDistance =&gt; {
+<a href=#151 id=151 data-nosnippet>151</a>        <span class="kw">crate</span>::BuiltIn::ClipDistances =&gt; {
 <a href=#152 id=152 data-nosnippet>152</a>            enable_extensions.require(ImplementedEnableExtension::ClipDistances, span)<span class="question-mark">?
 <a href=#153 id=153 data-nosnippet>153</a>        </span>}
 <a href=#154 id=154 data-nosnippet>154</a>        <span class="kw">crate</span>::BuiltIn::PrimitiveIndex =&gt; {

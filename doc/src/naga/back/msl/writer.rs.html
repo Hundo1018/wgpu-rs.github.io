@@ -7190,10 +7190,10 @@
 <a href=#7190 id=7190 data-nosnippet>7190</a>                        };
 <a href=#7191 id=7191 data-nosnippet>7191</a>                        <span class="kw">let </span>resolved = options.resolve_local_binding(binding, out_mode)<span class="question-mark">?</span>;
 <a href=#7192 id=7192 data-nosnippet>7192</a>                        <span class="macro">write!</span>(<span class="self">self</span>.out, <span class="string">"{}{} {}"</span>, back::INDENT, ty_name, name)<span class="question-mark">?</span>;
-<a href=#7193 id=7193 data-nosnippet>7193</a>                        <span class="kw">if let </span><span class="prelude-val">Some</span>(array_len) = array_len {
-<a href=#7194 id=7194 data-nosnippet>7194</a>                            <span class="macro">write!</span>(<span class="self">self</span>.out, <span class="string">" [{array_len}]"</span>)<span class="question-mark">?</span>;
-<a href=#7195 id=7195 data-nosnippet>7195</a>                        }
-<a href=#7196 id=7196 data-nosnippet>7196</a>                        resolved.try_fmt(<span class="kw-2">&amp;mut </span><span class="self">self</span>.out)<span class="question-mark">?</span>;
+<a href=#7193 id=7193 data-nosnippet>7193</a>                        resolved.try_fmt(<span class="kw-2">&amp;mut </span><span class="self">self</span>.out)<span class="question-mark">?</span>;
+<a href=#7194 id=7194 data-nosnippet>7194</a>                        <span class="kw">if let </span><span class="prelude-val">Some</span>(array_len) = array_len {
+<a href=#7195 id=7195 data-nosnippet>7195</a>                            <span class="macro">write!</span>(<span class="self">self</span>.out, <span class="string">" [{array_len}]"</span>)<span class="question-mark">?</span>;
+<a href=#7196 id=7196 data-nosnippet>7196</a>                        }
 <a href=#7197 id=7197 data-nosnippet>7197</a>                        <span class="macro">writeln!</span>(<span class="self">self</span>.out, <span class="string">";"</span>)<span class="question-mark">?</span>;
 <a href=#7198 id=7198 data-nosnippet>7198</a>                    }
 <a href=#7199 id=7199 data-nosnippet>7199</a>

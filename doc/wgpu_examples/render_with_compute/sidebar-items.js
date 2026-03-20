@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_tv_and_bg","main"],"struct":["Example","GlobalParams"]};

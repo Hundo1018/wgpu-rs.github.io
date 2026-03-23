@@ -2722,20 +2722,20 @@
 <a href=#2722 id=2722 data-nosnippet>2722</a>                            BinaryOperator::Add =&gt; a.wrapping_add(b),
 <a href=#2723 id=2723 data-nosnippet>2723</a>                            BinaryOperator::Subtract =&gt; a.wrapping_sub(b),
 <a href=#2724 id=2724 data-nosnippet>2724</a>                            BinaryOperator::Multiply =&gt; a.wrapping_mul(b),
-<a href=#2725 id=2725 data-nosnippet>2725</a>                            BinaryOperator::Divide =&gt; {
+<a href=#2725 id=2725 data-nosnippet>2725</a>                            BinaryOperator::Divide =&gt; a.checked_div(b).ok_or_else(|| {
 <a href=#2726 id=2726 data-nosnippet>2726</a>                                <span class="kw">if </span>b == <span class="number">0 </span>{
-<a href=#2727 id=2727 data-nosnippet>2727</a>                                    <span class="kw">return </span><span class="prelude-val">Err</span>(ConstantEvaluatorError::DivisionByZero);
+<a href=#2727 id=2727 data-nosnippet>2727</a>                                    ConstantEvaluatorError::DivisionByZero
 <a href=#2728 id=2728 data-nosnippet>2728</a>                                } <span class="kw">else </span>{
-<a href=#2729 id=2729 data-nosnippet>2729</a>                                    a.wrapping_div(b)
+<a href=#2729 id=2729 data-nosnippet>2729</a>                                    ConstantEvaluatorError::Overflow(<span class="string">"division"</span>.into())
 <a href=#2730 id=2730 data-nosnippet>2730</a>                                }
-<a href=#2731 id=2731 data-nosnippet>2731</a>                            }
-<a href=#2732 id=2732 data-nosnippet>2732</a>                            BinaryOperator::Modulo =&gt; {
+<a href=#2731 id=2731 data-nosnippet>2731</a>                            })<span class="question-mark">?</span>,
+<a href=#2732 id=2732 data-nosnippet>2732</a>                            BinaryOperator::Modulo =&gt; a.checked_rem(b).ok_or_else(|| {
 <a href=#2733 id=2733 data-nosnippet>2733</a>                                <span class="kw">if </span>b == <span class="number">0 </span>{
-<a href=#2734 id=2734 data-nosnippet>2734</a>                                    <span class="kw">return </span><span class="prelude-val">Err</span>(ConstantEvaluatorError::RemainderByZero);
+<a href=#2734 id=2734 data-nosnippet>2734</a>                                    ConstantEvaluatorError::RemainderByZero
 <a href=#2735 id=2735 data-nosnippet>2735</a>                                } <span class="kw">else </span>{
-<a href=#2736 id=2736 data-nosnippet>2736</a>                                    a.wrapping_rem(b)
+<a href=#2736 id=2736 data-nosnippet>2736</a>                                    ConstantEvaluatorError::Overflow(<span class="string">"remainder"</span>.into())
 <a href=#2737 id=2737 data-nosnippet>2737</a>                                }
-<a href=#2738 id=2738 data-nosnippet>2738</a>                            }
+<a href=#2738 id=2738 data-nosnippet>2738</a>                            })<span class="question-mark">?</span>,
 <a href=#2739 id=2739 data-nosnippet>2739</a>                            BinaryOperator::And =&gt; a &amp; b,
 <a href=#2740 id=2740 data-nosnippet>2740</a>                            BinaryOperator::ExclusiveOr =&gt; a ^ b,
 <a href=#2741 id=2741 data-nosnippet>2741</a>                            BinaryOperator::InclusiveOr =&gt; a | b,

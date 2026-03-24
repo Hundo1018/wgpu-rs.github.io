@@ -2090,26 +2090,26 @@
 <a href=#2090 id=2090 data-nosnippet>2090</a>                .contains(vk::MemoryPropertyFlags::LAZILY_ALLOCATED)
 <a href=#2091 id=2091 data-nosnippet>2091</a>        });
 <a href=#2092 id=2092 data-nosnippet>2092</a>
-<a href=#2093 id=2093 data-nosnippet>2093</a>        <span class="kw">let </span>info = wgt::AdapterInfo {
-<a href=#2094 id=2094 data-nosnippet>2094</a>            name: {
-<a href=#2095 id=2095 data-nosnippet>2095</a>                phd_capabilities
-<a href=#2096 id=2096 data-nosnippet>2096</a>                    .properties
-<a href=#2097 id=2097 data-nosnippet>2097</a>                    .device_name_as_c_str()
-<a href=#2098 id=2098 data-nosnippet>2098</a>                    .ok()
-<a href=#2099 id=2099 data-nosnippet>2099</a>                    .and_then(|name| name.to_str().ok())
-<a href=#2100 id=2100 data-nosnippet>2100</a>                    .unwrap_or(<span class="string">"?"</span>)
-<a href=#2101 id=2101 data-nosnippet>2101</a>                    .to_owned()
-<a href=#2102 id=2102 data-nosnippet>2102</a>            },
-<a href=#2103 id=2103 data-nosnippet>2103</a>            vendor: phd_capabilities.properties.vendor_id,
-<a href=#2104 id=2104 data-nosnippet>2104</a>            device: phd_capabilities.properties.device_id,
-<a href=#2105 id=2105 data-nosnippet>2105</a>            device_type: <span class="kw">match </span>phd_capabilities.properties.device_type {
-<a href=#2106 id=2106 data-nosnippet>2106</a>                vk::PhysicalDeviceType::OTHER =&gt; wgt::DeviceType::Other,
-<a href=#2107 id=2107 data-nosnippet>2107</a>                vk::PhysicalDeviceType::INTEGRATED_GPU =&gt; wgt::DeviceType::IntegratedGpu,
-<a href=#2108 id=2108 data-nosnippet>2108</a>                vk::PhysicalDeviceType::DISCRETE_GPU =&gt; wgt::DeviceType::DiscreteGpu,
-<a href=#2109 id=2109 data-nosnippet>2109</a>                vk::PhysicalDeviceType::VIRTUAL_GPU =&gt; wgt::DeviceType::VirtualGpu,
-<a href=#2110 id=2110 data-nosnippet>2110</a>                vk::PhysicalDeviceType::CPU =&gt; wgt::DeviceType::Cpu,
-<a href=#2111 id=2111 data-nosnippet>2111</a>                <span class="kw">_ </span>=&gt; wgt::DeviceType::Other,
-<a href=#2112 id=2112 data-nosnippet>2112</a>            },
+<a href=#2093 id=2093 data-nosnippet>2093</a>        <span class="kw">let </span>device_type = <span class="kw">match </span>phd_capabilities.properties.device_type {
+<a href=#2094 id=2094 data-nosnippet>2094</a>            vk::PhysicalDeviceType::OTHER =&gt; wgt::DeviceType::Other,
+<a href=#2095 id=2095 data-nosnippet>2095</a>            vk::PhysicalDeviceType::INTEGRATED_GPU =&gt; wgt::DeviceType::IntegratedGpu,
+<a href=#2096 id=2096 data-nosnippet>2096</a>            vk::PhysicalDeviceType::DISCRETE_GPU =&gt; wgt::DeviceType::DiscreteGpu,
+<a href=#2097 id=2097 data-nosnippet>2097</a>            vk::PhysicalDeviceType::VIRTUAL_GPU =&gt; wgt::DeviceType::VirtualGpu,
+<a href=#2098 id=2098 data-nosnippet>2098</a>            vk::PhysicalDeviceType::CPU =&gt; wgt::DeviceType::Cpu,
+<a href=#2099 id=2099 data-nosnippet>2099</a>            <span class="kw">_ </span>=&gt; wgt::DeviceType::Other,
+<a href=#2100 id=2100 data-nosnippet>2100</a>        };
+<a href=#2101 id=2101 data-nosnippet>2101</a>        <span class="kw">let </span>info = wgt::AdapterInfo {
+<a href=#2102 id=2102 data-nosnippet>2102</a>            name: {
+<a href=#2103 id=2103 data-nosnippet>2103</a>                phd_capabilities
+<a href=#2104 id=2104 data-nosnippet>2104</a>                    .properties
+<a href=#2105 id=2105 data-nosnippet>2105</a>                    .device_name_as_c_str()
+<a href=#2106 id=2106 data-nosnippet>2106</a>                    .ok()
+<a href=#2107 id=2107 data-nosnippet>2107</a>                    .and_then(|name| name.to_str().ok())
+<a href=#2108 id=2108 data-nosnippet>2108</a>                    .unwrap_or(<span class="string">"?"</span>)
+<a href=#2109 id=2109 data-nosnippet>2109</a>                    .to_owned()
+<a href=#2110 id=2110 data-nosnippet>2110</a>            },
+<a href=#2111 id=2111 data-nosnippet>2111</a>            vendor: phd_capabilities.properties.vendor_id,
+<a href=#2112 id=2112 data-nosnippet>2112</a>            device: phd_capabilities.properties.device_id,
 <a href=#2113 id=2113 data-nosnippet>2113</a>            device_pci_bus_id: phd_capabilities
 <a href=#2114 id=2114 data-nosnippet>2114</a>                .pci_bus_info
 <a href=#2115 id=2115 data-nosnippet>2115</a>                .filter(|info| info.<span class="macro">pci_bus !</span>= <span class="number">0 </span>|| info.<span class="macro">pci_device !</span>= <span class="number">0</span>)
@@ -2138,16 +2138,16 @@
 <a href=#2138 id=2138 data-nosnippet>2138</a>                    .unwrap_or(<span class="string">"?"</span>)
 <a href=#2139 id=2139 data-nosnippet>2139</a>                    .to_owned()
 <a href=#2140 id=2140 data-nosnippet>2140</a>            },
-<a href=#2141 id=2141 data-nosnippet>2141</a>            backend: wgt::Backend::Vulkan,
-<a href=#2142 id=2142 data-nosnippet>2142</a>            subgroup_min_size: phd_capabilities
-<a href=#2143 id=2143 data-nosnippet>2143</a>                .subgroup_size_control
-<a href=#2144 id=2144 data-nosnippet>2144</a>                .map(|subgroup_size| subgroup_size.min_subgroup_size)
-<a href=#2145 id=2145 data-nosnippet>2145</a>                .unwrap_or(wgt::MINIMUM_SUBGROUP_MIN_SIZE),
-<a href=#2146 id=2146 data-nosnippet>2146</a>            subgroup_max_size: phd_capabilities
-<a href=#2147 id=2147 data-nosnippet>2147</a>                .subgroup_size_control
-<a href=#2148 id=2148 data-nosnippet>2148</a>                .map(|subgroup_size| subgroup_size.max_subgroup_size)
-<a href=#2149 id=2149 data-nosnippet>2149</a>                .unwrap_or(wgt::MAXIMUM_SUBGROUP_MAX_SIZE),
-<a href=#2150 id=2150 data-nosnippet>2150</a>            transient_saves_memory: supports_lazily_allocated,
+<a href=#2141 id=2141 data-nosnippet>2141</a>            subgroup_min_size: phd_capabilities
+<a href=#2142 id=2142 data-nosnippet>2142</a>                .subgroup_size_control
+<a href=#2143 id=2143 data-nosnippet>2143</a>                .map(|subgroup_size| subgroup_size.min_subgroup_size)
+<a href=#2144 id=2144 data-nosnippet>2144</a>                .unwrap_or(wgt::MINIMUM_SUBGROUP_MIN_SIZE),
+<a href=#2145 id=2145 data-nosnippet>2145</a>            subgroup_max_size: phd_capabilities
+<a href=#2146 id=2146 data-nosnippet>2146</a>                .subgroup_size_control
+<a href=#2147 id=2147 data-nosnippet>2147</a>                .map(|subgroup_size| subgroup_size.max_subgroup_size)
+<a href=#2148 id=2148 data-nosnippet>2148</a>                .unwrap_or(wgt::MAXIMUM_SUBGROUP_MAX_SIZE),
+<a href=#2149 id=2149 data-nosnippet>2149</a>            transient_saves_memory: supports_lazily_allocated,
+<a href=#2150 id=2150 data-nosnippet>2150</a>            ..wgt::AdapterInfo::new(device_type, wgt::Backend::Vulkan)
 <a href=#2151 id=2151 data-nosnippet>2151</a>        };
 <a href=#2152 id=2152 data-nosnippet>2152</a>        <span class="kw">let </span><span class="kw-2">mut </span>workarounds = <span class="kw">super</span>::Workarounds::empty();
 <a href=#2153 id=2153 data-nosnippet>2153</a>        {

@@ -430,7 +430,7 @@
 <a href=#430 id=430 data-nosnippet>430</a>}
 <a href=#431 id=431 data-nosnippet>431</a>
 <a href=#432 id=432 data-nosnippet>432</a><span class="kw">impl </span>AllocationSizes {
-<a href=#433 id=433 data-nosnippet>433</a>    <span class="attr">#[allow(dead_code)] </span><span class="comment">// may be unused on some platforms
+<a href=#433 id=433 data-nosnippet>433</a>    <span class="attr">#[allow(dead_code, reason = <span class="string">"may be unused on some platforms"</span>)]
 <a href=#434 id=434 data-nosnippet>434</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_memory_hints(memory_hints: <span class="kw-2">&amp;</span>wgt::MemoryHints) -&gt; <span class="self">Self </span>{
 <a href=#435 id=435 data-nosnippet>435</a>        <span class="comment">// TODO: the allocator's configuration should take hardware capability into
 <a href=#436 id=436 data-nosnippet>436</a>        // account.
@@ -483,14 +483,14 @@
 <a href=#483 id=483 data-nosnippet>483</a>    }
 <a href=#484 id=484 data-nosnippet>484</a>}
 <a href=#485 id=485 data-nosnippet>485</a>
-<a href=#486 id=486 data-nosnippet>486</a><span class="attr">#[allow(dead_code)] </span><span class="comment">// may be unused on some platforms
-<a href=#487 id=487 data-nosnippet>487</a></span><span class="attr">#[cold]
+<a href=#486 id=486 data-nosnippet>486</a><span class="attr">#[allow(dead_code, reason = <span class="string">"may be unused on some platforms"</span>)]
+<a href=#487 id=487 data-nosnippet>487</a>#[cold]
 <a href=#488 id=488 data-nosnippet>488</a></span><span class="kw">fn </span>hal_usage_error&lt;T: fmt::Display&gt;(txt: T) -&gt; ! {
 <a href=#489 id=489 data-nosnippet>489</a>    <span class="macro">panic!</span>(<span class="string">"wgpu-hal invariant was violated (usage error): {txt}"</span>)
 <a href=#490 id=490 data-nosnippet>490</a>}
 <a href=#491 id=491 data-nosnippet>491</a>
-<a href=#492 id=492 data-nosnippet>492</a><span class="attr">#[allow(dead_code)] </span><span class="comment">// may be unused on some platforms
-<a href=#493 id=493 data-nosnippet>493</a></span><span class="attr">#[cold]
+<a href=#492 id=492 data-nosnippet>492</a><span class="attr">#[allow(dead_code, reason = <span class="string">"may be unused on some platforms"</span>)]
+<a href=#493 id=493 data-nosnippet>493</a>#[cold]
 <a href=#494 id=494 data-nosnippet>494</a></span><span class="kw">fn </span>hal_internal_error&lt;T: fmt::Display&gt;(txt: T) -&gt; ! {
 <a href=#495 id=495 data-nosnippet>495</a>    <span class="macro">panic!</span>(<span class="string">"wgpu-hal ran into a preventable internal error: {txt}"</span>)
 <a href=#496 id=496 data-nosnippet>496</a>}
@@ -555,14 +555,14 @@
 <a href=#555 id=555 data-nosnippet>555</a>}
 <a href=#556 id=556 data-nosnippet>556</a>
 <a href=#557 id=557 data-nosnippet>557</a><span class="kw">impl </span>InstanceError {
-<a href=#558 id=558 data-nosnippet>558</a>    <span class="attr">#[allow(dead_code)] </span><span class="comment">// may be unused on some platforms
+<a href=#558 id=558 data-nosnippet>558</a>    <span class="attr">#[allow(dead_code, reason = <span class="string">"may be unused on some platforms"</span>)]
 <a href=#559 id=559 data-nosnippet>559</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(message: String) -&gt; <span class="self">Self </span>{
 <a href=#560 id=560 data-nosnippet>560</a>        <span class="self">Self </span>{
 <a href=#561 id=561 data-nosnippet>561</a>            message,
 <a href=#562 id=562 data-nosnippet>562</a>            source: <span class="prelude-val">None</span>,
 <a href=#563 id=563 data-nosnippet>563</a>        }
 <a href=#564 id=564 data-nosnippet>564</a>    }
-<a href=#565 id=565 data-nosnippet>565</a>    <span class="attr">#[allow(dead_code)] </span><span class="comment">// may be unused on some platforms
+<a href=#565 id=565 data-nosnippet>565</a>    <span class="attr">#[allow(dead_code, reason = <span class="string">"may be unused on some platforms"</span>)]
 <a href=#566 id=566 data-nosnippet>566</a>    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>with_source(message: String, source: <span class="kw">impl </span>Error + Send + Sync + <span class="lifetime">'static</span>) -&gt; <span class="self">Self </span>{
 <a href=#567 id=567 data-nosnippet>567</a>        <span class="macro">cfg_if::cfg_if!</span> {
 <a href=#568 id=568 data-nosnippet>568</a>            <span class="kw">if </span><span class="attr">#[cfg(supports_ptr_atomics)] </span>{

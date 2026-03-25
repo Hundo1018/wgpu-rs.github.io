@@ -844,7 +844,7 @@
 <a href=#844 id=844 data-nosnippet>844</a>                        )
 <a href=#845 id=845 data-nosnippet>845</a>                    } <span class="kw">else if </span>target == glow::TEXTURE_3D {
 <a href=#846 id=846 data-nosnippet>846</a>                        <span class="kw">let </span><span class="kw-2">mut </span>width = desc.size.width;
-<a href=#847 id=847 data-nosnippet>847</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.width;
+<a href=#847 id=847 data-nosnippet>847</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.height;
 <a href=#848 id=848 data-nosnippet>848</a>                        <span class="kw">let </span><span class="kw-2">mut </span>depth = desc.size.depth_or_array_layers;
 <a href=#849 id=849 data-nosnippet>849</a>                        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..desc.mip_level_count {
 <a href=#850 id=850 data-nosnippet>850</a>                            gl.tex_image_3d(
@@ -865,7 +865,7 @@
 <a href=#865 id=865 data-nosnippet>865</a>                        }
 <a href=#866 id=866 data-nosnippet>866</a>                    } <span class="kw">else </span>{
 <a href=#867 id=867 data-nosnippet>867</a>                        <span class="kw">let </span><span class="kw-2">mut </span>width = desc.size.width;
-<a href=#868 id=868 data-nosnippet>868</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.width;
+<a href=#868 id=868 data-nosnippet>868</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.height;
 <a href=#869 id=869 data-nosnippet>869</a>                        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..desc.mip_level_count {
 <a href=#870 id=870 data-nosnippet>870</a>                            gl.tex_image_3d(
 <a href=#871 id=871 data-nosnippet>871</a>                                target,
@@ -911,7 +911,7 @@
 <a href=#911 id=911 data-nosnippet>911</a>                        )
 <a href=#912 id=912 data-nosnippet>912</a>                    } <span class="kw">else if </span>target == glow::TEXTURE_CUBE_MAP {
 <a href=#913 id=913 data-nosnippet>913</a>                        <span class="kw">let </span><span class="kw-2">mut </span>width = desc.size.width;
-<a href=#914 id=914 data-nosnippet>914</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.width;
+<a href=#914 id=914 data-nosnippet>914</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.height;
 <a href=#915 id=915 data-nosnippet>915</a>                        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..desc.mip_level_count {
 <a href=#916 id=916 data-nosnippet>916</a>                            <span class="kw">for </span>face <span class="kw">in </span>[
 <a href=#917 id=917 data-nosnippet>917</a>                                glow::TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -938,7 +938,7 @@
 <a href=#938 id=938 data-nosnippet>938</a>                        }
 <a href=#939 id=939 data-nosnippet>939</a>                    } <span class="kw">else </span>{
 <a href=#940 id=940 data-nosnippet>940</a>                        <span class="kw">let </span><span class="kw-2">mut </span>width = desc.size.width;
-<a href=#941 id=941 data-nosnippet>941</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.width;
+<a href=#941 id=941 data-nosnippet>941</a>                        <span class="kw">let </span><span class="kw-2">mut </span>height = desc.size.height;
 <a href=#942 id=942 data-nosnippet>942</a>                        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..desc.mip_level_count {
 <a href=#943 id=943 data-nosnippet>943</a>                            gl.tex_image_2d(
 <a href=#944 id=944 data-nosnippet>944</a>                                target,

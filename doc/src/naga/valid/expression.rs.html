@@ -483,7 +483,7 @@
 <a href=#483 id=483 data-nosnippet>483</a>
 <a href=#484 id=484 data-nosnippet>484</a>                <span class="kw">let </span>limit = resolve_index_limit(module, base, <span class="kw-2">&amp;</span>resolver[base], <span class="bool-val">true</span>)<span class="question-mark">?</span>;
 <a href=#485 id=485 data-nosnippet>485</a>                <span class="kw">if </span>index &gt;= limit {
-<a href=#486 id=486 data-nosnippet>486</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(ExpressionError::IndexOutOfBounds(base, limit));
+<a href=#486 id=486 data-nosnippet>486</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(ExpressionError::IndexOutOfBounds(base, index));
 <a href=#487 id=487 data-nosnippet>487</a>                }
 <a href=#488 id=488 data-nosnippet>488</a>                ShaderStages::all()
 <a href=#489 id=489 data-nosnippet>489</a>            }

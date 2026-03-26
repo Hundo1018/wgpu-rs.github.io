@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"macro":["to_u64"]};
+window.SIDEBAR_ITEMS = {"macro":["to_u64"],"struct":["Card"]};

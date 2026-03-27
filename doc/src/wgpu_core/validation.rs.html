@@ -16,7 +16,7 @@
 <a href=#16 id=16 data-nosnippet>16</a>};
 <a href=#17 id=17 data-nosnippet>17</a>
 <a href=#18 id=18 data-nosnippet>18</a><span class="kw">use crate</span>::{
-<a href=#19 id=19 data-nosnippet>19</a>    device::bgl, resource::InvalidResourceError,
+<a href=#19 id=19 data-nosnippet>19</a>    command::ColorAttachmentError, device::bgl, resource::InvalidResourceError,
 <a href=#20 id=20 data-nosnippet>20</a>    validation::shader_io_deductions::MaxFragmentShaderInputDeduction, FastHashMap, FastHashSet,
 <a href=#21 id=21 data-nosnippet>21</a>};
 <a href=#22 id=22 data-nosnippet>22</a>
@@ -1880,69 +1880,82 @@
 <a href=#1880 id=1880 data-nosnippet>1880</a>    }
 <a href=#1881 id=1881 data-nosnippet>1881</a>}
 <a href=#1882 id=1882 data-nosnippet>1882</a>
-<a href=#1883 id=1883 data-nosnippet>1883</a><span class="doccomment">/// Validate a list of color attachment formats against `maxColorAttachmentBytesPerSample`.
-<a href=#1884 id=1884 data-nosnippet>1884</a>///
-<a href=#1885 id=1885 data-nosnippet>1885</a>/// The color attachments can be from a render pass descriptor or a pipeline descriptor.
-<a href=#1886 id=1886 data-nosnippet>1886</a>///
-<a href=#1887 id=1887 data-nosnippet>1887</a>/// Implements &lt;https://gpuweb.github.io/gpuweb/#abstract-opdef-calculating-color-attachment-bytes-per-sample&gt;.
-<a href=#1888 id=1888 data-nosnippet>1888</a></span><span class="kw">pub fn </span>validate_color_attachment_bytes_per_sample(
-<a href=#1889 id=1889 data-nosnippet>1889</a>    attachment_formats: <span class="kw">impl </span>IntoIterator&lt;Item = wgt::TextureFormat&gt;,
-<a href=#1890 id=1890 data-nosnippet>1890</a>    limit: u32,
-<a href=#1891 id=1891 data-nosnippet>1891</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="kw">crate</span>::command::ColorAttachmentError&gt; {
-<a href=#1892 id=1892 data-nosnippet>1892</a>    <span class="kw">let </span><span class="kw-2">mut </span>total_bytes_per_sample: u32 = <span class="number">0</span>;
-<a href=#1893 id=1893 data-nosnippet>1893</a>    <span class="kw">for </span>format <span class="kw">in </span>attachment_formats {
-<a href=#1894 id=1894 data-nosnippet>1894</a>        <span class="kw">let </span>byte_cost = format.target_pixel_byte_cost().unwrap();
-<a href=#1895 id=1895 data-nosnippet>1895</a>        <span class="kw">let </span>alignment = format.target_component_alignment().unwrap();
-<a href=#1896 id=1896 data-nosnippet>1896</a>
-<a href=#1897 id=1897 data-nosnippet>1897</a>        total_bytes_per_sample = total_bytes_per_sample.next_multiple_of(alignment);
-<a href=#1898 id=1898 data-nosnippet>1898</a>        total_bytes_per_sample += byte_cost;
-<a href=#1899 id=1899 data-nosnippet>1899</a>    }
-<a href=#1900 id=1900 data-nosnippet>1900</a>
-<a href=#1901 id=1901 data-nosnippet>1901</a>    <span class="kw">if </span>total_bytes_per_sample &gt; limit {
-<a href=#1902 id=1902 data-nosnippet>1902</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(
-<a href=#1903 id=1903 data-nosnippet>1903</a>            <span class="kw">crate</span>::command::ColorAttachmentError::TooManyBytesPerSample {
-<a href=#1904 id=1904 data-nosnippet>1904</a>                total: total_bytes_per_sample,
-<a href=#1905 id=1905 data-nosnippet>1905</a>                limit,
-<a href=#1906 id=1906 data-nosnippet>1906</a>            },
-<a href=#1907 id=1907 data-nosnippet>1907</a>        );
-<a href=#1908 id=1908 data-nosnippet>1908</a>    }
-<a href=#1909 id=1909 data-nosnippet>1909</a>
-<a href=#1910 id=1910 data-nosnippet>1910</a>    <span class="prelude-val">Ok</span>(())
-<a href=#1911 id=1911 data-nosnippet>1911</a>}
-<a href=#1912 id=1912 data-nosnippet>1912</a>
-<a href=#1913 id=1913 data-nosnippet>1913</a><span class="kw">pub enum </span>ShaderStageForValidation {
-<a href=#1914 id=1914 data-nosnippet>1914</a>    Vertex {
-<a href=#1915 id=1915 data-nosnippet>1915</a>        topology: wgt::PrimitiveTopology,
-<a href=#1916 id=1916 data-nosnippet>1916</a>        compare_function: <span class="prelude-ty">Option</span>&lt;wgt::CompareFunction&gt;,
-<a href=#1917 id=1917 data-nosnippet>1917</a>    },
-<a href=#1918 id=1918 data-nosnippet>1918</a>    Mesh,
-<a href=#1919 id=1919 data-nosnippet>1919</a>    Fragment {
-<a href=#1920 id=1920 data-nosnippet>1920</a>        dual_source_blending: bool,
-<a href=#1921 id=1921 data-nosnippet>1921</a>        has_depth_attachment: bool,
-<a href=#1922 id=1922 data-nosnippet>1922</a>    },
-<a href=#1923 id=1923 data-nosnippet>1923</a>    Compute,
-<a href=#1924 id=1924 data-nosnippet>1924</a>    Task,
-<a href=#1925 id=1925 data-nosnippet>1925</a>}
-<a href=#1926 id=1926 data-nosnippet>1926</a>
-<a href=#1927 id=1927 data-nosnippet>1927</a><span class="kw">impl </span>ShaderStageForValidation {
-<a href=#1928 id=1928 data-nosnippet>1928</a>    <span class="kw">pub fn </span>to_naga(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; naga::ShaderStage {
-<a href=#1929 id=1929 data-nosnippet>1929</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#1930 id=1930 data-nosnippet>1930</a>            <span class="self">Self</span>::Vertex { .. } =&gt; naga::ShaderStage::Vertex,
-<a href=#1931 id=1931 data-nosnippet>1931</a>            <span class="self">Self</span>::Mesh =&gt; naga::ShaderStage::Mesh,
-<a href=#1932 id=1932 data-nosnippet>1932</a>            <span class="self">Self</span>::Fragment { .. } =&gt; naga::ShaderStage::Fragment,
-<a href=#1933 id=1933 data-nosnippet>1933</a>            <span class="self">Self</span>::Compute =&gt; naga::ShaderStage::Compute,
-<a href=#1934 id=1934 data-nosnippet>1934</a>            <span class="self">Self</span>::Task =&gt; naga::ShaderStage::Task,
-<a href=#1935 id=1935 data-nosnippet>1935</a>        }
-<a href=#1936 id=1936 data-nosnippet>1936</a>    }
-<a href=#1937 id=1937 data-nosnippet>1937</a>
-<a href=#1938 id=1938 data-nosnippet>1938</a>    <span class="kw">pub fn </span>to_wgt_bit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; wgt::ShaderStages {
-<a href=#1939 id=1939 data-nosnippet>1939</a>        <span class="kw">match </span><span class="self">self </span>{
-<a href=#1940 id=1940 data-nosnippet>1940</a>            <span class="self">Self</span>::Vertex { .. } =&gt; wgt::ShaderStages::VERTEX,
-<a href=#1941 id=1941 data-nosnippet>1941</a>            <span class="self">Self</span>::Mesh =&gt; wgt::ShaderStages::MESH,
-<a href=#1942 id=1942 data-nosnippet>1942</a>            <span class="self">Self</span>::Fragment { .. } =&gt; wgt::ShaderStages::FRAGMENT,
-<a href=#1943 id=1943 data-nosnippet>1943</a>            <span class="self">Self</span>::Compute =&gt; wgt::ShaderStages::COMPUTE,
-<a href=#1944 id=1944 data-nosnippet>1944</a>            <span class="self">Self</span>::Task =&gt; wgt::ShaderStages::TASK,
-<a href=#1945 id=1945 data-nosnippet>1945</a>        }
-<a href=#1946 id=1946 data-nosnippet>1946</a>    }
-<a href=#1947 id=1947 data-nosnippet>1947</a>}
+<a href=#1883 id=1883 data-nosnippet>1883</a><span class="kw">pub fn </span>check_color_attachment_count(
+<a href=#1884 id=1884 data-nosnippet>1884</a>    num_attachments: usize,
+<a href=#1885 id=1885 data-nosnippet>1885</a>    limit: u32,
+<a href=#1886 id=1886 data-nosnippet>1886</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ColorAttachmentError&gt; {
+<a href=#1887 id=1887 data-nosnippet>1887</a>    <span class="kw">let </span>limit = usize::try_from(limit).unwrap();
+<a href=#1888 id=1888 data-nosnippet>1888</a>    <span class="kw">if </span>num_attachments &gt; limit {
+<a href=#1889 id=1889 data-nosnippet>1889</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(ColorAttachmentError::TooMany {
+<a href=#1890 id=1890 data-nosnippet>1890</a>            given: num_attachments,
+<a href=#1891 id=1891 data-nosnippet>1891</a>            limit,
+<a href=#1892 id=1892 data-nosnippet>1892</a>        });
+<a href=#1893 id=1893 data-nosnippet>1893</a>    }
+<a href=#1894 id=1894 data-nosnippet>1894</a>
+<a href=#1895 id=1895 data-nosnippet>1895</a>    <span class="prelude-val">Ok</span>(())
+<a href=#1896 id=1896 data-nosnippet>1896</a>}
+<a href=#1897 id=1897 data-nosnippet>1897</a>
+<a href=#1898 id=1898 data-nosnippet>1898</a><span class="doccomment">/// Validate a list of color attachment formats against `maxColorAttachmentBytesPerSample`.
+<a href=#1899 id=1899 data-nosnippet>1899</a>///
+<a href=#1900 id=1900 data-nosnippet>1900</a>/// The color attachments can be from a render pass descriptor or a pipeline descriptor.
+<a href=#1901 id=1901 data-nosnippet>1901</a>///
+<a href=#1902 id=1902 data-nosnippet>1902</a>/// Implements &lt;https://gpuweb.github.io/gpuweb/#abstract-opdef-calculating-color-attachment-bytes-per-sample&gt;.
+<a href=#1903 id=1903 data-nosnippet>1903</a></span><span class="kw">pub fn </span>validate_color_attachment_bytes_per_sample(
+<a href=#1904 id=1904 data-nosnippet>1904</a>    attachment_formats: <span class="kw">impl </span>IntoIterator&lt;Item = wgt::TextureFormat&gt;,
+<a href=#1905 id=1905 data-nosnippet>1905</a>    limit: u32,
+<a href=#1906 id=1906 data-nosnippet>1906</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), ColorAttachmentError&gt; {
+<a href=#1907 id=1907 data-nosnippet>1907</a>    <span class="kw">let </span><span class="kw-2">mut </span>total_bytes_per_sample: u32 = <span class="number">0</span>;
+<a href=#1908 id=1908 data-nosnippet>1908</a>    <span class="kw">for </span>format <span class="kw">in </span>attachment_formats {
+<a href=#1909 id=1909 data-nosnippet>1909</a>        <span class="kw">let </span>byte_cost = format.target_pixel_byte_cost().unwrap();
+<a href=#1910 id=1910 data-nosnippet>1910</a>        <span class="kw">let </span>alignment = format.target_component_alignment().unwrap();
+<a href=#1911 id=1911 data-nosnippet>1911</a>
+<a href=#1912 id=1912 data-nosnippet>1912</a>        total_bytes_per_sample = total_bytes_per_sample.next_multiple_of(alignment);
+<a href=#1913 id=1913 data-nosnippet>1913</a>        total_bytes_per_sample += byte_cost;
+<a href=#1914 id=1914 data-nosnippet>1914</a>    }
+<a href=#1915 id=1915 data-nosnippet>1915</a>
+<a href=#1916 id=1916 data-nosnippet>1916</a>    <span class="kw">if </span>total_bytes_per_sample &gt; limit {
+<a href=#1917 id=1917 data-nosnippet>1917</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(ColorAttachmentError::TooManyBytesPerSample {
+<a href=#1918 id=1918 data-nosnippet>1918</a>            total: total_bytes_per_sample,
+<a href=#1919 id=1919 data-nosnippet>1919</a>            limit,
+<a href=#1920 id=1920 data-nosnippet>1920</a>        });
+<a href=#1921 id=1921 data-nosnippet>1921</a>    }
+<a href=#1922 id=1922 data-nosnippet>1922</a>
+<a href=#1923 id=1923 data-nosnippet>1923</a>    <span class="prelude-val">Ok</span>(())
+<a href=#1924 id=1924 data-nosnippet>1924</a>}
+<a href=#1925 id=1925 data-nosnippet>1925</a>
+<a href=#1926 id=1926 data-nosnippet>1926</a><span class="kw">pub enum </span>ShaderStageForValidation {
+<a href=#1927 id=1927 data-nosnippet>1927</a>    Vertex {
+<a href=#1928 id=1928 data-nosnippet>1928</a>        topology: wgt::PrimitiveTopology,
+<a href=#1929 id=1929 data-nosnippet>1929</a>        compare_function: <span class="prelude-ty">Option</span>&lt;wgt::CompareFunction&gt;,
+<a href=#1930 id=1930 data-nosnippet>1930</a>    },
+<a href=#1931 id=1931 data-nosnippet>1931</a>    Mesh,
+<a href=#1932 id=1932 data-nosnippet>1932</a>    Fragment {
+<a href=#1933 id=1933 data-nosnippet>1933</a>        dual_source_blending: bool,
+<a href=#1934 id=1934 data-nosnippet>1934</a>        has_depth_attachment: bool,
+<a href=#1935 id=1935 data-nosnippet>1935</a>    },
+<a href=#1936 id=1936 data-nosnippet>1936</a>    Compute,
+<a href=#1937 id=1937 data-nosnippet>1937</a>    Task,
+<a href=#1938 id=1938 data-nosnippet>1938</a>}
+<a href=#1939 id=1939 data-nosnippet>1939</a>
+<a href=#1940 id=1940 data-nosnippet>1940</a><span class="kw">impl </span>ShaderStageForValidation {
+<a href=#1941 id=1941 data-nosnippet>1941</a>    <span class="kw">pub fn </span>to_naga(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; naga::ShaderStage {
+<a href=#1942 id=1942 data-nosnippet>1942</a>        <span class="kw">match </span><span class="self">self </span>{
+<a href=#1943 id=1943 data-nosnippet>1943</a>            <span class="self">Self</span>::Vertex { .. } =&gt; naga::ShaderStage::Vertex,
+<a href=#1944 id=1944 data-nosnippet>1944</a>            <span class="self">Self</span>::Mesh =&gt; naga::ShaderStage::Mesh,
+<a href=#1945 id=1945 data-nosnippet>1945</a>            <span class="self">Self</span>::Fragment { .. } =&gt; naga::ShaderStage::Fragment,
+<a href=#1946 id=1946 data-nosnippet>1946</a>            <span class="self">Self</span>::Compute =&gt; naga::ShaderStage::Compute,
+<a href=#1947 id=1947 data-nosnippet>1947</a>            <span class="self">Self</span>::Task =&gt; naga::ShaderStage::Task,
+<a href=#1948 id=1948 data-nosnippet>1948</a>        }
+<a href=#1949 id=1949 data-nosnippet>1949</a>    }
+<a href=#1950 id=1950 data-nosnippet>1950</a>
+<a href=#1951 id=1951 data-nosnippet>1951</a>    <span class="kw">pub fn </span>to_wgt_bit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; wgt::ShaderStages {
+<a href=#1952 id=1952 data-nosnippet>1952</a>        <span class="kw">match </span><span class="self">self </span>{
+<a href=#1953 id=1953 data-nosnippet>1953</a>            <span class="self">Self</span>::Vertex { .. } =&gt; wgt::ShaderStages::VERTEX,
+<a href=#1954 id=1954 data-nosnippet>1954</a>            <span class="self">Self</span>::Mesh =&gt; wgt::ShaderStages::MESH,
+<a href=#1955 id=1955 data-nosnippet>1955</a>            <span class="self">Self</span>::Fragment { .. } =&gt; wgt::ShaderStages::FRAGMENT,
+<a href=#1956 id=1956 data-nosnippet>1956</a>            <span class="self">Self</span>::Compute =&gt; wgt::ShaderStages::COMPUTE,
+<a href=#1957 id=1957 data-nosnippet>1957</a>            <span class="self">Self</span>::Task =&gt; wgt::ShaderStages::TASK,
+<a href=#1958 id=1958 data-nosnippet>1958</a>        }
+<a href=#1959 id=1959 data-nosnippet>1959</a>    }
+<a href=#1960 id=1960 data-nosnippet>1960</a>}
 </code></pre></div></section></main></body></html>

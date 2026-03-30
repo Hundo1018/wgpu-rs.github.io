@@ -4603,270 +4603,277 @@
 <a href=#4603 id=4603 data-nosnippet>4603</a>
 <a href=#4604 id=4604 data-nosnippet>4604</a>            <span class="kw">let </span>member_size = <span class="kw">if let </span><span class="prelude-val">Some</span>(size_expr) = member.size {
 <a href=#4605 id=4605 data-nosnippet>4605</a>                <span class="kw">let </span>(size, span) = <span class="self">self</span>.const_u32(size_expr, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>;
-<a href=#4606 id=4606 data-nosnippet>4606</a>                <span class="kw">if </span>size &lt; member_min_size {
-<a href=#4607 id=4607 data-nosnippet>4607</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::SizeAttributeTooLow(span, member_min_size)));
-<a href=#4608 id=4608 data-nosnippet>4608</a>                } <span class="kw">else </span>{
-<a href=#4609 id=4609 data-nosnippet>4609</a>                    size
-<a href=#4610 id=4610 data-nosnippet>4610</a>                }
-<a href=#4611 id=4611 data-nosnippet>4611</a>            } <span class="kw">else </span>{
-<a href=#4612 id=4612 data-nosnippet>4612</a>                member_min_size
-<a href=#4613 id=4613 data-nosnippet>4613</a>            };
-<a href=#4614 id=4614 data-nosnippet>4614</a>
-<a href=#4615 id=4615 data-nosnippet>4615</a>            <span class="kw">let </span>member_alignment = <span class="kw">if let </span><span class="prelude-val">Some</span>(align_expr) = member.align {
-<a href=#4616 id=4616 data-nosnippet>4616</a>                <span class="kw">let </span>(align, span) = <span class="self">self</span>.const_u32(align_expr, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>;
-<a href=#4617 id=4617 data-nosnippet>4617</a>                <span class="kw">if let </span><span class="prelude-val">Some</span>(alignment) = proc::Alignment::new(align) {
-<a href=#4618 id=4618 data-nosnippet>4618</a>                    <span class="kw">if </span>alignment &lt; member_min_alignment {
-<a href=#4619 id=4619 data-nosnippet>4619</a>                        <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::AlignAttributeTooLow(
-<a href=#4620 id=4620 data-nosnippet>4620</a>                            span,
-<a href=#4621 id=4621 data-nosnippet>4621</a>                            member_min_alignment,
-<a href=#4622 id=4622 data-nosnippet>4622</a>                        )));
-<a href=#4623 id=4623 data-nosnippet>4623</a>                    } <span class="kw">else </span>{
-<a href=#4624 id=4624 data-nosnippet>4624</a>                        alignment
-<a href=#4625 id=4625 data-nosnippet>4625</a>                    }
-<a href=#4626 id=4626 data-nosnippet>4626</a>                } <span class="kw">else </span>{
-<a href=#4627 id=4627 data-nosnippet>4627</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::NonPowerOfTwoAlignAttribute(span)));
-<a href=#4628 id=4628 data-nosnippet>4628</a>                }
-<a href=#4629 id=4629 data-nosnippet>4629</a>            } <span class="kw">else </span>{
-<a href=#4630 id=4630 data-nosnippet>4630</a>                member_min_alignment
-<a href=#4631 id=4631 data-nosnippet>4631</a>            };
-<a href=#4632 id=4632 data-nosnippet>4632</a>
-<a href=#4633 id=4633 data-nosnippet>4633</a>            <span class="kw">let </span>binding = <span class="self">self</span>.binding(<span class="kw-2">&amp;</span>member.binding, ty, ctx)<span class="question-mark">?</span>;
-<a href=#4634 id=4634 data-nosnippet>4634</a>
-<a href=#4635 id=4635 data-nosnippet>4635</a>            offset = member_alignment.round_up(offset);
-<a href=#4636 id=4636 data-nosnippet>4636</a>            struct_alignment = struct_alignment.max(member_alignment);
-<a href=#4637 id=4637 data-nosnippet>4637</a>
-<a href=#4638 id=4638 data-nosnippet>4638</a>            <span class="kw">if </span>!member.doc_comments.is_empty() {
-<a href=#4639 id=4639 data-nosnippet>4639</a>                doc_comments.push(<span class="prelude-val">Some</span>(
-<a href=#4640 id=4640 data-nosnippet>4640</a>                    member.doc_comments.iter().map(|s| s.to_string()).collect(),
-<a href=#4641 id=4641 data-nosnippet>4641</a>                ));
-<a href=#4642 id=4642 data-nosnippet>4642</a>            }
-<a href=#4643 id=4643 data-nosnippet>4643</a>            members.push(ir::StructMember {
-<a href=#4644 id=4644 data-nosnippet>4644</a>                name: <span class="prelude-val">Some</span>(member.name.name.to_owned()),
-<a href=#4645 id=4645 data-nosnippet>4645</a>                ty,
-<a href=#4646 id=4646 data-nosnippet>4646</a>                binding,
-<a href=#4647 id=4647 data-nosnippet>4647</a>                offset,
-<a href=#4648 id=4648 data-nosnippet>4648</a>            });
-<a href=#4649 id=4649 data-nosnippet>4649</a>
-<a href=#4650 id=4650 data-nosnippet>4650</a>            offset += member_size;
-<a href=#4651 id=4651 data-nosnippet>4651</a>            <span class="kw">if </span>offset &gt; <span class="kw">crate</span>::valid::MAX_TYPE_SIZE {
-<a href=#4652 id=4652 data-nosnippet>4652</a>                <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::TypeTooLarge { span }));
-<a href=#4653 id=4653 data-nosnippet>4653</a>            }
-<a href=#4654 id=4654 data-nosnippet>4654</a>        }
-<a href=#4655 id=4655 data-nosnippet>4655</a>
-<a href=#4656 id=4656 data-nosnippet>4656</a>        <span class="kw">let </span>size = struct_alignment.round_up(offset);
-<a href=#4657 id=4657 data-nosnippet>4657</a>        <span class="kw">let </span>inner = ir::TypeInner::Struct {
-<a href=#4658 id=4658 data-nosnippet>4658</a>            members,
-<a href=#4659 id=4659 data-nosnippet>4659</a>            span: size,
-<a href=#4660 id=4660 data-nosnippet>4660</a>        };
-<a href=#4661 id=4661 data-nosnippet>4661</a>
-<a href=#4662 id=4662 data-nosnippet>4662</a>        <span class="kw">let </span>handle = ctx.module.types.insert(
-<a href=#4663 id=4663 data-nosnippet>4663</a>            ir::Type {
-<a href=#4664 id=4664 data-nosnippet>4664</a>                name: <span class="prelude-val">Some</span>(s.name.name.to_string()),
-<a href=#4665 id=4665 data-nosnippet>4665</a>                inner,
-<a href=#4666 id=4666 data-nosnippet>4666</a>            },
-<a href=#4667 id=4667 data-nosnippet>4667</a>            span,
-<a href=#4668 id=4668 data-nosnippet>4668</a>        );
-<a href=#4669 id=4669 data-nosnippet>4669</a>        <span class="kw">for </span>(i, c) <span class="kw">in </span>doc_comments.drain(..).enumerate() {
-<a href=#4670 id=4670 data-nosnippet>4670</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(comment) = c {
-<a href=#4671 id=4671 data-nosnippet>4671</a>                ctx.module
-<a href=#4672 id=4672 data-nosnippet>4672</a>                    .get_or_insert_default_doc_comments()
-<a href=#4673 id=4673 data-nosnippet>4673</a>                    .struct_members
-<a href=#4674 id=4674 data-nosnippet>4674</a>                    .insert((handle, i), comment);
-<a href=#4675 id=4675 data-nosnippet>4675</a>            }
-<a href=#4676 id=4676 data-nosnippet>4676</a>        }
-<a href=#4677 id=4677 data-nosnippet>4677</a>        <span class="prelude-val">Ok</span>(handle)
-<a href=#4678 id=4678 data-nosnippet>4678</a>    }
-<a href=#4679 id=4679 data-nosnippet>4679</a>
-<a href=#4680 id=4680 data-nosnippet>4680</a>    <span class="kw">fn </span>const_u32(
-<a href=#4681 id=4681 data-nosnippet>4681</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4682 id=4682 data-nosnippet>4682</a>        expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
-<a href=#4683 id=4683 data-nosnippet>4683</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4684 id=4684 data-nosnippet>4684</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, (u32, Span)&gt; {
-<a href=#4685 id=4685 data-nosnippet>4685</a>        <span class="kw">let </span>span = ctx.ast_expressions.get_span(expr);
-<a href=#4686 id=4686 data-nosnippet>4686</a>        <span class="kw">let </span>expr = <span class="self">self</span>.expression(expr, ctx)<span class="question-mark">?</span>;
-<a href=#4687 id=4687 data-nosnippet>4687</a>        <span class="kw">let </span>value = ctx
-<a href=#4688 id=4688 data-nosnippet>4688</a>            .module
-<a href=#4689 id=4689 data-nosnippet>4689</a>            .to_ctx()
-<a href=#4690 id=4690 data-nosnippet>4690</a>            .get_const_val(expr)
-<a href=#4691 id=4691 data-nosnippet>4691</a>            .map_err(|err| <span class="kw">match </span>err {
-<a href=#4692 id=4692 data-nosnippet>4692</a>                proc::ConstValueError::NonConst | proc::ConstValueError::InvalidType =&gt; {
-<a href=#4693 id=4693 data-nosnippet>4693</a>                    Error::ExpectedConstExprConcreteIntegerScalar(span)
-<a href=#4694 id=4694 data-nosnippet>4694</a>                }
-<a href=#4695 id=4695 data-nosnippet>4695</a>                proc::ConstValueError::Negative =&gt; Error::ExpectedNonNegative(span),
-<a href=#4696 id=4696 data-nosnippet>4696</a>            })<span class="question-mark">?</span>;
-<a href=#4697 id=4697 data-nosnippet>4697</a>        <span class="prelude-val">Ok</span>((value, span))
-<a href=#4698 id=4698 data-nosnippet>4698</a>    }
-<a href=#4699 id=4699 data-nosnippet>4699</a>
-<a href=#4700 id=4700 data-nosnippet>4700</a>    <span class="kw">fn </span>array_size(
-<a href=#4701 id=4701 data-nosnippet>4701</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4702 id=4702 data-nosnippet>4702</a>        expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
-<a href=#4703 id=4703 data-nosnippet>4703</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4704 id=4704 data-nosnippet>4704</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, ir::ArraySize&gt; {
-<a href=#4705 id=4705 data-nosnippet>4705</a>        <span class="kw">let </span>span = ctx.ast_expressions.get_span(expr);
-<a href=#4706 id=4706 data-nosnippet>4706</a>        <span class="kw">let </span>const_ctx = <span class="kw-2">&amp;mut </span>ctx.as_const();
-<a href=#4707 id=4707 data-nosnippet>4707</a>        <span class="kw">let </span>const_expr = <span class="self">self</span>.expression(expr, const_ctx);
-<a href=#4708 id=4708 data-nosnippet>4708</a>        <span class="kw">match </span>const_expr {
-<a href=#4709 id=4709 data-nosnippet>4709</a>            <span class="prelude-val">Ok</span>(value) =&gt; {
-<a href=#4710 id=4710 data-nosnippet>4710</a>                <span class="kw">let </span>len = const_ctx.get_const_val(value).map_err(|err| {
-<a href=#4711 id=4711 data-nosnippet>4711</a>                    Box::new(<span class="kw">match </span>err {
-<a href=#4712 id=4712 data-nosnippet>4712</a>                        proc::ConstValueError::NonConst | proc::ConstValueError::InvalidType =&gt; {
-<a href=#4713 id=4713 data-nosnippet>4713</a>                            Error::ExpectedConstExprConcreteIntegerScalar(span)
-<a href=#4714 id=4714 data-nosnippet>4714</a>                        }
-<a href=#4715 id=4715 data-nosnippet>4715</a>                        proc::ConstValueError::Negative =&gt; Error::ExpectedPositiveArrayLength(span),
-<a href=#4716 id=4716 data-nosnippet>4716</a>                    })
-<a href=#4717 id=4717 data-nosnippet>4717</a>                })<span class="question-mark">?</span>;
-<a href=#4718 id=4718 data-nosnippet>4718</a>                <span class="kw">let </span>size = NonZeroU32::new(len).ok_or(Error::ExpectedPositiveArrayLength(span))<span class="question-mark">?</span>;
-<a href=#4719 id=4719 data-nosnippet>4719</a>                <span class="prelude-val">Ok</span>(ir::ArraySize::Constant(size))
-<a href=#4720 id=4720 data-nosnippet>4720</a>            }
-<a href=#4721 id=4721 data-nosnippet>4721</a>            <span class="prelude-val">Err</span>(err) =&gt; {
-<a href=#4722 id=4722 data-nosnippet>4722</a>                <span class="comment">// If the error is simply that `expr` was an override expression, then we
-<a href=#4723 id=4723 data-nosnippet>4723</a>                // can represent that as an array length.
-<a href=#4724 id=4724 data-nosnippet>4724</a>                </span><span class="kw">let </span>Error::ConstantEvaluatorError(<span class="kw-2">ref </span>ty, <span class="kw">_</span>) = <span class="kw-2">*</span>err <span class="kw">else </span>{
-<a href=#4725 id=4725 data-nosnippet>4725</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(err);
-<a href=#4726 id=4726 data-nosnippet>4726</a>                };
-<a href=#4727 id=4727 data-nosnippet>4727</a>
-<a href=#4728 id=4728 data-nosnippet>4728</a>                <span class="kw">let </span>proc::ConstantEvaluatorError::OverrideExpr = <span class="kw-2">**</span>ty <span class="kw">else </span>{
-<a href=#4729 id=4729 data-nosnippet>4729</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(err);
-<a href=#4730 id=4730 data-nosnippet>4730</a>                };
-<a href=#4731 id=4731 data-nosnippet>4731</a>
-<a href=#4732 id=4732 data-nosnippet>4732</a>                <span class="prelude-val">Ok</span>(ir::ArraySize::Pending(<span class="self">self</span>.array_size_override(
-<a href=#4733 id=4733 data-nosnippet>4733</a>                    expr,
-<a href=#4734 id=4734 data-nosnippet>4734</a>                    <span class="kw-2">&amp;mut </span>ctx.as_global().as_override(),
-<a href=#4735 id=4735 data-nosnippet>4735</a>                    span,
-<a href=#4736 id=4736 data-nosnippet>4736</a>                )<span class="question-mark">?</span>))
-<a href=#4737 id=4737 data-nosnippet>4737</a>            }
-<a href=#4738 id=4738 data-nosnippet>4738</a>        }
-<a href=#4739 id=4739 data-nosnippet>4739</a>    }
-<a href=#4740 id=4740 data-nosnippet>4740</a>
-<a href=#4741 id=4741 data-nosnippet>4741</a>    <span class="kw">fn </span>array_size_override(
-<a href=#4742 id=4742 data-nosnippet>4742</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4743 id=4743 data-nosnippet>4743</a>        size_expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
-<a href=#4744 id=4744 data-nosnippet>4744</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4745 id=4745 data-nosnippet>4745</a>        span: Span,
-<a href=#4746 id=4746 data-nosnippet>4746</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Override&gt;&gt; {
-<a href=#4747 id=4747 data-nosnippet>4747</a>        <span class="kw">let </span>expr = <span class="self">self</span>.expression(size_expr, ctx)<span class="question-mark">?</span>;
-<a href=#4748 id=4748 data-nosnippet>4748</a>        <span class="kw">match </span><span class="macro">resolve_inner!</span>(ctx, expr).scalar_kind().ok_or(<span class="number">0</span>) {
-<a href=#4749 id=4749 data-nosnippet>4749</a>            <span class="prelude-val">Ok</span>(ir::ScalarKind::Sint) | <span class="prelude-val">Ok</span>(ir::ScalarKind::Uint) =&gt; <span class="prelude-val">Ok</span>({
-<a href=#4750 id=4750 data-nosnippet>4750</a>                <span class="kw">if let </span>ir::Expression::Override(handle) = ctx.module.global_expressions[expr] {
-<a href=#4751 id=4751 data-nosnippet>4751</a>                    handle
-<a href=#4752 id=4752 data-nosnippet>4752</a>                } <span class="kw">else </span>{
-<a href=#4753 id=4753 data-nosnippet>4753</a>                    <span class="kw">let </span>ty = ctx.register_type(expr)<span class="question-mark">?</span>;
-<a href=#4754 id=4754 data-nosnippet>4754</a>                    ctx.module.overrides.append(
-<a href=#4755 id=4755 data-nosnippet>4755</a>                        ir::Override {
-<a href=#4756 id=4756 data-nosnippet>4756</a>                            name: <span class="prelude-val">None</span>,
-<a href=#4757 id=4757 data-nosnippet>4757</a>                            id: <span class="prelude-val">None</span>,
-<a href=#4758 id=4758 data-nosnippet>4758</a>                            ty,
-<a href=#4759 id=4759 data-nosnippet>4759</a>                            init: <span class="prelude-val">Some</span>(expr),
-<a href=#4760 id=4760 data-nosnippet>4760</a>                        },
-<a href=#4761 id=4761 data-nosnippet>4761</a>                        span,
-<a href=#4762 id=4762 data-nosnippet>4762</a>                    )
-<a href=#4763 id=4763 data-nosnippet>4763</a>                }
-<a href=#4764 id=4764 data-nosnippet>4764</a>            }),
-<a href=#4765 id=4765 data-nosnippet>4765</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Box::new(Error::ExpectedConstExprConcreteIntegerScalar(
-<a href=#4766 id=4766 data-nosnippet>4766</a>                span,
-<a href=#4767 id=4767 data-nosnippet>4767</a>            ))),
-<a href=#4768 id=4768 data-nosnippet>4768</a>        }
-<a href=#4769 id=4769 data-nosnippet>4769</a>    }
-<a href=#4770 id=4770 data-nosnippet>4770</a>
-<a href=#4771 id=4771 data-nosnippet>4771</a>    <span class="doccomment">/// Build the Naga equivalent of a named AST type.
-<a href=#4772 id=4772 data-nosnippet>4772</a>    ///
-<a href=#4773 id=4773 data-nosnippet>4773</a>    /// Return a Naga `Handle&lt;Type&gt;` representing the front-end type
-<a href=#4774 id=4774 data-nosnippet>4774</a>    /// `handle`, which should be named `name`, if given.
-<a href=#4775 id=4775 data-nosnippet>4775</a>    ///
-<a href=#4776 id=4776 data-nosnippet>4776</a>    /// If `handle` refers to a type cached in [`SpecialTypes`],
-<a href=#4777 id=4777 data-nosnippet>4777</a>    /// `name` may be ignored.
-<a href=#4778 id=4778 data-nosnippet>4778</a>    ///
-<a href=#4779 id=4779 data-nosnippet>4779</a>    /// [`SpecialTypes`]: ir::SpecialTypes
-<a href=#4780 id=4780 data-nosnippet>4780</a>    </span><span class="kw">fn </span>resolve_named_ast_type(
-<a href=#4781 id=4781 data-nosnippet>4781</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4782 id=4782 data-nosnippet>4782</a>        ident: <span class="kw-2">&amp;</span>ast::TemplateElaboratedIdent&lt;<span class="lifetime">'source</span>&gt;,
-<a href=#4783 id=4783 data-nosnippet>4783</a>        name: String,
-<a href=#4784 id=4784 data-nosnippet>4784</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4785 id=4785 data-nosnippet>4785</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Type&gt;&gt; {
-<a href=#4786 id=4786 data-nosnippet>4786</a>        <span class="self">self</span>.type_specifier(ident, ctx, <span class="prelude-val">Some</span>(name))
-<a href=#4787 id=4787 data-nosnippet>4787</a>    }
-<a href=#4788 id=4788 data-nosnippet>4788</a>
-<a href=#4789 id=4789 data-nosnippet>4789</a>    <span class="doccomment">/// Return a Naga `Handle&lt;Type&gt;` representing the front-end type `handle`.
-<a href=#4790 id=4790 data-nosnippet>4790</a>    </span><span class="kw">fn </span>resolve_ast_type(
-<a href=#4791 id=4791 data-nosnippet>4791</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4792 id=4792 data-nosnippet>4792</a>        ident: <span class="kw-2">&amp;</span>ast::TemplateElaboratedIdent&lt;<span class="lifetime">'source</span>&gt;,
-<a href=#4793 id=4793 data-nosnippet>4793</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4794 id=4794 data-nosnippet>4794</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Type&gt;&gt; {
-<a href=#4795 id=4795 data-nosnippet>4795</a>        <span class="self">self</span>.type_specifier(ident, ctx, <span class="prelude-val">None</span>)
-<a href=#4796 id=4796 data-nosnippet>4796</a>    }
-<a href=#4797 id=4797 data-nosnippet>4797</a>
-<a href=#4798 id=4798 data-nosnippet>4798</a>    <span class="kw">fn </span>binding(
-<a href=#4799 id=4799 data-nosnippet>4799</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4800 id=4800 data-nosnippet>4800</a>        binding: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;ast::Binding&lt;<span class="lifetime">'source</span>&gt;&gt;,
-<a href=#4801 id=4801 data-nosnippet>4801</a>        ty: Handle&lt;ir::Type&gt;,
-<a href=#4802 id=4802 data-nosnippet>4802</a>        ctx: <span class="kw-2">&amp;mut </span>GlobalContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4803 id=4803 data-nosnippet>4803</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, <span class="prelude-ty">Option</span>&lt;ir::Binding&gt;&gt; {
-<a href=#4804 id=4804 data-nosnippet>4804</a>        <span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="kw-2">*</span>binding {
-<a href=#4805 id=4805 data-nosnippet>4805</a>            <span class="prelude-val">Some</span>(ast::Binding::BuiltIn(b)) =&gt; <span class="prelude-val">Some</span>(ir::Binding::BuiltIn(b)),
-<a href=#4806 id=4806 data-nosnippet>4806</a>            <span class="prelude-val">Some</span>(ast::Binding::Location {
-<a href=#4807 id=4807 data-nosnippet>4807</a>                location,
-<a href=#4808 id=4808 data-nosnippet>4808</a>                interpolation,
-<a href=#4809 id=4809 data-nosnippet>4809</a>                sampling,
-<a href=#4810 id=4810 data-nosnippet>4810</a>                blend_src,
-<a href=#4811 id=4811 data-nosnippet>4811</a>                per_primitive,
-<a href=#4812 id=4812 data-nosnippet>4812</a>            }) =&gt; {
-<a href=#4813 id=4813 data-nosnippet>4813</a>                <span class="kw">let </span>blend_src = <span class="kw">if let </span><span class="prelude-val">Some</span>(blend_src) = blend_src {
-<a href=#4814 id=4814 data-nosnippet>4814</a>                    <span class="prelude-val">Some</span>(<span class="self">self</span>.const_u32(blend_src, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>.<span class="number">0</span>)
-<a href=#4815 id=4815 data-nosnippet>4815</a>                } <span class="kw">else </span>{
-<a href=#4816 id=4816 data-nosnippet>4816</a>                    <span class="prelude-val">None
-<a href=#4817 id=4817 data-nosnippet>4817</a>                </span>};
-<a href=#4818 id=4818 data-nosnippet>4818</a>
-<a href=#4819 id=4819 data-nosnippet>4819</a>                <span class="kw">let </span><span class="kw-2">mut </span>binding = ir::Binding::Location {
-<a href=#4820 id=4820 data-nosnippet>4820</a>                    location: <span class="self">self</span>.const_u32(location, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>.<span class="number">0</span>,
-<a href=#4821 id=4821 data-nosnippet>4821</a>                    interpolation,
-<a href=#4822 id=4822 data-nosnippet>4822</a>                    sampling,
-<a href=#4823 id=4823 data-nosnippet>4823</a>                    blend_src,
-<a href=#4824 id=4824 data-nosnippet>4824</a>                    per_primitive,
-<a href=#4825 id=4825 data-nosnippet>4825</a>                };
-<a href=#4826 id=4826 data-nosnippet>4826</a>                binding.apply_default_interpolation(<span class="kw-2">&amp;</span>ctx.module.types[ty].inner);
-<a href=#4827 id=4827 data-nosnippet>4827</a>                <span class="prelude-val">Some</span>(binding)
-<a href=#4828 id=4828 data-nosnippet>4828</a>            }
-<a href=#4829 id=4829 data-nosnippet>4829</a>            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
-<a href=#4830 id=4830 data-nosnippet>4830</a>        })
-<a href=#4831 id=4831 data-nosnippet>4831</a>    }
-<a href=#4832 id=4832 data-nosnippet>4832</a>
-<a href=#4833 id=4833 data-nosnippet>4833</a>    <span class="kw">fn </span>ray_query_pointer(
-<a href=#4834 id=4834 data-nosnippet>4834</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-<a href=#4835 id=4835 data-nosnippet>4835</a>        expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
-<a href=#4836 id=4836 data-nosnippet>4836</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
-<a href=#4837 id=4837 data-nosnippet>4837</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Expression&gt;&gt; {
-<a href=#4838 id=4838 data-nosnippet>4838</a>        <span class="kw">let </span>span = ctx.ast_expressions.get_span(expr);
-<a href=#4839 id=4839 data-nosnippet>4839</a>        <span class="kw">let </span>pointer = <span class="self">self</span>.expression(expr, ctx)<span class="question-mark">?</span>;
-<a href=#4840 id=4840 data-nosnippet>4840</a>
-<a href=#4841 id=4841 data-nosnippet>4841</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="macro">resolve_inner!</span>(ctx, pointer) {
-<a href=#4842 id=4842 data-nosnippet>4842</a>            ir::TypeInner::Pointer { base, .. } =&gt; <span class="kw">match </span>ctx.module.types[base].inner {
-<a href=#4843 id=4843 data-nosnippet>4843</a>                ir::TypeInner::RayQuery { .. } =&gt; <span class="prelude-val">Ok</span>(pointer),
-<a href=#4844 id=4844 data-nosnippet>4844</a>                <span class="kw-2">ref </span>other =&gt; {
-<a href=#4845 id=4845 data-nosnippet>4845</a>                    <span class="macro">log::error!</span>(<span class="string">"Pointer type to {other:?} passed to ray query op"</span>);
-<a href=#4846 id=4846 data-nosnippet>4846</a>                    <span class="prelude-val">Err</span>(Box::new(Error::InvalidRayQueryPointer(span)))
-<a href=#4847 id=4847 data-nosnippet>4847</a>                }
-<a href=#4848 id=4848 data-nosnippet>4848</a>            },
-<a href=#4849 id=4849 data-nosnippet>4849</a>            <span class="kw-2">ref </span>other =&gt; {
-<a href=#4850 id=4850 data-nosnippet>4850</a>                <span class="macro">log::error!</span>(<span class="string">"Type {other:?} passed to ray query op"</span>);
-<a href=#4851 id=4851 data-nosnippet>4851</a>                <span class="prelude-val">Err</span>(Box::new(Error::InvalidRayQueryPointer(span)))
-<a href=#4852 id=4852 data-nosnippet>4852</a>            }
-<a href=#4853 id=4853 data-nosnippet>4853</a>        }
-<a href=#4854 id=4854 data-nosnippet>4854</a>    }
-<a href=#4855 id=4855 data-nosnippet>4855</a>}
-<a href=#4856 id=4856 data-nosnippet>4856</a>
-<a href=#4857 id=4857 data-nosnippet>4857</a><span class="kw">impl </span>ir::AtomicFunction {
-<a href=#4858 id=4858 data-nosnippet>4858</a>    <span class="kw">pub fn </span>map(word: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-<a href=#4859 id=4859 data-nosnippet>4859</a>        <span class="prelude-val">Some</span>(<span class="kw">match </span>word {
-<a href=#4860 id=4860 data-nosnippet>4860</a>            <span class="string">"atomicAdd" </span>=&gt; ir::AtomicFunction::Add,
-<a href=#4861 id=4861 data-nosnippet>4861</a>            <span class="string">"atomicSub" </span>=&gt; ir::AtomicFunction::Subtract,
-<a href=#4862 id=4862 data-nosnippet>4862</a>            <span class="string">"atomicAnd" </span>=&gt; ir::AtomicFunction::And,
-<a href=#4863 id=4863 data-nosnippet>4863</a>            <span class="string">"atomicOr" </span>=&gt; ir::AtomicFunction::InclusiveOr,
-<a href=#4864 id=4864 data-nosnippet>4864</a>            <span class="string">"atomicXor" </span>=&gt; ir::AtomicFunction::ExclusiveOr,
-<a href=#4865 id=4865 data-nosnippet>4865</a>            <span class="string">"atomicMin" </span>=&gt; ir::AtomicFunction::Min,
-<a href=#4866 id=4866 data-nosnippet>4866</a>            <span class="string">"atomicMax" </span>=&gt; ir::AtomicFunction::Max,
-<a href=#4867 id=4867 data-nosnippet>4867</a>            <span class="string">"atomicExchange" </span>=&gt; ir::AtomicFunction::Exchange { compare: <span class="prelude-val">None </span>},
-<a href=#4868 id=4868 data-nosnippet>4868</a>            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
-<a href=#4869 id=4869 data-nosnippet>4869</a>        })
-<a href=#4870 id=4870 data-nosnippet>4870</a>    }
-<a href=#4871 id=4871 data-nosnippet>4871</a>}
+<a href=#4606 id=4606 data-nosnippet>4606</a>                <span class="kw">if let </span>ir::TypeInner::Array {
+<a href=#4607 id=4607 data-nosnippet>4607</a>                    size: ir::ArraySize::Dynamic | ir::ArraySize::Pending(<span class="kw">_</span>),
+<a href=#4608 id=4608 data-nosnippet>4608</a>                    ..
+<a href=#4609 id=4609 data-nosnippet>4609</a>                } = ctx.module.types[ty].inner
+<a href=#4610 id=4610 data-nosnippet>4610</a>                {
+<a href=#4611 id=4611 data-nosnippet>4611</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::SizeAttributeRequiresFixedFootprint(span)));
+<a href=#4612 id=4612 data-nosnippet>4612</a>                }
+<a href=#4613 id=4613 data-nosnippet>4613</a>                <span class="kw">if </span>size &lt; member_min_size {
+<a href=#4614 id=4614 data-nosnippet>4614</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::SizeAttributeTooLow(span, member_min_size)));
+<a href=#4615 id=4615 data-nosnippet>4615</a>                } <span class="kw">else </span>{
+<a href=#4616 id=4616 data-nosnippet>4616</a>                    size
+<a href=#4617 id=4617 data-nosnippet>4617</a>                }
+<a href=#4618 id=4618 data-nosnippet>4618</a>            } <span class="kw">else </span>{
+<a href=#4619 id=4619 data-nosnippet>4619</a>                member_min_size
+<a href=#4620 id=4620 data-nosnippet>4620</a>            };
+<a href=#4621 id=4621 data-nosnippet>4621</a>
+<a href=#4622 id=4622 data-nosnippet>4622</a>            <span class="kw">let </span>member_alignment = <span class="kw">if let </span><span class="prelude-val">Some</span>(align_expr) = member.align {
+<a href=#4623 id=4623 data-nosnippet>4623</a>                <span class="kw">let </span>(align, span) = <span class="self">self</span>.const_u32(align_expr, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>;
+<a href=#4624 id=4624 data-nosnippet>4624</a>                <span class="kw">if let </span><span class="prelude-val">Some</span>(alignment) = proc::Alignment::new(align) {
+<a href=#4625 id=4625 data-nosnippet>4625</a>                    <span class="kw">if </span>alignment &lt; member_min_alignment {
+<a href=#4626 id=4626 data-nosnippet>4626</a>                        <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::AlignAttributeTooLow(
+<a href=#4627 id=4627 data-nosnippet>4627</a>                            span,
+<a href=#4628 id=4628 data-nosnippet>4628</a>                            member_min_alignment,
+<a href=#4629 id=4629 data-nosnippet>4629</a>                        )));
+<a href=#4630 id=4630 data-nosnippet>4630</a>                    } <span class="kw">else </span>{
+<a href=#4631 id=4631 data-nosnippet>4631</a>                        alignment
+<a href=#4632 id=4632 data-nosnippet>4632</a>                    }
+<a href=#4633 id=4633 data-nosnippet>4633</a>                } <span class="kw">else </span>{
+<a href=#4634 id=4634 data-nosnippet>4634</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::NonPowerOfTwoAlignAttribute(span)));
+<a href=#4635 id=4635 data-nosnippet>4635</a>                }
+<a href=#4636 id=4636 data-nosnippet>4636</a>            } <span class="kw">else </span>{
+<a href=#4637 id=4637 data-nosnippet>4637</a>                member_min_alignment
+<a href=#4638 id=4638 data-nosnippet>4638</a>            };
+<a href=#4639 id=4639 data-nosnippet>4639</a>
+<a href=#4640 id=4640 data-nosnippet>4640</a>            <span class="kw">let </span>binding = <span class="self">self</span>.binding(<span class="kw-2">&amp;</span>member.binding, ty, ctx)<span class="question-mark">?</span>;
+<a href=#4641 id=4641 data-nosnippet>4641</a>
+<a href=#4642 id=4642 data-nosnippet>4642</a>            offset = member_alignment.round_up(offset);
+<a href=#4643 id=4643 data-nosnippet>4643</a>            struct_alignment = struct_alignment.max(member_alignment);
+<a href=#4644 id=4644 data-nosnippet>4644</a>
+<a href=#4645 id=4645 data-nosnippet>4645</a>            <span class="kw">if </span>!member.doc_comments.is_empty() {
+<a href=#4646 id=4646 data-nosnippet>4646</a>                doc_comments.push(<span class="prelude-val">Some</span>(
+<a href=#4647 id=4647 data-nosnippet>4647</a>                    member.doc_comments.iter().map(|s| s.to_string()).collect(),
+<a href=#4648 id=4648 data-nosnippet>4648</a>                ));
+<a href=#4649 id=4649 data-nosnippet>4649</a>            }
+<a href=#4650 id=4650 data-nosnippet>4650</a>            members.push(ir::StructMember {
+<a href=#4651 id=4651 data-nosnippet>4651</a>                name: <span class="prelude-val">Some</span>(member.name.name.to_owned()),
+<a href=#4652 id=4652 data-nosnippet>4652</a>                ty,
+<a href=#4653 id=4653 data-nosnippet>4653</a>                binding,
+<a href=#4654 id=4654 data-nosnippet>4654</a>                offset,
+<a href=#4655 id=4655 data-nosnippet>4655</a>            });
+<a href=#4656 id=4656 data-nosnippet>4656</a>
+<a href=#4657 id=4657 data-nosnippet>4657</a>            offset += member_size;
+<a href=#4658 id=4658 data-nosnippet>4658</a>            <span class="kw">if </span>offset &gt; <span class="kw">crate</span>::valid::MAX_TYPE_SIZE {
+<a href=#4659 id=4659 data-nosnippet>4659</a>                <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::TypeTooLarge { span }));
+<a href=#4660 id=4660 data-nosnippet>4660</a>            }
+<a href=#4661 id=4661 data-nosnippet>4661</a>        }
+<a href=#4662 id=4662 data-nosnippet>4662</a>
+<a href=#4663 id=4663 data-nosnippet>4663</a>        <span class="kw">let </span>size = struct_alignment.round_up(offset);
+<a href=#4664 id=4664 data-nosnippet>4664</a>        <span class="kw">let </span>inner = ir::TypeInner::Struct {
+<a href=#4665 id=4665 data-nosnippet>4665</a>            members,
+<a href=#4666 id=4666 data-nosnippet>4666</a>            span: size,
+<a href=#4667 id=4667 data-nosnippet>4667</a>        };
+<a href=#4668 id=4668 data-nosnippet>4668</a>
+<a href=#4669 id=4669 data-nosnippet>4669</a>        <span class="kw">let </span>handle = ctx.module.types.insert(
+<a href=#4670 id=4670 data-nosnippet>4670</a>            ir::Type {
+<a href=#4671 id=4671 data-nosnippet>4671</a>                name: <span class="prelude-val">Some</span>(s.name.name.to_string()),
+<a href=#4672 id=4672 data-nosnippet>4672</a>                inner,
+<a href=#4673 id=4673 data-nosnippet>4673</a>            },
+<a href=#4674 id=4674 data-nosnippet>4674</a>            span,
+<a href=#4675 id=4675 data-nosnippet>4675</a>        );
+<a href=#4676 id=4676 data-nosnippet>4676</a>        <span class="kw">for </span>(i, c) <span class="kw">in </span>doc_comments.drain(..).enumerate() {
+<a href=#4677 id=4677 data-nosnippet>4677</a>            <span class="kw">if let </span><span class="prelude-val">Some</span>(comment) = c {
+<a href=#4678 id=4678 data-nosnippet>4678</a>                ctx.module
+<a href=#4679 id=4679 data-nosnippet>4679</a>                    .get_or_insert_default_doc_comments()
+<a href=#4680 id=4680 data-nosnippet>4680</a>                    .struct_members
+<a href=#4681 id=4681 data-nosnippet>4681</a>                    .insert((handle, i), comment);
+<a href=#4682 id=4682 data-nosnippet>4682</a>            }
+<a href=#4683 id=4683 data-nosnippet>4683</a>        }
+<a href=#4684 id=4684 data-nosnippet>4684</a>        <span class="prelude-val">Ok</span>(handle)
+<a href=#4685 id=4685 data-nosnippet>4685</a>    }
+<a href=#4686 id=4686 data-nosnippet>4686</a>
+<a href=#4687 id=4687 data-nosnippet>4687</a>    <span class="kw">fn </span>const_u32(
+<a href=#4688 id=4688 data-nosnippet>4688</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4689 id=4689 data-nosnippet>4689</a>        expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
+<a href=#4690 id=4690 data-nosnippet>4690</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4691 id=4691 data-nosnippet>4691</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, (u32, Span)&gt; {
+<a href=#4692 id=4692 data-nosnippet>4692</a>        <span class="kw">let </span>span = ctx.ast_expressions.get_span(expr);
+<a href=#4693 id=4693 data-nosnippet>4693</a>        <span class="kw">let </span>expr = <span class="self">self</span>.expression(expr, ctx)<span class="question-mark">?</span>;
+<a href=#4694 id=4694 data-nosnippet>4694</a>        <span class="kw">let </span>value = ctx
+<a href=#4695 id=4695 data-nosnippet>4695</a>            .module
+<a href=#4696 id=4696 data-nosnippet>4696</a>            .to_ctx()
+<a href=#4697 id=4697 data-nosnippet>4697</a>            .get_const_val(expr)
+<a href=#4698 id=4698 data-nosnippet>4698</a>            .map_err(|err| <span class="kw">match </span>err {
+<a href=#4699 id=4699 data-nosnippet>4699</a>                proc::ConstValueError::NonConst | proc::ConstValueError::InvalidType =&gt; {
+<a href=#4700 id=4700 data-nosnippet>4700</a>                    Error::ExpectedConstExprConcreteIntegerScalar(span)
+<a href=#4701 id=4701 data-nosnippet>4701</a>                }
+<a href=#4702 id=4702 data-nosnippet>4702</a>                proc::ConstValueError::Negative =&gt; Error::ExpectedNonNegative(span),
+<a href=#4703 id=4703 data-nosnippet>4703</a>            })<span class="question-mark">?</span>;
+<a href=#4704 id=4704 data-nosnippet>4704</a>        <span class="prelude-val">Ok</span>((value, span))
+<a href=#4705 id=4705 data-nosnippet>4705</a>    }
+<a href=#4706 id=4706 data-nosnippet>4706</a>
+<a href=#4707 id=4707 data-nosnippet>4707</a>    <span class="kw">fn </span>array_size(
+<a href=#4708 id=4708 data-nosnippet>4708</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4709 id=4709 data-nosnippet>4709</a>        expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
+<a href=#4710 id=4710 data-nosnippet>4710</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4711 id=4711 data-nosnippet>4711</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, ir::ArraySize&gt; {
+<a href=#4712 id=4712 data-nosnippet>4712</a>        <span class="kw">let </span>span = ctx.ast_expressions.get_span(expr);
+<a href=#4713 id=4713 data-nosnippet>4713</a>        <span class="kw">let </span>const_ctx = <span class="kw-2">&amp;mut </span>ctx.as_const();
+<a href=#4714 id=4714 data-nosnippet>4714</a>        <span class="kw">let </span>const_expr = <span class="self">self</span>.expression(expr, const_ctx);
+<a href=#4715 id=4715 data-nosnippet>4715</a>        <span class="kw">match </span>const_expr {
+<a href=#4716 id=4716 data-nosnippet>4716</a>            <span class="prelude-val">Ok</span>(value) =&gt; {
+<a href=#4717 id=4717 data-nosnippet>4717</a>                <span class="kw">let </span>len = const_ctx.get_const_val(value).map_err(|err| {
+<a href=#4718 id=4718 data-nosnippet>4718</a>                    Box::new(<span class="kw">match </span>err {
+<a href=#4719 id=4719 data-nosnippet>4719</a>                        proc::ConstValueError::NonConst | proc::ConstValueError::InvalidType =&gt; {
+<a href=#4720 id=4720 data-nosnippet>4720</a>                            Error::ExpectedConstExprConcreteIntegerScalar(span)
+<a href=#4721 id=4721 data-nosnippet>4721</a>                        }
+<a href=#4722 id=4722 data-nosnippet>4722</a>                        proc::ConstValueError::Negative =&gt; Error::ExpectedPositiveArrayLength(span),
+<a href=#4723 id=4723 data-nosnippet>4723</a>                    })
+<a href=#4724 id=4724 data-nosnippet>4724</a>                })<span class="question-mark">?</span>;
+<a href=#4725 id=4725 data-nosnippet>4725</a>                <span class="kw">let </span>size = NonZeroU32::new(len).ok_or(Error::ExpectedPositiveArrayLength(span))<span class="question-mark">?</span>;
+<a href=#4726 id=4726 data-nosnippet>4726</a>                <span class="prelude-val">Ok</span>(ir::ArraySize::Constant(size))
+<a href=#4727 id=4727 data-nosnippet>4727</a>            }
+<a href=#4728 id=4728 data-nosnippet>4728</a>            <span class="prelude-val">Err</span>(err) =&gt; {
+<a href=#4729 id=4729 data-nosnippet>4729</a>                <span class="comment">// If the error is simply that `expr` was an override expression, then we
+<a href=#4730 id=4730 data-nosnippet>4730</a>                // can represent that as an array length.
+<a href=#4731 id=4731 data-nosnippet>4731</a>                </span><span class="kw">let </span>Error::ConstantEvaluatorError(<span class="kw-2">ref </span>ty, <span class="kw">_</span>) = <span class="kw-2">*</span>err <span class="kw">else </span>{
+<a href=#4732 id=4732 data-nosnippet>4732</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(err);
+<a href=#4733 id=4733 data-nosnippet>4733</a>                };
+<a href=#4734 id=4734 data-nosnippet>4734</a>
+<a href=#4735 id=4735 data-nosnippet>4735</a>                <span class="kw">let </span>proc::ConstantEvaluatorError::OverrideExpr = <span class="kw-2">**</span>ty <span class="kw">else </span>{
+<a href=#4736 id=4736 data-nosnippet>4736</a>                    <span class="kw">return </span><span class="prelude-val">Err</span>(err);
+<a href=#4737 id=4737 data-nosnippet>4737</a>                };
+<a href=#4738 id=4738 data-nosnippet>4738</a>
+<a href=#4739 id=4739 data-nosnippet>4739</a>                <span class="prelude-val">Ok</span>(ir::ArraySize::Pending(<span class="self">self</span>.array_size_override(
+<a href=#4740 id=4740 data-nosnippet>4740</a>                    expr,
+<a href=#4741 id=4741 data-nosnippet>4741</a>                    <span class="kw-2">&amp;mut </span>ctx.as_global().as_override(),
+<a href=#4742 id=4742 data-nosnippet>4742</a>                    span,
+<a href=#4743 id=4743 data-nosnippet>4743</a>                )<span class="question-mark">?</span>))
+<a href=#4744 id=4744 data-nosnippet>4744</a>            }
+<a href=#4745 id=4745 data-nosnippet>4745</a>        }
+<a href=#4746 id=4746 data-nosnippet>4746</a>    }
+<a href=#4747 id=4747 data-nosnippet>4747</a>
+<a href=#4748 id=4748 data-nosnippet>4748</a>    <span class="kw">fn </span>array_size_override(
+<a href=#4749 id=4749 data-nosnippet>4749</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4750 id=4750 data-nosnippet>4750</a>        size_expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
+<a href=#4751 id=4751 data-nosnippet>4751</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4752 id=4752 data-nosnippet>4752</a>        span: Span,
+<a href=#4753 id=4753 data-nosnippet>4753</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Override&gt;&gt; {
+<a href=#4754 id=4754 data-nosnippet>4754</a>        <span class="kw">let </span>expr = <span class="self">self</span>.expression(size_expr, ctx)<span class="question-mark">?</span>;
+<a href=#4755 id=4755 data-nosnippet>4755</a>        <span class="kw">match </span><span class="macro">resolve_inner!</span>(ctx, expr).scalar_kind().ok_or(<span class="number">0</span>) {
+<a href=#4756 id=4756 data-nosnippet>4756</a>            <span class="prelude-val">Ok</span>(ir::ScalarKind::Sint) | <span class="prelude-val">Ok</span>(ir::ScalarKind::Uint) =&gt; <span class="prelude-val">Ok</span>({
+<a href=#4757 id=4757 data-nosnippet>4757</a>                <span class="kw">if let </span>ir::Expression::Override(handle) = ctx.module.global_expressions[expr] {
+<a href=#4758 id=4758 data-nosnippet>4758</a>                    handle
+<a href=#4759 id=4759 data-nosnippet>4759</a>                } <span class="kw">else </span>{
+<a href=#4760 id=4760 data-nosnippet>4760</a>                    <span class="kw">let </span>ty = ctx.register_type(expr)<span class="question-mark">?</span>;
+<a href=#4761 id=4761 data-nosnippet>4761</a>                    ctx.module.overrides.append(
+<a href=#4762 id=4762 data-nosnippet>4762</a>                        ir::Override {
+<a href=#4763 id=4763 data-nosnippet>4763</a>                            name: <span class="prelude-val">None</span>,
+<a href=#4764 id=4764 data-nosnippet>4764</a>                            id: <span class="prelude-val">None</span>,
+<a href=#4765 id=4765 data-nosnippet>4765</a>                            ty,
+<a href=#4766 id=4766 data-nosnippet>4766</a>                            init: <span class="prelude-val">Some</span>(expr),
+<a href=#4767 id=4767 data-nosnippet>4767</a>                        },
+<a href=#4768 id=4768 data-nosnippet>4768</a>                        span,
+<a href=#4769 id=4769 data-nosnippet>4769</a>                    )
+<a href=#4770 id=4770 data-nosnippet>4770</a>                }
+<a href=#4771 id=4771 data-nosnippet>4771</a>            }),
+<a href=#4772 id=4772 data-nosnippet>4772</a>            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(Box::new(Error::ExpectedConstExprConcreteIntegerScalar(
+<a href=#4773 id=4773 data-nosnippet>4773</a>                span,
+<a href=#4774 id=4774 data-nosnippet>4774</a>            ))),
+<a href=#4775 id=4775 data-nosnippet>4775</a>        }
+<a href=#4776 id=4776 data-nosnippet>4776</a>    }
+<a href=#4777 id=4777 data-nosnippet>4777</a>
+<a href=#4778 id=4778 data-nosnippet>4778</a>    <span class="doccomment">/// Build the Naga equivalent of a named AST type.
+<a href=#4779 id=4779 data-nosnippet>4779</a>    ///
+<a href=#4780 id=4780 data-nosnippet>4780</a>    /// Return a Naga `Handle&lt;Type&gt;` representing the front-end type
+<a href=#4781 id=4781 data-nosnippet>4781</a>    /// `handle`, which should be named `name`, if given.
+<a href=#4782 id=4782 data-nosnippet>4782</a>    ///
+<a href=#4783 id=4783 data-nosnippet>4783</a>    /// If `handle` refers to a type cached in [`SpecialTypes`],
+<a href=#4784 id=4784 data-nosnippet>4784</a>    /// `name` may be ignored.
+<a href=#4785 id=4785 data-nosnippet>4785</a>    ///
+<a href=#4786 id=4786 data-nosnippet>4786</a>    /// [`SpecialTypes`]: ir::SpecialTypes
+<a href=#4787 id=4787 data-nosnippet>4787</a>    </span><span class="kw">fn </span>resolve_named_ast_type(
+<a href=#4788 id=4788 data-nosnippet>4788</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4789 id=4789 data-nosnippet>4789</a>        ident: <span class="kw-2">&amp;</span>ast::TemplateElaboratedIdent&lt;<span class="lifetime">'source</span>&gt;,
+<a href=#4790 id=4790 data-nosnippet>4790</a>        name: String,
+<a href=#4791 id=4791 data-nosnippet>4791</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4792 id=4792 data-nosnippet>4792</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Type&gt;&gt; {
+<a href=#4793 id=4793 data-nosnippet>4793</a>        <span class="self">self</span>.type_specifier(ident, ctx, <span class="prelude-val">Some</span>(name))
+<a href=#4794 id=4794 data-nosnippet>4794</a>    }
+<a href=#4795 id=4795 data-nosnippet>4795</a>
+<a href=#4796 id=4796 data-nosnippet>4796</a>    <span class="doccomment">/// Return a Naga `Handle&lt;Type&gt;` representing the front-end type `handle`.
+<a href=#4797 id=4797 data-nosnippet>4797</a>    </span><span class="kw">fn </span>resolve_ast_type(
+<a href=#4798 id=4798 data-nosnippet>4798</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4799 id=4799 data-nosnippet>4799</a>        ident: <span class="kw-2">&amp;</span>ast::TemplateElaboratedIdent&lt;<span class="lifetime">'source</span>&gt;,
+<a href=#4800 id=4800 data-nosnippet>4800</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4801 id=4801 data-nosnippet>4801</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Type&gt;&gt; {
+<a href=#4802 id=4802 data-nosnippet>4802</a>        <span class="self">self</span>.type_specifier(ident, ctx, <span class="prelude-val">None</span>)
+<a href=#4803 id=4803 data-nosnippet>4803</a>    }
+<a href=#4804 id=4804 data-nosnippet>4804</a>
+<a href=#4805 id=4805 data-nosnippet>4805</a>    <span class="kw">fn </span>binding(
+<a href=#4806 id=4806 data-nosnippet>4806</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4807 id=4807 data-nosnippet>4807</a>        binding: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;ast::Binding&lt;<span class="lifetime">'source</span>&gt;&gt;,
+<a href=#4808 id=4808 data-nosnippet>4808</a>        ty: Handle&lt;ir::Type&gt;,
+<a href=#4809 id=4809 data-nosnippet>4809</a>        ctx: <span class="kw-2">&amp;mut </span>GlobalContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4810 id=4810 data-nosnippet>4810</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, <span class="prelude-ty">Option</span>&lt;ir::Binding&gt;&gt; {
+<a href=#4811 id=4811 data-nosnippet>4811</a>        <span class="prelude-val">Ok</span>(<span class="kw">match </span><span class="kw-2">*</span>binding {
+<a href=#4812 id=4812 data-nosnippet>4812</a>            <span class="prelude-val">Some</span>(ast::Binding::BuiltIn(b)) =&gt; <span class="prelude-val">Some</span>(ir::Binding::BuiltIn(b)),
+<a href=#4813 id=4813 data-nosnippet>4813</a>            <span class="prelude-val">Some</span>(ast::Binding::Location {
+<a href=#4814 id=4814 data-nosnippet>4814</a>                location,
+<a href=#4815 id=4815 data-nosnippet>4815</a>                interpolation,
+<a href=#4816 id=4816 data-nosnippet>4816</a>                sampling,
+<a href=#4817 id=4817 data-nosnippet>4817</a>                blend_src,
+<a href=#4818 id=4818 data-nosnippet>4818</a>                per_primitive,
+<a href=#4819 id=4819 data-nosnippet>4819</a>            }) =&gt; {
+<a href=#4820 id=4820 data-nosnippet>4820</a>                <span class="kw">let </span>blend_src = <span class="kw">if let </span><span class="prelude-val">Some</span>(blend_src) = blend_src {
+<a href=#4821 id=4821 data-nosnippet>4821</a>                    <span class="prelude-val">Some</span>(<span class="self">self</span>.const_u32(blend_src, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>.<span class="number">0</span>)
+<a href=#4822 id=4822 data-nosnippet>4822</a>                } <span class="kw">else </span>{
+<a href=#4823 id=4823 data-nosnippet>4823</a>                    <span class="prelude-val">None
+<a href=#4824 id=4824 data-nosnippet>4824</a>                </span>};
+<a href=#4825 id=4825 data-nosnippet>4825</a>
+<a href=#4826 id=4826 data-nosnippet>4826</a>                <span class="kw">let </span><span class="kw-2">mut </span>binding = ir::Binding::Location {
+<a href=#4827 id=4827 data-nosnippet>4827</a>                    location: <span class="self">self</span>.const_u32(location, <span class="kw-2">&amp;mut </span>ctx.as_const())<span class="question-mark">?</span>.<span class="number">0</span>,
+<a href=#4828 id=4828 data-nosnippet>4828</a>                    interpolation,
+<a href=#4829 id=4829 data-nosnippet>4829</a>                    sampling,
+<a href=#4830 id=4830 data-nosnippet>4830</a>                    blend_src,
+<a href=#4831 id=4831 data-nosnippet>4831</a>                    per_primitive,
+<a href=#4832 id=4832 data-nosnippet>4832</a>                };
+<a href=#4833 id=4833 data-nosnippet>4833</a>                binding.apply_default_interpolation(<span class="kw-2">&amp;</span>ctx.module.types[ty].inner);
+<a href=#4834 id=4834 data-nosnippet>4834</a>                <span class="prelude-val">Some</span>(binding)
+<a href=#4835 id=4835 data-nosnippet>4835</a>            }
+<a href=#4836 id=4836 data-nosnippet>4836</a>            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+<a href=#4837 id=4837 data-nosnippet>4837</a>        })
+<a href=#4838 id=4838 data-nosnippet>4838</a>    }
+<a href=#4839 id=4839 data-nosnippet>4839</a>
+<a href=#4840 id=4840 data-nosnippet>4840</a>    <span class="kw">fn </span>ray_query_pointer(
+<a href=#4841 id=4841 data-nosnippet>4841</a>        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+<a href=#4842 id=4842 data-nosnippet>4842</a>        expr: Handle&lt;ast::Expression&lt;<span class="lifetime">'source</span>&gt;&gt;,
+<a href=#4843 id=4843 data-nosnippet>4843</a>        ctx: <span class="kw-2">&amp;mut </span>ExpressionContext&lt;<span class="lifetime">'source</span>, <span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+<a href=#4844 id=4844 data-nosnippet>4844</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="lifetime">'source</span>, Handle&lt;ir::Expression&gt;&gt; {
+<a href=#4845 id=4845 data-nosnippet>4845</a>        <span class="kw">let </span>span = ctx.ast_expressions.get_span(expr);
+<a href=#4846 id=4846 data-nosnippet>4846</a>        <span class="kw">let </span>pointer = <span class="self">self</span>.expression(expr, ctx)<span class="question-mark">?</span>;
+<a href=#4847 id=4847 data-nosnippet>4847</a>
+<a href=#4848 id=4848 data-nosnippet>4848</a>        <span class="kw">match </span><span class="kw-2">*</span><span class="macro">resolve_inner!</span>(ctx, pointer) {
+<a href=#4849 id=4849 data-nosnippet>4849</a>            ir::TypeInner::Pointer { base, .. } =&gt; <span class="kw">match </span>ctx.module.types[base].inner {
+<a href=#4850 id=4850 data-nosnippet>4850</a>                ir::TypeInner::RayQuery { .. } =&gt; <span class="prelude-val">Ok</span>(pointer),
+<a href=#4851 id=4851 data-nosnippet>4851</a>                <span class="kw-2">ref </span>other =&gt; {
+<a href=#4852 id=4852 data-nosnippet>4852</a>                    <span class="macro">log::error!</span>(<span class="string">"Pointer type to {other:?} passed to ray query op"</span>);
+<a href=#4853 id=4853 data-nosnippet>4853</a>                    <span class="prelude-val">Err</span>(Box::new(Error::InvalidRayQueryPointer(span)))
+<a href=#4854 id=4854 data-nosnippet>4854</a>                }
+<a href=#4855 id=4855 data-nosnippet>4855</a>            },
+<a href=#4856 id=4856 data-nosnippet>4856</a>            <span class="kw-2">ref </span>other =&gt; {
+<a href=#4857 id=4857 data-nosnippet>4857</a>                <span class="macro">log::error!</span>(<span class="string">"Type {other:?} passed to ray query op"</span>);
+<a href=#4858 id=4858 data-nosnippet>4858</a>                <span class="prelude-val">Err</span>(Box::new(Error::InvalidRayQueryPointer(span)))
+<a href=#4859 id=4859 data-nosnippet>4859</a>            }
+<a href=#4860 id=4860 data-nosnippet>4860</a>        }
+<a href=#4861 id=4861 data-nosnippet>4861</a>    }
+<a href=#4862 id=4862 data-nosnippet>4862</a>}
+<a href=#4863 id=4863 data-nosnippet>4863</a>
+<a href=#4864 id=4864 data-nosnippet>4864</a><span class="kw">impl </span>ir::AtomicFunction {
+<a href=#4865 id=4865 data-nosnippet>4865</a>    <span class="kw">pub fn </span>map(word: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+<a href=#4866 id=4866 data-nosnippet>4866</a>        <span class="prelude-val">Some</span>(<span class="kw">match </span>word {
+<a href=#4867 id=4867 data-nosnippet>4867</a>            <span class="string">"atomicAdd" </span>=&gt; ir::AtomicFunction::Add,
+<a href=#4868 id=4868 data-nosnippet>4868</a>            <span class="string">"atomicSub" </span>=&gt; ir::AtomicFunction::Subtract,
+<a href=#4869 id=4869 data-nosnippet>4869</a>            <span class="string">"atomicAnd" </span>=&gt; ir::AtomicFunction::And,
+<a href=#4870 id=4870 data-nosnippet>4870</a>            <span class="string">"atomicOr" </span>=&gt; ir::AtomicFunction::InclusiveOr,
+<a href=#4871 id=4871 data-nosnippet>4871</a>            <span class="string">"atomicXor" </span>=&gt; ir::AtomicFunction::ExclusiveOr,
+<a href=#4872 id=4872 data-nosnippet>4872</a>            <span class="string">"atomicMin" </span>=&gt; ir::AtomicFunction::Min,
+<a href=#4873 id=4873 data-nosnippet>4873</a>            <span class="string">"atomicMax" </span>=&gt; ir::AtomicFunction::Max,
+<a href=#4874 id=4874 data-nosnippet>4874</a>            <span class="string">"atomicExchange" </span>=&gt; ir::AtomicFunction::Exchange { compare: <span class="prelude-val">None </span>},
+<a href=#4875 id=4875 data-nosnippet>4875</a>            <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
+<a href=#4876 id=4876 data-nosnippet>4876</a>        })
+<a href=#4877 id=4877 data-nosnippet>4877</a>    }
+<a href=#4878 id=4878 data-nosnippet>4878</a>}
 </code></pre></div></section></main></body></html>

@@ -36,9 +36,9 @@
 <a href=#36 id=36 data-nosnippet>36</a><span class="kw">use </span><span class="self">self</span>::handles::InvalidHandleError;
 <a href=#37 id=37 data-nosnippet>37</a>
 <a href=#38 id=38 data-nosnippet>38</a><span class="doccomment">/// Maximum size of a type, in bytes.
-<a href=#39 id=39 data-nosnippet>39</a></span><span class="kw">pub const </span>MAX_TYPE_SIZE: u32 = <span class="number">0x4000_0000</span>; <span class="comment">// 1GB
+<a href=#39 id=39 data-nosnippet>39</a></span><span class="kw">pub const </span>MAX_TYPE_SIZE: u32 = i32::MAX <span class="kw">as </span>u32;
 <a href=#40 id=40 data-nosnippet>40</a>
-<a href=#41 id=41 data-nosnippet>41</a></span><span class="macro">bitflags::bitflags!</span> {
+<a href=#41 id=41 data-nosnippet>41</a><span class="macro">bitflags::bitflags!</span> {
 <a href=#42 id=42 data-nosnippet>42</a>    <span class="doccomment">/// Validation flags.
 <a href=#43 id=43 data-nosnippet>43</a>    ///
 <a href=#44 id=44 data-nosnippet>44</a>    /// If you are working with trusted shaders, then you may be able

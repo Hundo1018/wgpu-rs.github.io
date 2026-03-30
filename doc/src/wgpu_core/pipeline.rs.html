@@ -309,7 +309,7 @@
 <a href=#309 id=309 data-nosnippet>309</a>        <span class="self">self</span>: <span class="kw-2">&amp;</span>Arc&lt;<span class="self">Self</span>&gt;,
 <a href=#310 id=310 data-nosnippet>310</a>        index: u32,
 <a href=#311 id=311 data-nosnippet>311</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;BindGroupLayout&gt;, GetBindGroupLayoutError&gt; {
-<a href=#312 id=312 data-nosnippet>312</a>        <span class="self">self</span>.layout.get_bind_group_layout(index)
+<a href=#312 id=312 data-nosnippet>312</a>        <span class="self">self</span>.layout.get_bind_group_layout(index, <span class="self">self</span>.into())
 <a href=#313 id=313 data-nosnippet>313</a>    }
 <a href=#314 id=314 data-nosnippet>314</a>}
 <a href=#315 id=315 data-nosnippet>315</a>
@@ -848,7 +848,7 @@
 <a href=#848 id=848 data-nosnippet>848</a>        <span class="self">self</span>: <span class="kw-2">&amp;</span>Arc&lt;<span class="self">Self</span>&gt;,
 <a href=#849 id=849 data-nosnippet>849</a>        index: u32,
 <a href=#850 id=850 data-nosnippet>850</a>    ) -&gt; <span class="prelude-ty">Result</span>&lt;Arc&lt;BindGroupLayout&gt;, GetBindGroupLayoutError&gt; {
-<a href=#851 id=851 data-nosnippet>851</a>        <span class="self">self</span>.layout.get_bind_group_layout(index)
+<a href=#851 id=851 data-nosnippet>851</a>        <span class="self">self</span>.layout.get_bind_group_layout(index, <span class="self">self</span>.into())
 <a href=#852 id=852 data-nosnippet>852</a>    }
 <a href=#853 id=853 data-nosnippet>853</a>}
 </code></pre></div></section></main></body></html>

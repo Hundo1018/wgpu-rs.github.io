@@ -894,7 +894,7 @@
 <a href=#894 id=894 data-nosnippet>894</a>
 <a href=#895 id=895 data-nosnippet>895</a>    <span class="kw">let </span>vertex_limits = <span class="kw">super</span>::VertexLimits::new(state.vertex_buffer_sizes(), <span class="kw-2">&amp;</span>pipeline.steps);
 <a href=#896 id=896 data-nosnippet>896</a>
-<a href=#897 id=897 data-nosnippet>897</a>    <span class="kw">let </span>stride = <span class="kw">super</span>::get_stride_of_indirect_args(family);
+<a href=#897 id=897 data-nosnippet>897</a>    <span class="kw">let </span>stride = <span class="kw">super</span>::get_src_stride_of_indirect_args(family);
 <a href=#898 id=898 data-nosnippet>898</a>    state
 <a href=#899 id=899 data-nosnippet>899</a>        .buffer_memory_init_actions
 <a href=#900 id=900 data-nosnippet>900</a>        .extend(buffer.initialization_status.read().create_action(

@@ -885,11 +885,11 @@
 <a href=#885 id=885 data-nosnippet>885</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(ComputePassErrorInner::UnalignedIndirectBufferOffset(offset));
 <a href=#886 id=886 data-nosnippet>886</a>    }
 <a href=#887 id=887 data-nosnippet>887</a>
-<a href=#888 id=888 data-nosnippet>888</a>    <span class="kw">let </span>end_offset = offset + size_of::&lt;wgt::DispatchIndirectArgs&gt;() <span class="kw">as </span>u64;
-<a href=#889 id=889 data-nosnippet>889</a>    <span class="kw">if </span>end_offset &gt; buffer.size {
+<a href=#888 id=888 data-nosnippet>888</a>    <span class="kw">let </span>args_size = size_of::&lt;wgt::DispatchIndirectArgs&gt;() <span class="kw">as </span>u64;
+<a href=#889 id=889 data-nosnippet>889</a>    <span class="kw">if </span>buffer.size &lt; args_size || buffer.size - args_size &lt; offset {
 <a href=#890 id=890 data-nosnippet>890</a>        <span class="kw">return </span><span class="prelude-val">Err</span>(ComputePassErrorInner::IndirectBufferOverrun {
 <a href=#891 id=891 data-nosnippet>891</a>            offset,
-<a href=#892 id=892 data-nosnippet>892</a>            end_offset,
+<a href=#892 id=892 data-nosnippet>892</a>            end_offset: offset + args_size,
 <a href=#893 id=893 data-nosnippet>893</a>            buffer_size: buffer.size,
 <a href=#894 id=894 data-nosnippet>894</a>        });
 <a href=#895 id=895 data-nosnippet>895</a>    }

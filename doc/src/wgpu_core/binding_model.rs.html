@@ -5,7 +5,7 @@
 <a href=#5 id=5 data-nosnippet>5</a>    sync::{Arc, Weak},
 <a href=#6 id=6 data-nosnippet>6</a>    vec::Vec,
 <a href=#7 id=7 data-nosnippet>7</a>};
-<a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>core::{fmt, mem::ManuallyDrop, ops::Range};
+<a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>core::{fmt, mem::ManuallyDrop, num::Saturating, ops::Range};
 <a href=#9 id=9 data-nosnippet>9</a>
 <a href=#10 id=10 data-nosnippet>10</a><span class="kw">use </span>arrayvec::ArrayVec;
 <a href=#11 id=11 data-nosnippet>11</a><span class="kw">use </span>thiserror::Error;
@@ -367,9 +367,9 @@
 <a href=#367 id=367 data-nosnippet>367</a>
 <a href=#368 id=368 data-nosnippet>368</a><span class="attr">#[derive(Debug, Default)]
 <a href=#369 id=369 data-nosnippet>369</a></span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>PerStageBindingTypeCounter {
-<a href=#370 id=370 data-nosnippet>370</a>    vertex: u32,
-<a href=#371 id=371 data-nosnippet>371</a>    fragment: u32,
-<a href=#372 id=372 data-nosnippet>372</a>    compute: u32,
+<a href=#370 id=370 data-nosnippet>370</a>    vertex: Saturating&lt;u32&gt;,
+<a href=#371 id=371 data-nosnippet>371</a>    fragment: Saturating&lt;u32&gt;,
+<a href=#372 id=372 data-nosnippet>372</a>    compute: Saturating&lt;u32&gt;,
 <a href=#373 id=373 data-nosnippet>373</a>}
 <a href=#374 id=374 data-nosnippet>374</a>
 <a href=#375 id=375 data-nosnippet>375</a><span class="kw">impl </span>PerStageBindingTypeCounter {
@@ -397,7 +397,7 @@
 <a href=#397 id=397 data-nosnippet>397</a>        <span class="kw">if </span>max_value == <span class="self">self</span>.compute {
 <a href=#398 id=398 data-nosnippet>398</a>            stage |= wgt::ShaderStages::COMPUTE
 <a href=#399 id=399 data-nosnippet>399</a>        }
-<a href=#400 id=400 data-nosnippet>400</a>        (BindingZone::Stage(stage), max_value)
+<a href=#400 id=400 data-nosnippet>400</a>        (BindingZone::Stage(stage), max_value.<span class="number">0</span>)
 <a href=#401 id=401 data-nosnippet>401</a>    }
 <a href=#402 id=402 data-nosnippet>402</a>
 <a href=#403 id=403 data-nosnippet>403</a>    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>merge(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) {

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["affine_to_rows","main"],"struct":["Example","GpuAabb","Uniforms"]};

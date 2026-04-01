@@ -1305,66 +1305,85 @@
 <a href=#1305 id=1305 data-nosnippet>1305</a>                        .collect(),
 <a href=#1306 id=1306 data-nosnippet>1306</a>                )
 <a href=#1307 id=1307 data-nosnippet>1307</a>            }
-<a href=#1308 id=1308 data-nosnippet>1308</a>        }
-<a href=#1309 id=1309 data-nosnippet>1309</a>    }
-<a href=#1310 id=1310 data-nosnippet>1310</a>
-<a href=#1311 id=1311 data-nosnippet>1311</a>    <span class="kw">fn </span>resolve_blas_triangle_geometry(
-<a href=#1312 id=1312 data-nosnippet>1312</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#1313 id=1313 data-nosnippet>1313</a>        geometry: wgc::ray_tracing::OwnedBlasTriangleGeometry&lt;PointerReferences&gt;,
-<a href=#1314 id=1314 data-nosnippet>1314</a>    ) -&gt; wgc::ray_tracing::OwnedBlasTriangleGeometry&lt;ArcReferences&gt; {
-<a href=#1315 id=1315 data-nosnippet>1315</a>        wgc::ray_tracing::OwnedBlasTriangleGeometry {
-<a href=#1316 id=1316 data-nosnippet>1316</a>            size: geometry.size,
-<a href=#1317 id=1317 data-nosnippet>1317</a>            vertex_buffer: <span class="self">self</span>.resolve_buffer_id(geometry.vertex_buffer),
-<a href=#1318 id=1318 data-nosnippet>1318</a>            index_buffer: geometry.index_buffer.map(|buf| <span class="self">self</span>.resolve_buffer_id(buf)),
-<a href=#1319 id=1319 data-nosnippet>1319</a>            transform_buffer: geometry
-<a href=#1320 id=1320 data-nosnippet>1320</a>                .transform_buffer
-<a href=#1321 id=1321 data-nosnippet>1321</a>                .map(|buf| <span class="self">self</span>.resolve_buffer_id(buf)),
-<a href=#1322 id=1322 data-nosnippet>1322</a>            first_vertex: geometry.first_vertex,
-<a href=#1323 id=1323 data-nosnippet>1323</a>            vertex_stride: geometry.vertex_stride,
-<a href=#1324 id=1324 data-nosnippet>1324</a>            first_index: geometry.first_index,
-<a href=#1325 id=1325 data-nosnippet>1325</a>            transform_buffer_offset: geometry.transform_buffer_offset,
-<a href=#1326 id=1326 data-nosnippet>1326</a>        }
-<a href=#1327 id=1327 data-nosnippet>1327</a>    }
-<a href=#1328 id=1328 data-nosnippet>1328</a>
-<a href=#1329 id=1329 data-nosnippet>1329</a>    <span class="kw">fn </span>resolve_tlas_instance(
-<a href=#1330 id=1330 data-nosnippet>1330</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#1331 id=1331 data-nosnippet>1331</a>        instance: wgc::ray_tracing::OwnedTlasInstance&lt;PointerReferences&gt;,
-<a href=#1332 id=1332 data-nosnippet>1332</a>    ) -&gt; wgc::ray_tracing::OwnedTlasInstance&lt;ArcReferences&gt; {
-<a href=#1333 id=1333 data-nosnippet>1333</a>        wgc::ray_tracing::OwnedTlasInstance {
-<a href=#1334 id=1334 data-nosnippet>1334</a>            blas: <span class="self">self</span>.resolve_blas_id(instance.blas),
-<a href=#1335 id=1335 data-nosnippet>1335</a>            transform: instance.transform,
-<a href=#1336 id=1336 data-nosnippet>1336</a>            custom_data: instance.custom_data,
-<a href=#1337 id=1337 data-nosnippet>1337</a>            mask: instance.mask,
-<a href=#1338 id=1338 data-nosnippet>1338</a>        }
-<a href=#1339 id=1339 data-nosnippet>1339</a>    }
-<a href=#1340 id=1340 data-nosnippet>1340</a>
-<a href=#1341 id=1341 data-nosnippet>1341</a>    <span class="kw">fn </span>resolve_buffer_transition(
-<a href=#1342 id=1342 data-nosnippet>1342</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#1343 id=1343 data-nosnippet>1343</a>        trans: wgt::BufferTransition&lt;PointerId&lt;wgc::id::markers::Buffer&gt;&gt;,
-<a href=#1344 id=1344 data-nosnippet>1344</a>    ) -&gt; wgt::BufferTransition&lt;Arc&lt;wgc::resource::Buffer&gt;&gt; {
-<a href=#1345 id=1345 data-nosnippet>1345</a>        wgt::BufferTransition {
-<a href=#1346 id=1346 data-nosnippet>1346</a>            buffer: <span class="self">self
-<a href=#1347 id=1347 data-nosnippet>1347</a>                </span>.buffers
-<a href=#1348 id=1348 data-nosnippet>1348</a>                .get(<span class="kw-2">&amp;</span>trans.buffer)
-<a href=#1349 id=1349 data-nosnippet>1349</a>                .cloned()
-<a href=#1350 id=1350 data-nosnippet>1350</a>                .expect(<span class="string">"invalid buffer"</span>),
-<a href=#1351 id=1351 data-nosnippet>1351</a>            state: trans.state,
-<a href=#1352 id=1352 data-nosnippet>1352</a>        }
-<a href=#1353 id=1353 data-nosnippet>1353</a>    }
-<a href=#1354 id=1354 data-nosnippet>1354</a>
-<a href=#1355 id=1355 data-nosnippet>1355</a>    <span class="kw">fn </span>resolve_texture_transition(
-<a href=#1356 id=1356 data-nosnippet>1356</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
-<a href=#1357 id=1357 data-nosnippet>1357</a>        trans: wgt::TextureTransition&lt;PointerId&lt;wgc::id::markers::Texture&gt;&gt;,
-<a href=#1358 id=1358 data-nosnippet>1358</a>    ) -&gt; wgt::TextureTransition&lt;Arc&lt;wgc::resource::Texture&gt;&gt; {
-<a href=#1359 id=1359 data-nosnippet>1359</a>        wgt::TextureTransition {
-<a href=#1360 id=1360 data-nosnippet>1360</a>            texture: <span class="self">self
-<a href=#1361 id=1361 data-nosnippet>1361</a>                </span>.textures
-<a href=#1362 id=1362 data-nosnippet>1362</a>                .get(<span class="kw-2">&amp;</span>trans.texture)
-<a href=#1363 id=1363 data-nosnippet>1363</a>                .cloned()
-<a href=#1364 id=1364 data-nosnippet>1364</a>                .expect(<span class="string">"invalid texture"</span>),
-<a href=#1365 id=1365 data-nosnippet>1365</a>            selector: trans.selector.clone(),
-<a href=#1366 id=1366 data-nosnippet>1366</a>            state: trans.state,
-<a href=#1367 id=1367 data-nosnippet>1367</a>        }
-<a href=#1368 id=1368 data-nosnippet>1368</a>    }
-<a href=#1369 id=1369 data-nosnippet>1369</a>}
+<a href=#1308 id=1308 data-nosnippet>1308</a>            wgc::ray_tracing::OwnedBlasGeometries::AabbGeometries(geos) =&gt; {
+<a href=#1309 id=1309 data-nosnippet>1309</a>                wgc::ray_tracing::OwnedBlasGeometries::AabbGeometries(
+<a href=#1310 id=1310 data-nosnippet>1310</a>                    geos.into_iter()
+<a href=#1311 id=1311 data-nosnippet>1311</a>                        .map(|geo| <span class="self">self</span>.resolve_blas_aabb_geometry(geo))
+<a href=#1312 id=1312 data-nosnippet>1312</a>                        .collect(),
+<a href=#1313 id=1313 data-nosnippet>1313</a>                )
+<a href=#1314 id=1314 data-nosnippet>1314</a>            }
+<a href=#1315 id=1315 data-nosnippet>1315</a>        }
+<a href=#1316 id=1316 data-nosnippet>1316</a>    }
+<a href=#1317 id=1317 data-nosnippet>1317</a>
+<a href=#1318 id=1318 data-nosnippet>1318</a>    <span class="kw">fn </span>resolve_blas_triangle_geometry(
+<a href=#1319 id=1319 data-nosnippet>1319</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#1320 id=1320 data-nosnippet>1320</a>        geometry: wgc::ray_tracing::OwnedBlasTriangleGeometry&lt;PointerReferences&gt;,
+<a href=#1321 id=1321 data-nosnippet>1321</a>    ) -&gt; wgc::ray_tracing::OwnedBlasTriangleGeometry&lt;ArcReferences&gt; {
+<a href=#1322 id=1322 data-nosnippet>1322</a>        wgc::ray_tracing::OwnedBlasTriangleGeometry {
+<a href=#1323 id=1323 data-nosnippet>1323</a>            size: geometry.size,
+<a href=#1324 id=1324 data-nosnippet>1324</a>            vertex_buffer: <span class="self">self</span>.resolve_buffer_id(geometry.vertex_buffer),
+<a href=#1325 id=1325 data-nosnippet>1325</a>            index_buffer: geometry.index_buffer.map(|buf| <span class="self">self</span>.resolve_buffer_id(buf)),
+<a href=#1326 id=1326 data-nosnippet>1326</a>            transform_buffer: geometry
+<a href=#1327 id=1327 data-nosnippet>1327</a>                .transform_buffer
+<a href=#1328 id=1328 data-nosnippet>1328</a>                .map(|buf| <span class="self">self</span>.resolve_buffer_id(buf)),
+<a href=#1329 id=1329 data-nosnippet>1329</a>            first_vertex: geometry.first_vertex,
+<a href=#1330 id=1330 data-nosnippet>1330</a>            vertex_stride: geometry.vertex_stride,
+<a href=#1331 id=1331 data-nosnippet>1331</a>            first_index: geometry.first_index,
+<a href=#1332 id=1332 data-nosnippet>1332</a>            transform_buffer_offset: geometry.transform_buffer_offset,
+<a href=#1333 id=1333 data-nosnippet>1333</a>        }
+<a href=#1334 id=1334 data-nosnippet>1334</a>    }
+<a href=#1335 id=1335 data-nosnippet>1335</a>
+<a href=#1336 id=1336 data-nosnippet>1336</a>    <span class="kw">fn </span>resolve_blas_aabb_geometry(
+<a href=#1337 id=1337 data-nosnippet>1337</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#1338 id=1338 data-nosnippet>1338</a>        geometry: wgc::ray_tracing::OwnedBlasAabbGeometry&lt;PointerReferences&gt;,
+<a href=#1339 id=1339 data-nosnippet>1339</a>    ) -&gt; wgc::ray_tracing::OwnedBlasAabbGeometry&lt;ArcReferences&gt; {
+<a href=#1340 id=1340 data-nosnippet>1340</a>        wgc::ray_tracing::OwnedBlasAabbGeometry {
+<a href=#1341 id=1341 data-nosnippet>1341</a>            size: geometry.size,
+<a href=#1342 id=1342 data-nosnippet>1342</a>            stride: geometry.stride,
+<a href=#1343 id=1343 data-nosnippet>1343</a>            aabb_buffer: <span class="self">self</span>.resolve_buffer_id(geometry.aabb_buffer),
+<a href=#1344 id=1344 data-nosnippet>1344</a>            primitive_offset: geometry.primitive_offset,
+<a href=#1345 id=1345 data-nosnippet>1345</a>        }
+<a href=#1346 id=1346 data-nosnippet>1346</a>    }
+<a href=#1347 id=1347 data-nosnippet>1347</a>
+<a href=#1348 id=1348 data-nosnippet>1348</a>    <span class="kw">fn </span>resolve_tlas_instance(
+<a href=#1349 id=1349 data-nosnippet>1349</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#1350 id=1350 data-nosnippet>1350</a>        instance: wgc::ray_tracing::OwnedTlasInstance&lt;PointerReferences&gt;,
+<a href=#1351 id=1351 data-nosnippet>1351</a>    ) -&gt; wgc::ray_tracing::OwnedTlasInstance&lt;ArcReferences&gt; {
+<a href=#1352 id=1352 data-nosnippet>1352</a>        wgc::ray_tracing::OwnedTlasInstance {
+<a href=#1353 id=1353 data-nosnippet>1353</a>            blas: <span class="self">self</span>.resolve_blas_id(instance.blas),
+<a href=#1354 id=1354 data-nosnippet>1354</a>            transform: instance.transform,
+<a href=#1355 id=1355 data-nosnippet>1355</a>            custom_data: instance.custom_data,
+<a href=#1356 id=1356 data-nosnippet>1356</a>            mask: instance.mask,
+<a href=#1357 id=1357 data-nosnippet>1357</a>        }
+<a href=#1358 id=1358 data-nosnippet>1358</a>    }
+<a href=#1359 id=1359 data-nosnippet>1359</a>
+<a href=#1360 id=1360 data-nosnippet>1360</a>    <span class="kw">fn </span>resolve_buffer_transition(
+<a href=#1361 id=1361 data-nosnippet>1361</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#1362 id=1362 data-nosnippet>1362</a>        trans: wgt::BufferTransition&lt;PointerId&lt;wgc::id::markers::Buffer&gt;&gt;,
+<a href=#1363 id=1363 data-nosnippet>1363</a>    ) -&gt; wgt::BufferTransition&lt;Arc&lt;wgc::resource::Buffer&gt;&gt; {
+<a href=#1364 id=1364 data-nosnippet>1364</a>        wgt::BufferTransition {
+<a href=#1365 id=1365 data-nosnippet>1365</a>            buffer: <span class="self">self
+<a href=#1366 id=1366 data-nosnippet>1366</a>                </span>.buffers
+<a href=#1367 id=1367 data-nosnippet>1367</a>                .get(<span class="kw-2">&amp;</span>trans.buffer)
+<a href=#1368 id=1368 data-nosnippet>1368</a>                .cloned()
+<a href=#1369 id=1369 data-nosnippet>1369</a>                .expect(<span class="string">"invalid buffer"</span>),
+<a href=#1370 id=1370 data-nosnippet>1370</a>            state: trans.state,
+<a href=#1371 id=1371 data-nosnippet>1371</a>        }
+<a href=#1372 id=1372 data-nosnippet>1372</a>    }
+<a href=#1373 id=1373 data-nosnippet>1373</a>
+<a href=#1374 id=1374 data-nosnippet>1374</a>    <span class="kw">fn </span>resolve_texture_transition(
+<a href=#1375 id=1375 data-nosnippet>1375</a>        <span class="kw-2">&amp;</span><span class="self">self</span>,
+<a href=#1376 id=1376 data-nosnippet>1376</a>        trans: wgt::TextureTransition&lt;PointerId&lt;wgc::id::markers::Texture&gt;&gt;,
+<a href=#1377 id=1377 data-nosnippet>1377</a>    ) -&gt; wgt::TextureTransition&lt;Arc&lt;wgc::resource::Texture&gt;&gt; {
+<a href=#1378 id=1378 data-nosnippet>1378</a>        wgt::TextureTransition {
+<a href=#1379 id=1379 data-nosnippet>1379</a>            texture: <span class="self">self
+<a href=#1380 id=1380 data-nosnippet>1380</a>                </span>.textures
+<a href=#1381 id=1381 data-nosnippet>1381</a>                .get(<span class="kw-2">&amp;</span>trans.texture)
+<a href=#1382 id=1382 data-nosnippet>1382</a>                .cloned()
+<a href=#1383 id=1383 data-nosnippet>1383</a>                .expect(<span class="string">"invalid texture"</span>),
+<a href=#1384 id=1384 data-nosnippet>1384</a>            selector: trans.selector.clone(),
+<a href=#1385 id=1385 data-nosnippet>1385</a>            state: trans.state,
+<a href=#1386 id=1386 data-nosnippet>1386</a>        }
+<a href=#1387 id=1387 data-nosnippet>1387</a>    }
+<a href=#1388 id=1388 data-nosnippet>1388</a>}
 </code></pre></div></section></main></body></html>

@@ -7454,7 +7454,7 @@
 <a href=#7454 id=7454 data-nosnippet>7454</a>                            <span class="kw">if </span>access.contains(<span class="kw">crate</span>::StorageAccess::STORE)
 <a href=#7455 id=7455 data-nosnippet>7455</a>                                &amp;&amp; ep.stage == <span class="kw">crate</span>::ShaderStage::Fragment =&gt;
 <a href=#7456 id=7456 data-nosnippet>7456</a>                        {
-<a href=#7457 id=7457 data-nosnippet>7457</a>                            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnsupportedWriteableStorageBuffer)
+<a href=#7457 id=7457 data-nosnippet>7457</a>                            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnsupportedWritableStorageBuffer)
 <a href=#7458 id=7458 data-nosnippet>7458</a>                        }
 <a href=#7459 id=7459 data-nosnippet>7459</a>                        <span class="kw">crate</span>::AddressSpace::Handle =&gt; {
 <a href=#7460 id=7460 data-nosnippet>7460</a>                            <span class="kw">match </span>module.types[var.ty].inner {
@@ -7475,7 +7475,7 @@
 <a href=#7475 id=7475 data-nosnippet>7475</a>                                        &amp;&amp; (ep.stage == <span class="kw">crate</span>::ShaderStage::Vertex
 <a href=#7476 id=7476 data-nosnippet>7476</a>                                            || ep.stage == <span class="kw">crate</span>::ShaderStage::Fragment)
 <a href=#7477 id=7477 data-nosnippet>7477</a>                                    {
-<a href=#7478 id=7478 data-nosnippet>7478</a>                                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnsupportedWriteableStorageTexture(
+<a href=#7478 id=7478 data-nosnippet>7478</a>                                        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::UnsupportedWritableStorageTexture(
 <a href=#7479 id=7479 data-nosnippet>7479</a>                                            ep.stage,
 <a href=#7480 id=7480 data-nosnippet>7480</a>                                        ));
 <a href=#7481 id=7481 data-nosnippet>7481</a>                                    }

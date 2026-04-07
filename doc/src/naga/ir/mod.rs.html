@@ -1579,7 +1579,7 @@
 <a href=#1579 id=1579 data-nosnippet>1579</a>    </span><span class="kw">pub struct </span>Barrier: u32 {
 <a href=#1580 id=1580 data-nosnippet>1580</a>        <span class="doccomment">/// Barrier affects all [`AddressSpace::Storage`] accesses.
 <a href=#1581 id=1581 data-nosnippet>1581</a>        </span><span class="kw">const </span>STORAGE = <span class="number">1 </span>&lt;&lt; <span class="number">0</span>;
-<a href=#1582 id=1582 data-nosnippet>1582</a>        <span class="doccomment">/// Barrier affects all [`AddressSpace::WorkGroup`] accesses.
+<a href=#1582 id=1582 data-nosnippet>1582</a>        <span class="doccomment">/// Barrier affects all [`AddressSpace::WorkGroup`] and [`AddressSpace::TaskPayload`] accesses.
 <a href=#1583 id=1583 data-nosnippet>1583</a>        </span><span class="kw">const </span>WORK_GROUP = <span class="number">1 </span>&lt;&lt; <span class="number">1</span>;
 <a href=#1584 id=1584 data-nosnippet>1584</a>        <span class="doccomment">/// Barrier synchronizes execution across all invocations within a subgroup that execute this instruction.
 <a href=#1585 id=1585 data-nosnippet>1585</a>        </span><span class="kw">const </span>SUB_GROUP = <span class="number">1 </span>&lt;&lt; <span class="number">2</span>;

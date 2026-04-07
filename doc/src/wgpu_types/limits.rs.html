@@ -1042,88 +1042,91 @@
 <a href=#1042 id=1042 data-nosnippet>1042</a>        ///
 <a href=#1043 id=1043 data-nosnippet>1043</a>        /// Not supported by Vulkan on Mesa when [`Features::SHADER_F16`] is absent.
 <a href=#1044 id=1044 data-nosnippet>1044</a>        </span><span class="kw">const </span>SHADER_F16_IN_F32 = <span class="number">1 </span>&lt;&lt; <span class="number">23</span>;
-<a href=#1045 id=1045 data-nosnippet>1045</a>    }
-<a href=#1046 id=1046 data-nosnippet>1046</a>}
-<a href=#1047 id=1047 data-nosnippet>1047</a>
-<a href=#1048 id=1048 data-nosnippet>1048</a><span class="kw">impl </span>DownlevelFlags {
-<a href=#1049 id=1049 data-nosnippet>1049</a>    <span class="doccomment">/// All flags that indicate if the backend is WebGPU compliant
-<a href=#1050 id=1050 data-nosnippet>1050</a>    </span><span class="attr">#[must_use]
-<a href=#1051 id=1051 data-nosnippet>1051</a>    </span><span class="kw">pub const fn </span>compliant() -&gt; <span class="self">Self </span>{
-<a href=#1052 id=1052 data-nosnippet>1052</a>        <span class="comment">// We use manual bit twiddling to make this a const fn as `Sub` and `.remove` aren't const
-<a href=#1053 id=1053 data-nosnippet>1053</a>
-<a href=#1054 id=1054 data-nosnippet>1054</a>        // WebGPU doesn't actually require aniso
-<a href=#1055 id=1055 data-nosnippet>1055</a>        </span><span class="self">Self</span>::from_bits_truncate(<span class="self">Self</span>::all().bits() &amp; !<span class="self">Self</span>::ANISOTROPIC_FILTERING.bits())
-<a href=#1056 id=1056 data-nosnippet>1056</a>    }
-<a href=#1057 id=1057 data-nosnippet>1057</a>}
-<a href=#1058 id=1058 data-nosnippet>1058</a>
-<a href=#1059 id=1059 data-nosnippet>1059</a><span class="doccomment">/// Collections of shader features a device supports if they support less than WebGPU normally allows.
-<a href=#1060 id=1060 data-nosnippet>1060</a></span><span class="comment">// TODO: Fill out the differences between shader models more completely
-<a href=#1061 id=1061 data-nosnippet>1061</a></span><span class="attr">#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-<a href=#1062 id=1062 data-nosnippet>1062</a>#[cfg_attr(feature = <span class="string">"serde"</span>, derive(serde::Serialize, serde::Deserialize))]
-<a href=#1063 id=1063 data-nosnippet>1063</a></span><span class="kw">pub enum </span>ShaderModel {
-<a href=#1064 id=1064 data-nosnippet>1064</a>    <span class="doccomment">/// Extremely limited shaders, including a total instruction limit.
-<a href=#1065 id=1065 data-nosnippet>1065</a>    </span>Sm2,
-<a href=#1066 id=1066 data-nosnippet>1066</a>    <span class="doccomment">/// Missing minor features and storage images.
-<a href=#1067 id=1067 data-nosnippet>1067</a>    </span>Sm4,
-<a href=#1068 id=1068 data-nosnippet>1068</a>    <span class="doccomment">/// WebGPU supports shader module 5.
-<a href=#1069 id=1069 data-nosnippet>1069</a>    </span>Sm5,
-<a href=#1070 id=1070 data-nosnippet>1070</a>}
-<a href=#1071 id=1071 data-nosnippet>1071</a>
-<a href=#1072 id=1072 data-nosnippet>1072</a><span class="attr">#[cfg(test)]
-<a href=#1073 id=1073 data-nosnippet>1073</a></span><span class="kw">mod </span>tests {
-<a href=#1074 id=1074 data-nosnippet>1074</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-<a href=#1075 id=1075 data-nosnippet>1075</a>    <span class="kw">use </span>alloc::{format, string::String, vec::Vec};
-<a href=#1076 id=1076 data-nosnippet>1076</a>
-<a href=#1077 id=1077 data-nosnippet>1077</a>    <span class="kw">fn </span>side_by_side(left: <span class="kw-2">&amp;</span>str, right: <span class="kw-2">&amp;</span>str) -&gt; String {
-<a href=#1078 id=1078 data-nosnippet>1078</a>        <span class="kw">let </span>left_lines: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = left.lines().map(str::trim).collect();
-<a href=#1079 id=1079 data-nosnippet>1079</a>        <span class="kw">let </span>right_lines: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = right.lines().map(str::trim).collect();
-<a href=#1080 id=1080 data-nosnippet>1080</a>        <span class="kw">let </span>max_lines = left_lines.len().max(right_lines.len());
-<a href=#1081 id=1081 data-nosnippet>1081</a>        <span class="kw">let </span>diffs: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str)&gt; = (<span class="number">0</span>..max_lines)
-<a href=#1082 id=1082 data-nosnippet>1082</a>            .map(|i| {
-<a href=#1083 id=1083 data-nosnippet>1083</a>                <span class="kw">let </span>l = <span class="kw-2">*</span>left_lines.get(i).unwrap_or(<span class="kw-2">&amp;</span><span class="string">""</span>);
-<a href=#1084 id=1084 data-nosnippet>1084</a>                <span class="kw">let </span>r = <span class="kw-2">*</span>right_lines.get(i).unwrap_or(<span class="kw-2">&amp;</span><span class="string">""</span>);
-<a href=#1085 id=1085 data-nosnippet>1085</a>                (l, r)
-<a href=#1086 id=1086 data-nosnippet>1086</a>            })
-<a href=#1087 id=1087 data-nosnippet>1087</a>            .filter(|(l, r)| <span class="macro">l !</span>= r)
-<a href=#1088 id=1088 data-nosnippet>1088</a>            .collect();
-<a href=#1089 id=1089 data-nosnippet>1089</a>        <span class="kw">let </span>left_width = diffs.iter().map(|(l, <span class="kw">_</span>)| l.len()).max().unwrap_or(<span class="number">0</span>);
-<a href=#1090 id=1090 data-nosnippet>1090</a>        <span class="kw">let </span><span class="kw-2">mut </span>out = String::new();
-<a href=#1091 id=1091 data-nosnippet>1091</a>        <span class="kw">for </span>(l, r) <span class="kw">in </span><span class="kw-2">&amp;</span>diffs {
-<a href=#1092 id=1092 data-nosnippet>1092</a>            out += <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{:&lt;width$}  |  {}\n"</span>, l, r, width = left_width);
-<a href=#1093 id=1093 data-nosnippet>1093</a>        }
-<a href=#1094 id=1094 data-nosnippet>1094</a>        out
-<a href=#1095 id=1095 data-nosnippet>1095</a>    }
-<a href=#1096 id=1096 data-nosnippet>1096</a>
-<a href=#1097 id=1097 data-nosnippet>1097</a>    <span class="attr">#[test]
-<a href=#1098 id=1098 data-nosnippet>1098</a>    </span><span class="kw">fn </span>with_limits_exhaustive() {
-<a href=#1099 id=1099 data-nosnippet>1099</a>        <span class="comment">// Check that all limits are included in `with_limits!`, by using it to
-<a href=#1100 id=1100 data-nosnippet>1100</a>        // replicate `Limits::unlimited()`.
-<a href=#1101 id=1101 data-nosnippet>1101</a>        </span><span class="kw">let </span><span class="kw-2">mut </span>limits = Limits::default();
-<a href=#1102 id=1102 data-nosnippet>1102</a>
-<a href=#1103 id=1103 data-nosnippet>1103</a>        <span class="macro">macro_rules!</span> set_to_max {
-<a href=#1104 id=1104 data-nosnippet>1104</a>            (<span class="macro-nonterminal">$name</span>:ident, <span class="macro-nonterminal">$ordering</span>:expr) =&gt; {
-<a href=#1105 id=1105 data-nosnippet>1105</a>                <span class="kw">if </span><span class="macro-nonterminal">$ordering </span>== Ordering::Less {
-<a href=#1106 id=1106 data-nosnippet>1106</a>                    limits.<span class="macro-nonterminal">$name </span>= i32::MAX <span class="kw">as _</span>;
-<a href=#1107 id=1107 data-nosnippet>1107</a>                } <span class="kw">else </span>{
-<a href=#1108 id=1108 data-nosnippet>1108</a>                    limits.<span class="macro-nonterminal">$name </span>= <span class="number">1</span>;
-<a href=#1109 id=1109 data-nosnippet>1109</a>                }
-<a href=#1110 id=1110 data-nosnippet>1110</a>            };
-<a href=#1111 id=1111 data-nosnippet>1111</a>        }
-<a href=#1112 id=1112 data-nosnippet>1112</a>
-<a href=#1113 id=1113 data-nosnippet>1113</a>        <span class="macro">with_limits!</span>(set_to_max);
-<a href=#1114 id=1114 data-nosnippet>1114</a>
-<a href=#1115 id=1115 data-nosnippet>1115</a>        <span class="macro">assert_eq!</span>(
-<a href=#1116 id=1116 data-nosnippet>1116</a>            limits,
-<a href=#1117 id=1117 data-nosnippet>1117</a>            Limits::unlimited(),
-<a href=#1118 id=1118 data-nosnippet>1118</a>            <span class="string">"with_limits! did not replicate Limits::unlimited():\n{}"</span>,
-<a href=#1119 id=1119 data-nosnippet>1119</a>            side_by_side(
-<a href=#1120 id=1120 data-nosnippet>1120</a>                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"with_limits!\n------------\n{:#?}"</span>, limits),
-<a href=#1121 id=1121 data-nosnippet>1121</a>                <span class="kw-2">&amp;</span><span class="macro">format!</span>(
-<a href=#1122 id=1122 data-nosnippet>1122</a>                    <span class="string">"Limits::unlimited()\n-------------------\n{:#?}"</span>,
-<a href=#1123 id=1123 data-nosnippet>1123</a>                    Limits::unlimited()
-<a href=#1124 id=1124 data-nosnippet>1124</a>                ),
-<a href=#1125 id=1125 data-nosnippet>1125</a>            )
-<a href=#1126 id=1126 data-nosnippet>1126</a>        );
-<a href=#1127 id=1127 data-nosnippet>1127</a>    }
-<a href=#1128 id=1128 data-nosnippet>1128</a>}
+<a href=#1045 id=1045 data-nosnippet>1045</a>
+<a href=#1046 id=1046 data-nosnippet>1046</a>        <span class="doccomment">/// Supports features introduced in MSL 2.1.
+<a href=#1047 id=1047 data-nosnippet>1047</a>        </span><span class="kw">const </span>MSL2_1 = <span class="number">1 </span>&lt;&lt; <span class="number">24</span>;
+<a href=#1048 id=1048 data-nosnippet>1048</a>    }
+<a href=#1049 id=1049 data-nosnippet>1049</a>}
+<a href=#1050 id=1050 data-nosnippet>1050</a>
+<a href=#1051 id=1051 data-nosnippet>1051</a><span class="kw">impl </span>DownlevelFlags {
+<a href=#1052 id=1052 data-nosnippet>1052</a>    <span class="doccomment">/// All flags that indicate if the backend is WebGPU compliant
+<a href=#1053 id=1053 data-nosnippet>1053</a>    </span><span class="attr">#[must_use]
+<a href=#1054 id=1054 data-nosnippet>1054</a>    </span><span class="kw">pub const fn </span>compliant() -&gt; <span class="self">Self </span>{
+<a href=#1055 id=1055 data-nosnippet>1055</a>        <span class="comment">// We use manual bit twiddling to make this a const fn as `Sub` and `.remove` aren't const
+<a href=#1056 id=1056 data-nosnippet>1056</a>
+<a href=#1057 id=1057 data-nosnippet>1057</a>        // WebGPU doesn't actually require aniso
+<a href=#1058 id=1058 data-nosnippet>1058</a>        </span><span class="self">Self</span>::from_bits_truncate(<span class="self">Self</span>::all().bits() &amp; !<span class="self">Self</span>::ANISOTROPIC_FILTERING.bits())
+<a href=#1059 id=1059 data-nosnippet>1059</a>    }
+<a href=#1060 id=1060 data-nosnippet>1060</a>}
+<a href=#1061 id=1061 data-nosnippet>1061</a>
+<a href=#1062 id=1062 data-nosnippet>1062</a><span class="doccomment">/// Collections of shader features a device supports if they support less than WebGPU normally allows.
+<a href=#1063 id=1063 data-nosnippet>1063</a></span><span class="comment">// TODO: Fill out the differences between shader models more completely
+<a href=#1064 id=1064 data-nosnippet>1064</a></span><span class="attr">#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+<a href=#1065 id=1065 data-nosnippet>1065</a>#[cfg_attr(feature = <span class="string">"serde"</span>, derive(serde::Serialize, serde::Deserialize))]
+<a href=#1066 id=1066 data-nosnippet>1066</a></span><span class="kw">pub enum </span>ShaderModel {
+<a href=#1067 id=1067 data-nosnippet>1067</a>    <span class="doccomment">/// Extremely limited shaders, including a total instruction limit.
+<a href=#1068 id=1068 data-nosnippet>1068</a>    </span>Sm2,
+<a href=#1069 id=1069 data-nosnippet>1069</a>    <span class="doccomment">/// Missing minor features and storage images.
+<a href=#1070 id=1070 data-nosnippet>1070</a>    </span>Sm4,
+<a href=#1071 id=1071 data-nosnippet>1071</a>    <span class="doccomment">/// WebGPU supports shader module 5.
+<a href=#1072 id=1072 data-nosnippet>1072</a>    </span>Sm5,
+<a href=#1073 id=1073 data-nosnippet>1073</a>}
+<a href=#1074 id=1074 data-nosnippet>1074</a>
+<a href=#1075 id=1075 data-nosnippet>1075</a><span class="attr">#[cfg(test)]
+<a href=#1076 id=1076 data-nosnippet>1076</a></span><span class="kw">mod </span>tests {
+<a href=#1077 id=1077 data-nosnippet>1077</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#1078 id=1078 data-nosnippet>1078</a>    <span class="kw">use </span>alloc::{format, string::String, vec::Vec};
+<a href=#1079 id=1079 data-nosnippet>1079</a>
+<a href=#1080 id=1080 data-nosnippet>1080</a>    <span class="kw">fn </span>side_by_side(left: <span class="kw-2">&amp;</span>str, right: <span class="kw-2">&amp;</span>str) -&gt; String {
+<a href=#1081 id=1081 data-nosnippet>1081</a>        <span class="kw">let </span>left_lines: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = left.lines().map(str::trim).collect();
+<a href=#1082 id=1082 data-nosnippet>1082</a>        <span class="kw">let </span>right_lines: Vec&lt;<span class="kw-2">&amp;</span>str&gt; = right.lines().map(str::trim).collect();
+<a href=#1083 id=1083 data-nosnippet>1083</a>        <span class="kw">let </span>max_lines = left_lines.len().max(right_lines.len());
+<a href=#1084 id=1084 data-nosnippet>1084</a>        <span class="kw">let </span>diffs: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>str)&gt; = (<span class="number">0</span>..max_lines)
+<a href=#1085 id=1085 data-nosnippet>1085</a>            .map(|i| {
+<a href=#1086 id=1086 data-nosnippet>1086</a>                <span class="kw">let </span>l = <span class="kw-2">*</span>left_lines.get(i).unwrap_or(<span class="kw-2">&amp;</span><span class="string">""</span>);
+<a href=#1087 id=1087 data-nosnippet>1087</a>                <span class="kw">let </span>r = <span class="kw-2">*</span>right_lines.get(i).unwrap_or(<span class="kw-2">&amp;</span><span class="string">""</span>);
+<a href=#1088 id=1088 data-nosnippet>1088</a>                (l, r)
+<a href=#1089 id=1089 data-nosnippet>1089</a>            })
+<a href=#1090 id=1090 data-nosnippet>1090</a>            .filter(|(l, r)| <span class="macro">l !</span>= r)
+<a href=#1091 id=1091 data-nosnippet>1091</a>            .collect();
+<a href=#1092 id=1092 data-nosnippet>1092</a>        <span class="kw">let </span>left_width = diffs.iter().map(|(l, <span class="kw">_</span>)| l.len()).max().unwrap_or(<span class="number">0</span>);
+<a href=#1093 id=1093 data-nosnippet>1093</a>        <span class="kw">let </span><span class="kw-2">mut </span>out = String::new();
+<a href=#1094 id=1094 data-nosnippet>1094</a>        <span class="kw">for </span>(l, r) <span class="kw">in </span><span class="kw-2">&amp;</span>diffs {
+<a href=#1095 id=1095 data-nosnippet>1095</a>            out += <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{:&lt;width$}  |  {}\n"</span>, l, r, width = left_width);
+<a href=#1096 id=1096 data-nosnippet>1096</a>        }
+<a href=#1097 id=1097 data-nosnippet>1097</a>        out
+<a href=#1098 id=1098 data-nosnippet>1098</a>    }
+<a href=#1099 id=1099 data-nosnippet>1099</a>
+<a href=#1100 id=1100 data-nosnippet>1100</a>    <span class="attr">#[test]
+<a href=#1101 id=1101 data-nosnippet>1101</a>    </span><span class="kw">fn </span>with_limits_exhaustive() {
+<a href=#1102 id=1102 data-nosnippet>1102</a>        <span class="comment">// Check that all limits are included in `with_limits!`, by using it to
+<a href=#1103 id=1103 data-nosnippet>1103</a>        // replicate `Limits::unlimited()`.
+<a href=#1104 id=1104 data-nosnippet>1104</a>        </span><span class="kw">let </span><span class="kw-2">mut </span>limits = Limits::default();
+<a href=#1105 id=1105 data-nosnippet>1105</a>
+<a href=#1106 id=1106 data-nosnippet>1106</a>        <span class="macro">macro_rules!</span> set_to_max {
+<a href=#1107 id=1107 data-nosnippet>1107</a>            (<span class="macro-nonterminal">$name</span>:ident, <span class="macro-nonterminal">$ordering</span>:expr) =&gt; {
+<a href=#1108 id=1108 data-nosnippet>1108</a>                <span class="kw">if </span><span class="macro-nonterminal">$ordering </span>== Ordering::Less {
+<a href=#1109 id=1109 data-nosnippet>1109</a>                    limits.<span class="macro-nonterminal">$name </span>= i32::MAX <span class="kw">as _</span>;
+<a href=#1110 id=1110 data-nosnippet>1110</a>                } <span class="kw">else </span>{
+<a href=#1111 id=1111 data-nosnippet>1111</a>                    limits.<span class="macro-nonterminal">$name </span>= <span class="number">1</span>;
+<a href=#1112 id=1112 data-nosnippet>1112</a>                }
+<a href=#1113 id=1113 data-nosnippet>1113</a>            };
+<a href=#1114 id=1114 data-nosnippet>1114</a>        }
+<a href=#1115 id=1115 data-nosnippet>1115</a>
+<a href=#1116 id=1116 data-nosnippet>1116</a>        <span class="macro">with_limits!</span>(set_to_max);
+<a href=#1117 id=1117 data-nosnippet>1117</a>
+<a href=#1118 id=1118 data-nosnippet>1118</a>        <span class="macro">assert_eq!</span>(
+<a href=#1119 id=1119 data-nosnippet>1119</a>            limits,
+<a href=#1120 id=1120 data-nosnippet>1120</a>            Limits::unlimited(),
+<a href=#1121 id=1121 data-nosnippet>1121</a>            <span class="string">"with_limits! did not replicate Limits::unlimited():\n{}"</span>,
+<a href=#1122 id=1122 data-nosnippet>1122</a>            side_by_side(
+<a href=#1123 id=1123 data-nosnippet>1123</a>                <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"with_limits!\n------------\n{:#?}"</span>, limits),
+<a href=#1124 id=1124 data-nosnippet>1124</a>                <span class="kw-2">&amp;</span><span class="macro">format!</span>(
+<a href=#1125 id=1125 data-nosnippet>1125</a>                    <span class="string">"Limits::unlimited()\n-------------------\n{:#?}"</span>,
+<a href=#1126 id=1126 data-nosnippet>1126</a>                    Limits::unlimited()
+<a href=#1127 id=1127 data-nosnippet>1127</a>                ),
+<a href=#1128 id=1128 data-nosnippet>1128</a>            )
+<a href=#1129 id=1129 data-nosnippet>1129</a>        );
+<a href=#1130 id=1130 data-nosnippet>1130</a>    }
+<a href=#1131 id=1131 data-nosnippet>1131</a>}
 </code></pre></div></section></main></body></html>

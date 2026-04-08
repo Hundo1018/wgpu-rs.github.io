@@ -184,30 +184,32 @@
 <a href=#184 id=184 data-nosnippet>184</a>    buffer_slice.map_async(wgpu::MapMode::Read, <span class="kw">move </span>|r| sender.send(r).unwrap());
 <a href=#185 id=185 data-nosnippet>185</a>    device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
 <a href=#186 id=186 data-nosnippet>186</a>    receiver.recv_async().<span class="kw">await</span>.unwrap().unwrap();
-<a href=#187 id=187 data-nosnippet>187</a>    output.copy_from_slice(bytemuck::cast_slice(<span class="kw-2">&amp;</span>buffer_slice.get_mapped_range()[..]));
-<a href=#188 id=188 data-nosnippet>188</a>    staging_buffer.unmap();
-<a href=#189 id=189 data-nosnippet>189</a>}
-<a href=#190 id=190 data-nosnippet>190</a>
-<a href=#191 id=191 data-nosnippet>191</a><span class="kw">pub fn </span>main() {
-<a href=#192 id=192 data-nosnippet>192</a>    <span class="attr">#[cfg(not(target_arch = <span class="string">"wasm32"</span>))]
-<a href=#193 id=193 data-nosnippet>193</a>    </span>{
-<a href=#194 id=194 data-nosnippet>194</a>        env_logger::builder()
-<a href=#195 id=195 data-nosnippet>195</a>            .filter_level(log::LevelFilter::Info)
-<a href=#196 id=196 data-nosnippet>196</a>            .format_timestamp_nanos()
-<a href=#197 id=197 data-nosnippet>197</a>            .init();
-<a href=#198 id=198 data-nosnippet>198</a>        pollster::block_on(run());
-<a href=#199 id=199 data-nosnippet>199</a>    }
-<a href=#200 id=200 data-nosnippet>200</a>    <span class="attr">#[cfg(target_arch = <span class="string">"wasm32"</span>)]
-<a href=#201 id=201 data-nosnippet>201</a>    </span>{
-<a href=#202 id=202 data-nosnippet>202</a>        std::panic::set_hook(Box::new(console_error_panic_hook::hook));
-<a href=#203 id=203 data-nosnippet>203</a>        console_log::init_with_level(log::Level::Info).expect(<span class="string">"could not initialize logger"</span>);
-<a href=#204 id=204 data-nosnippet>204</a>
-<a href=#205 id=205 data-nosnippet>205</a>        <span class="kw">crate</span>::utils::add_web_nothing_to_see_msg();
+<a href=#187 id=187 data-nosnippet>187</a>    <span class="kw">let </span>data: Vec&lt;T&gt; =
+<a href=#188 id=188 data-nosnippet>188</a>        bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>buffer_slice.get_mapped_range()[..]);
+<a href=#189 id=189 data-nosnippet>189</a>    output.copy_from_slice(<span class="kw-2">&amp;</span>data);
+<a href=#190 id=190 data-nosnippet>190</a>    staging_buffer.unmap();
+<a href=#191 id=191 data-nosnippet>191</a>}
+<a href=#192 id=192 data-nosnippet>192</a>
+<a href=#193 id=193 data-nosnippet>193</a><span class="kw">pub fn </span>main() {
+<a href=#194 id=194 data-nosnippet>194</a>    <span class="attr">#[cfg(not(target_arch = <span class="string">"wasm32"</span>))]
+<a href=#195 id=195 data-nosnippet>195</a>    </span>{
+<a href=#196 id=196 data-nosnippet>196</a>        env_logger::builder()
+<a href=#197 id=197 data-nosnippet>197</a>            .filter_level(log::LevelFilter::Info)
+<a href=#198 id=198 data-nosnippet>198</a>            .format_timestamp_nanos()
+<a href=#199 id=199 data-nosnippet>199</a>            .init();
+<a href=#200 id=200 data-nosnippet>200</a>        pollster::block_on(run());
+<a href=#201 id=201 data-nosnippet>201</a>    }
+<a href=#202 id=202 data-nosnippet>202</a>    <span class="attr">#[cfg(target_arch = <span class="string">"wasm32"</span>)]
+<a href=#203 id=203 data-nosnippet>203</a>    </span>{
+<a href=#204 id=204 data-nosnippet>204</a>        std::panic::set_hook(Box::new(console_error_panic_hook::hook));
+<a href=#205 id=205 data-nosnippet>205</a>        console_log::init_with_level(log::Level::Info).expect(<span class="string">"could not initialize logger"</span>);
 <a href=#206 id=206 data-nosnippet>206</a>
-<a href=#207 id=207 data-nosnippet>207</a>        wasm_bindgen_futures::spawn_local(run());
-<a href=#208 id=208 data-nosnippet>208</a>    }
-<a href=#209 id=209 data-nosnippet>209</a>}
-<a href=#210 id=210 data-nosnippet>210</a>
-<a href=#211 id=211 data-nosnippet>211</a><span class="attr">#[cfg(test)]
-<a href=#212 id=212 data-nosnippet>212</a></span><span class="kw">pub mod </span>tests;
+<a href=#207 id=207 data-nosnippet>207</a>        <span class="kw">crate</span>::utils::add_web_nothing_to_see_msg();
+<a href=#208 id=208 data-nosnippet>208</a>
+<a href=#209 id=209 data-nosnippet>209</a>        wasm_bindgen_futures::spawn_local(run());
+<a href=#210 id=210 data-nosnippet>210</a>    }
+<a href=#211 id=211 data-nosnippet>211</a>}
+<a href=#212 id=212 data-nosnippet>212</a>
+<a href=#213 id=213 data-nosnippet>213</a><span class="attr">#[cfg(test)]
+<a href=#214 id=214 data-nosnippet>214</a></span><span class="kw">pub mod </span>tests;
 </code></pre></div></section></main></body></html>

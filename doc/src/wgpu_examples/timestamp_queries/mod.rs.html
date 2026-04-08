@@ -182,7 +182,7 @@
 <a href=#182 id=182 data-nosnippet>182</a>                </span>.destination_buffer
 <a href=#183 id=183 data-nosnippet>183</a>                .slice(..(size_of::&lt;u64&gt;() <span class="kw">as </span>wgpu::BufferAddress * <span class="self">self</span>.num_queries))
 <a href=#184 id=184 data-nosnippet>184</a>                .get_mapped_range();
-<a href=#185 id=185 data-nosnippet>185</a>            bytemuck::cast_slice(<span class="kw-2">&amp;</span>timestamp_view).to_vec()
+<a href=#185 id=185 data-nosnippet>185</a>            bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>timestamp_view)
 <a href=#186 id=186 data-nosnippet>186</a>        };
 <a href=#187 id=187 data-nosnippet>187</a>
 <a href=#188 id=188 data-nosnippet>188</a>        <span class="self">self</span>.destination_buffer.unmap();

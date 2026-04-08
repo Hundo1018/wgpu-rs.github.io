@@ -415,10 +415,10 @@
 <a href=#415 id=415 data-nosnippet>415</a>
 <a href=#416 id=416 data-nosnippet>416</a>    <span class="comment">// Convert result back to f32 for comparison
 <a href=#417 id=417 data-nosnippet>417</a>    </span><span class="kw">let </span>result: Vec&lt;f32&gt; = <span class="kw">if </span>use_f16 {
-<a href=#418 id=418 data-nosnippet>418</a>        <span class="kw">let </span>result_f16: <span class="kw-2">&amp;</span>[f16] = bytemuck::cast_slice(<span class="kw-2">&amp;</span>data);
+<a href=#418 id=418 data-nosnippet>418</a>        <span class="kw">let </span>result_f16: Vec&lt;f16&gt; = bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>data);
 <a href=#419 id=419 data-nosnippet>419</a>        result_f16.iter().map(|x| x.to_f32()).collect()
 <a href=#420 id=420 data-nosnippet>420</a>    } <span class="kw">else </span>{
-<a href=#421 id=421 data-nosnippet>421</a>        bytemuck::cast_slice::&lt;<span class="kw">_</span>, f32&gt;(<span class="kw-2">&amp;</span>data).to_vec()
+<a href=#421 id=421 data-nosnippet>421</a>        bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>data)
 <a href=#422 id=422 data-nosnippet>422</a>    };
 <a href=#423 id=423 data-nosnippet>423</a>
 <a href=#424 id=424 data-nosnippet>424</a>    <span class="comment">// Compute reference result on CPU for verification

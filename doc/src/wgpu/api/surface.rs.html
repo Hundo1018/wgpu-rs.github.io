@@ -367,7 +367,7 @@
 <a href=#367 id=367 data-nosnippet>367</a>    ///
 <a href=#368 id=368 data-nosnippet>368</a>    /// - All parameters must point to valid DRM values and remain valid for as long as the resulting [`Surface`] exists.
 <a href=#369 id=369 data-nosnippet>369</a>    /// - The file descriptor (`fd`), plane, connector, and mode configuration must be valid and compatible.
-<a href=#370 id=370 data-nosnippet>370</a>    </span><span class="attr">#[cfg(all(unix, not(target_vendor = <span class="string">"apple"</span>), not(target_family = <span class="string">"wasm"</span>)))]
+<a href=#370 id=370 data-nosnippet>370</a>    </span><span class="attr">#[cfg(drm)]
 <a href=#371 id=371 data-nosnippet>371</a>    </span>Drm {
 <a href=#372 id=372 data-nosnippet>372</a>        <span class="doccomment">/// The file descriptor of the DRM device.
 <a href=#373 id=373 data-nosnippet>373</a>        </span>fd: i32,

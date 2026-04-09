@@ -3,8 +3,8 @@
 <a href=#3 id=3 data-nosnippet>3</a><span class="kw">use </span><span class="kw">super</span>::Data;
 <a href=#4 id=4 data-nosnippet>4</a>
 <a href=#5 id=5 data-nosnippet>5</a><span class="kw">pub trait </span>DataLoader {
-<a href=#6 id=6 data-nosnippet>6</a>    <span class="kw">fn </span>load&lt;<span class="lifetime">'loader</span>, <span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'loader </span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, [u8]&gt;;
-<a href=#7 id=7 data-nosnippet>7</a>    <span class="kw">fn </span>load_utf8&lt;<span class="lifetime">'loader</span>, <span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'loader </span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, str&gt;;
+<a href=#6 id=6 data-nosnippet>6</a>    <span class="kw">fn </span>load&lt;<span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, [u8]&gt;;
+<a href=#7 id=7 data-nosnippet>7</a>    <span class="kw">fn </span>load_utf8&lt;<span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, str&gt;;
 <a href=#8 id=8 data-nosnippet>8</a>}
 <a href=#9 id=9 data-nosnippet>9</a>
 <a href=#10 id=10 data-nosnippet>10</a><span class="attr">#[cfg(feature = <span class="string">"std"</span>)]
@@ -18,7 +18,7 @@
 <a href=#18 id=18 data-nosnippet>18</a>}
 <a href=#19 id=19 data-nosnippet>19</a>
 <a href=#20 id=20 data-nosnippet>20</a><span class="kw">impl </span>DataLoader <span class="kw">for </span>DiskTraceLoader&lt;<span class="lifetime">'_</span>&gt; {
-<a href=#21 id=21 data-nosnippet>21</a>    <span class="kw">fn </span>load&lt;<span class="lifetime">'loader</span>, <span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'loader </span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, [u8]&gt; {
+<a href=#21 id=21 data-nosnippet>21</a>    <span class="kw">fn </span>load&lt;<span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, [u8]&gt; {
 <a href=#22 id=22 data-nosnippet>22</a>        <span class="kw">match </span>data {
 <a href=#23 id=23 data-nosnippet>23</a>            Data::File(file) =&gt; {
 <a href=#24 id=24 data-nosnippet>24</a>                Cow::from(std::fs::read(<span class="self">self</span>.<span class="number">0</span>.join(file)).expect(<span class="string">"Failed to read data file"</span>))
@@ -33,7 +33,7 @@
 <a href=#33 id=33 data-nosnippet>33</a>    /// # Panics
 <a href=#34 id=34 data-nosnippet>34</a>    ///
 <a href=#35 id=35 data-nosnippet>35</a>    /// If the data kind is not a string format or the data is not valid UTF-8
-<a href=#36 id=36 data-nosnippet>36</a>    </span><span class="kw">fn </span>load_utf8&lt;<span class="lifetime">'loader</span>, <span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'loader </span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, str&gt; {
+<a href=#36 id=36 data-nosnippet>36</a>    </span><span class="kw">fn </span>load_utf8&lt;<span class="lifetime">'data</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span><span class="lifetime">'data </span>Data) -&gt; Cow&lt;<span class="lifetime">'data</span>, str&gt; {
 <a href=#37 id=37 data-nosnippet>37</a>        <span class="kw">match </span>data {
 <a href=#38 id=38 data-nosnippet>38</a>            Data::File(file) =&gt; Cow::from(
 <a href=#39 id=39 data-nosnippet>39</a>                std::fs::read_to_string(<span class="self">self</span>.<span class="number">0</span>.join(file)).expect(<span class="string">"Failed to read data file"</span>),

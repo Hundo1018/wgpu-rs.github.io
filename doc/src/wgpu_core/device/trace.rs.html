@@ -5,7 +5,7 @@
 <a href=#5 id=5 data-nosnippet>5</a>
 <a href=#6 id=6 data-nosnippet>6</a><span class="kw">use </span>core::convert::Infallible;
 <a href=#7 id=7 data-nosnippet>7</a>
-<a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>alloc::{string::String, vec::Vec};
+<a href=#8 id=8 data-nosnippet>8</a><span class="kw">use </span>alloc::{borrow::Cow, string::String, vec::Vec};
 <a href=#9 id=9 data-nosnippet>9</a><span class="kw">use </span>macro_rules_attribute::apply;
 <a href=#10 id=10 data-nosnippet>10</a>
 <a href=#11 id=11 data-nosnippet>11</a><span class="kw">use crate</span>::{
@@ -189,7 +189,7 @@
 <a href=#189 id=189 data-nosnippet>189</a>        data: Vec&lt;Data&gt;,
 <a href=#190 id=190 data-nosnippet>190</a>
 <a href=#191 id=191 data-nosnippet>191</a>        label: <span class="kw">crate</span>::Label&lt;<span class="lifetime">'a</span>&gt;,
-<a href=#192 id=192 data-nosnippet>192</a>        num_workgroups: (u32, u32, u32),
+<a href=#192 id=192 data-nosnippet>192</a>        entry_points: Cow&lt;<span class="lifetime">'a</span>, [wgt::PassthroughShaderEntryPoint&lt;<span class="lifetime">'a</span>&gt;]&gt;,
 <a href=#193 id=193 data-nosnippet>193</a>    },
 <a href=#194 id=194 data-nosnippet>194</a>    DestroyShaderModule(PointerId&lt;markers::ShaderModule&gt;),
 <a href=#195 id=195 data-nosnippet>195</a>    CreateComputePipeline {

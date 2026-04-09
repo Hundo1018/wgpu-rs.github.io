@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["compile_wgsl","get_shaders","main"],"struct":["Example","Shaders"]};
+window.SIDEBAR_ITEMS = {"fn":["main"],"struct":["Example"]};

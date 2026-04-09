@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["CreateShaderModuleDescriptorPassthrough","ShaderRuntimeChecks"]};
+window.SIDEBAR_ITEMS = {"struct":["CreateShaderModuleDescriptorPassthrough","PassthroughShaderEntryPoint","ShaderRuntimeChecks"]};

@@ -1118,7 +1118,7 @@
 <a href=#1118 id=1118 data-nosnippet>1118</a>                    id: shader.to_trace(),
 <a href=#1119 id=1119 data-nosnippet>1119</a>                    data: file_names,
 <a href=#1120 id=1120 data-nosnippet>1120</a>                    label: desc.label.clone(),
-<a href=#1121 id=1121 data-nosnippet>1121</a>                    num_workgroups: desc.num_workgroups,
+<a href=#1121 id=1121 data-nosnippet>1121</a>                    entry_points: desc.entry_points.clone(),
 <a href=#1122 id=1122 data-nosnippet>1122</a>                });
 <a href=#1123 id=1123 data-nosnippet>1123</a>            };
 <a href=#1124 id=1124 data-nosnippet>1124</a>
@@ -1413,7 +1413,7 @@
 <a href=#1413 id=1413 data-nosnippet>1413</a>                        <span class="prelude-val">Ok</span>(module) =&gt; module,
 <a href=#1414 id=1414 data-nosnippet>1414</a>                        <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">break </span><span class="lifetime">'error </span>e,
 <a href=#1415 id=1415 data-nosnippet>1415</a>                    };
-<a href=#1416 id=1416 data-nosnippet>1416</a>                    <span class="kw">if </span>module.interface.is_none() {
+<a href=#1416 id=1416 data-nosnippet>1416</a>                    <span class="kw">if </span>module.interface.interface().is_none() {
 <a href=#1417 id=1417 data-nosnippet>1417</a>                        passthrough_stages |= wgt::ShaderStages::VERTEX;
 <a href=#1418 id=1418 data-nosnippet>1418</a>                    }
 <a href=#1419 id=1419 data-nosnippet>1419</a>                    <span class="kw">let </span>stage = ResolvedProgrammableStageDescriptor {
@@ -1443,7 +1443,7 @@
 <a href=#1443 id=1443 data-nosnippet>1443</a>                            <span class="prelude-val">Ok</span>(module) =&gt; module,
 <a href=#1444 id=1444 data-nosnippet>1444</a>                            <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">break </span><span class="lifetime">'error </span>e,
 <a href=#1445 id=1445 data-nosnippet>1445</a>                        };
-<a href=#1446 id=1446 data-nosnippet>1446</a>                        <span class="kw">if </span>module.interface.is_none() {
+<a href=#1446 id=1446 data-nosnippet>1446</a>                        <span class="kw">if </span>module.interface.interface().is_none() {
 <a href=#1447 id=1447 data-nosnippet>1447</a>                            passthrough_stages |= wgt::ShaderStages::TASK;
 <a href=#1448 id=1448 data-nosnippet>1448</a>                        }
 <a href=#1449 id=1449 data-nosnippet>1449</a>                        <span class="kw">let </span>state = ResolvedProgrammableStageDescriptor {
@@ -1470,7 +1470,7 @@
 <a href=#1470 id=1470 data-nosnippet>1470</a>                        <span class="prelude-val">Ok</span>(module) =&gt; module,
 <a href=#1471 id=1471 data-nosnippet>1471</a>                        <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">break </span><span class="lifetime">'error </span>e,
 <a href=#1472 id=1472 data-nosnippet>1472</a>                    };
-<a href=#1473 id=1473 data-nosnippet>1473</a>                    <span class="kw">if </span>mesh_module.interface.is_none() {
+<a href=#1473 id=1473 data-nosnippet>1473</a>                    <span class="kw">if </span>mesh_module.interface.interface().is_none() {
 <a href=#1474 id=1474 data-nosnippet>1474</a>                        passthrough_stages |= wgt::ShaderStages::VERTEX;
 <a href=#1475 id=1475 data-nosnippet>1475</a>                    }
 <a href=#1476 id=1476 data-nosnippet>1476</a>                    <span class="kw">let </span>mesh_stage = ResolvedProgrammableStageDescriptor {
@@ -1501,7 +1501,7 @@
 <a href=#1501 id=1501 data-nosnippet>1501</a>                    <span class="prelude-val">Ok</span>(module) =&gt; module,
 <a href=#1502 id=1502 data-nosnippet>1502</a>                    <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">break </span><span class="lifetime">'error </span>e,
 <a href=#1503 id=1503 data-nosnippet>1503</a>                };
-<a href=#1504 id=1504 data-nosnippet>1504</a>                <span class="kw">if </span>module.interface.is_none() {
+<a href=#1504 id=1504 data-nosnippet>1504</a>                <span class="kw">if </span>module.interface.interface().is_none() {
 <a href=#1505 id=1505 data-nosnippet>1505</a>                    passthrough_stages |= wgt::ShaderStages::FRAGMENT;
 <a href=#1506 id=1506 data-nosnippet>1506</a>                }
 <a href=#1507 id=1507 data-nosnippet>1507</a>                <span class="kw">let </span>stage = ResolvedProgrammableStageDescriptor {
@@ -1668,7 +1668,7 @@
 <a href=#1668 id=1668 data-nosnippet>1668</a>                <span class="prelude-val">Ok</span>(module) =&gt; module,
 <a href=#1669 id=1669 data-nosnippet>1669</a>                <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">break </span><span class="lifetime">'error </span>e.into(),
 <a href=#1670 id=1670 data-nosnippet>1670</a>            };
-<a href=#1671 id=1671 data-nosnippet>1671</a>            <span class="kw">if </span>module.interface.is_none() &amp;&amp; layout.is_none() {
+<a href=#1671 id=1671 data-nosnippet>1671</a>            <span class="kw">if </span>module.interface.interface().is_none() &amp;&amp; layout.is_none() {
 <a href=#1672 id=1672 data-nosnippet>1672</a>                <span class="kw">break </span><span class="lifetime">'error </span>pipeline::CreateComputePipelineError::Implicit(
 <a href=#1673 id=1673 data-nosnippet>1673</a>                    pipeline::ImplicitLayoutError::Passthrough(wgt::ShaderStages::COMPUTE),
 <a href=#1674 id=1674 data-nosnippet>1674</a>                );

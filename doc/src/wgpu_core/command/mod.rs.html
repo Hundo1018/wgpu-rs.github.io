@@ -2047,31 +2047,33 @@
 <a href=#2047 id=2047 data-nosnippet>2047</a>    </span>BeginPipelineStatisticsQuery,
 <a href=#2048 id=2048 data-nosnippet>2048</a>    <span class="attr">#[error(<span class="string">"In a end_pipeline_statistics_query command"</span>)]
 <a href=#2049 id=2049 data-nosnippet>2049</a>    </span>EndPipelineStatisticsQuery,
-<a href=#2050 id=2050 data-nosnippet>2050</a>    <span class="attr">#[error(<span class="string">"In a execute_bundle command"</span>)]
-<a href=#2051 id=2051 data-nosnippet>2051</a>    </span>ExecuteBundle,
-<a href=#2052 id=2052 data-nosnippet>2052</a>    <span class="attr">#[error(<span class="string">"In a dispatch command, indirect:{indirect}"</span>)]
-<a href=#2053 id=2053 data-nosnippet>2053</a>    </span>Dispatch { indirect: bool },
-<a href=#2054 id=2054 data-nosnippet>2054</a>    <span class="attr">#[error(<span class="string">"In a push_debug_group command"</span>)]
-<a href=#2055 id=2055 data-nosnippet>2055</a>    </span>PushDebugGroup,
-<a href=#2056 id=2056 data-nosnippet>2056</a>    <span class="attr">#[error(<span class="string">"In a pop_debug_group command"</span>)]
-<a href=#2057 id=2057 data-nosnippet>2057</a>    </span>PopDebugGroup,
-<a href=#2058 id=2058 data-nosnippet>2058</a>    <span class="attr">#[error(<span class="string">"In a insert_debug_marker command"</span>)]
-<a href=#2059 id=2059 data-nosnippet>2059</a>    </span>InsertDebugMarker,
-<a href=#2060 id=2060 data-nosnippet>2060</a>}
-<a href=#2061 id=2061 data-nosnippet>2061</a>
-<a href=#2062 id=2062 data-nosnippet>2062</a><span class="doccomment">/// Variant of `EncoderStateError` that includes the pass scope.
-<a href=#2063 id=2063 data-nosnippet>2063</a></span><span class="attr">#[derive(Clone, Debug, Error)]
-<a href=#2064 id=2064 data-nosnippet>2064</a>#[error(<span class="string">"{scope}"</span>)]
-<a href=#2065 id=2065 data-nosnippet>2065</a></span><span class="kw">pub struct </span>PassStateError {
-<a href=#2066 id=2066 data-nosnippet>2066</a>    <span class="kw">pub </span>scope: PassErrorScope,
-<a href=#2067 id=2067 data-nosnippet>2067</a>    <span class="attr">#[source]
-<a href=#2068 id=2068 data-nosnippet>2068</a>    </span><span class="kw">pub</span>(<span class="kw">super</span>) inner: EncoderStateError,
-<a href=#2069 id=2069 data-nosnippet>2069</a>}
-<a href=#2070 id=2070 data-nosnippet>2070</a>
-<a href=#2071 id=2071 data-nosnippet>2071</a><span class="kw">impl </span>WebGpuError <span class="kw">for </span>PassStateError {
-<a href=#2072 id=2072 data-nosnippet>2072</a>    <span class="kw">fn </span>webgpu_error_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ErrorType {
-<a href=#2073 id=2073 data-nosnippet>2073</a>        <span class="kw">let </span><span class="self">Self </span>{ scope: <span class="kw">_</span>, inner } = <span class="self">self</span>;
-<a href=#2074 id=2074 data-nosnippet>2074</a>        inner.webgpu_error_type()
-<a href=#2075 id=2075 data-nosnippet>2075</a>    }
-<a href=#2076 id=2076 data-nosnippet>2076</a>}
+<a href=#2050 id=2050 data-nosnippet>2050</a>    <span class="attr">#[error(<span class="string">"In a transition_resources command"</span>)]
+<a href=#2051 id=2051 data-nosnippet>2051</a>    </span>TransitionResources,
+<a href=#2052 id=2052 data-nosnippet>2052</a>    <span class="attr">#[error(<span class="string">"In a execute_bundle command"</span>)]
+<a href=#2053 id=2053 data-nosnippet>2053</a>    </span>ExecuteBundle,
+<a href=#2054 id=2054 data-nosnippet>2054</a>    <span class="attr">#[error(<span class="string">"In a dispatch command, indirect:{indirect}"</span>)]
+<a href=#2055 id=2055 data-nosnippet>2055</a>    </span>Dispatch { indirect: bool },
+<a href=#2056 id=2056 data-nosnippet>2056</a>    <span class="attr">#[error(<span class="string">"In a push_debug_group command"</span>)]
+<a href=#2057 id=2057 data-nosnippet>2057</a>    </span>PushDebugGroup,
+<a href=#2058 id=2058 data-nosnippet>2058</a>    <span class="attr">#[error(<span class="string">"In a pop_debug_group command"</span>)]
+<a href=#2059 id=2059 data-nosnippet>2059</a>    </span>PopDebugGroup,
+<a href=#2060 id=2060 data-nosnippet>2060</a>    <span class="attr">#[error(<span class="string">"In a insert_debug_marker command"</span>)]
+<a href=#2061 id=2061 data-nosnippet>2061</a>    </span>InsertDebugMarker,
+<a href=#2062 id=2062 data-nosnippet>2062</a>}
+<a href=#2063 id=2063 data-nosnippet>2063</a>
+<a href=#2064 id=2064 data-nosnippet>2064</a><span class="doccomment">/// Variant of `EncoderStateError` that includes the pass scope.
+<a href=#2065 id=2065 data-nosnippet>2065</a></span><span class="attr">#[derive(Clone, Debug, Error)]
+<a href=#2066 id=2066 data-nosnippet>2066</a>#[error(<span class="string">"{scope}"</span>)]
+<a href=#2067 id=2067 data-nosnippet>2067</a></span><span class="kw">pub struct </span>PassStateError {
+<a href=#2068 id=2068 data-nosnippet>2068</a>    <span class="kw">pub </span>scope: PassErrorScope,
+<a href=#2069 id=2069 data-nosnippet>2069</a>    <span class="attr">#[source]
+<a href=#2070 id=2070 data-nosnippet>2070</a>    </span><span class="kw">pub</span>(<span class="kw">super</span>) inner: EncoderStateError,
+<a href=#2071 id=2071 data-nosnippet>2071</a>}
+<a href=#2072 id=2072 data-nosnippet>2072</a>
+<a href=#2073 id=2073 data-nosnippet>2073</a><span class="kw">impl </span>WebGpuError <span class="kw">for </span>PassStateError {
+<a href=#2074 id=2074 data-nosnippet>2074</a>    <span class="kw">fn </span>webgpu_error_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ErrorType {
+<a href=#2075 id=2075 data-nosnippet>2075</a>        <span class="kw">let </span><span class="self">Self </span>{ scope: <span class="kw">_</span>, inner } = <span class="self">self</span>;
+<a href=#2076 id=2076 data-nosnippet>2076</a>        inner.webgpu_error_type()
+<a href=#2077 id=2077 data-nosnippet>2077</a>    }
+<a href=#2078 id=2078 data-nosnippet>2078</a>}
 </code></pre></div></section></main></body></html>

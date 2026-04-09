@@ -146,7 +146,7 @@
 <a href=#146 id=146 data-nosnippet>146</a>    receiver.recv_async().<span class="kw">await</span>.unwrap().unwrap();
 <a href=#147 id=147 data-nosnippet>147</a>    <span class="macro">log::info!</span>(<span class="string">"Output buffer mapped"</span>);
 <a href=#148 id=148 data-nosnippet>148</a>    {
-<a href=#149 id=149 data-nosnippet>149</a>        <span class="kw">let </span>view = buffer_slice.get_mapped_range();
+<a href=#149 id=149 data-nosnippet>149</a>        <span class="kw">let </span>view = buffer_slice.get_mapped_range().unwrap();
 <a href=#150 id=150 data-nosnippet>150</a>        texture_data.copy_from_slice(<span class="kw-2">&amp;</span>view[..]);
 <a href=#151 id=151 data-nosnippet>151</a>    }
 <a href=#152 id=152 data-nosnippet>152</a>    <span class="macro">log::info!</span>(<span class="string">"GPU data copied to local."</span>);

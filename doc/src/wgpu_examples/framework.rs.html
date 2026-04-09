@@ -744,7 +744,7 @@
 <a href=#744 id=744 data-nosnippet>744</a>                ctx.async_poll(wgpu::PollType::wait_indefinitely())
 <a href=#745 id=745 data-nosnippet>745</a>                    .<span class="kw">await
 <a href=#746 id=746 data-nosnippet>746</a>                    </span>.unwrap();
-<a href=#747 id=747 data-nosnippet>747</a>                <span class="kw">let </span>bytes = dst_buffer_slice.get_mapped_range().to_vec();
+<a href=#747 id=747 data-nosnippet>747</a>                <span class="kw">let </span>bytes = dst_buffer_slice.get_mapped_range().unwrap().to_vec();
 <a href=#748 id=748 data-nosnippet>748</a>
 <a href=#749 id=749 data-nosnippet>749</a>                wgpu_test::image::compare_image_output(
 <a href=#750 id=750 data-nosnippet>750</a>                    <span class="macro">dbg!</span>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>).to_string() + <span class="string">"/../../" </span>+ params.image_path),

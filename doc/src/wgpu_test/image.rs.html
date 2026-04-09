@@ -584,7 +584,7 @@
 <a href=#584 id=584 data-nosnippet>584</a>        <span class="kw">let </span>expected_buffer_size = expected_bytes_per_row
 <a href=#585 id=585 data-nosnippet>585</a>            * (<span class="self">self</span>.texture_height / block_height)
 <a href=#586 id=586 data-nosnippet>586</a>            * <span class="self">self</span>.texture_depth_or_array_layers;
-<a href=#587 id=587 data-nosnippet>587</a>        <span class="kw">let </span>data: BufferView = buffer_slice.get_mapped_range();
+<a href=#587 id=587 data-nosnippet>587</a>        <span class="kw">let </span>data: BufferView = buffer_slice.get_mapped_range().unwrap();
 <a href=#588 id=588 data-nosnippet>588</a>        <span class="kw">if </span>expected_buffer_size <span class="kw">as </span>usize == data.len() {
 <a href=#589 id=589 data-nosnippet>589</a>            data.to_vec()
 <a href=#590 id=590 data-nosnippet>590</a>        } <span class="kw">else </span>{

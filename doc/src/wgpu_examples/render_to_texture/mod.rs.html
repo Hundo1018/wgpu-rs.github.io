@@ -137,7 +137,7 @@
 <a href=#137 id=137 data-nosnippet>137</a>    receiver.recv_async().<span class="kw">await</span>.unwrap().unwrap();
 <a href=#138 id=138 data-nosnippet>138</a>    <span class="macro">log::info!</span>(<span class="string">"Output buffer mapped."</span>);
 <a href=#139 id=139 data-nosnippet>139</a>    {
-<a href=#140 id=140 data-nosnippet>140</a>        <span class="kw">let </span>view = buffer_slice.get_mapped_range();
+<a href=#140 id=140 data-nosnippet>140</a>        <span class="kw">let </span>view = buffer_slice.get_mapped_range().unwrap();
 <a href=#141 id=141 data-nosnippet>141</a>        texture_data.extend_from_slice(<span class="kw-2">&amp;</span>view[..]);
 <a href=#142 id=142 data-nosnippet>142</a>    }
 <a href=#143 id=143 data-nosnippet>143</a>    <span class="macro">log::info!</span>(<span class="string">"Image data copied to local."</span>);

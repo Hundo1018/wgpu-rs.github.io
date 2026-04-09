@@ -185,7 +185,7 @@
 <a href=#185 id=185 data-nosnippet>185</a>    device.poll(wgpu::PollType::wait_indefinitely()).unwrap();
 <a href=#186 id=186 data-nosnippet>186</a>    receiver.recv_async().<span class="kw">await</span>.unwrap().unwrap();
 <a href=#187 id=187 data-nosnippet>187</a>    <span class="kw">let </span>data: Vec&lt;T&gt; =
-<a href=#188 id=188 data-nosnippet>188</a>        bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>buffer_slice.get_mapped_range()[..]);
+<a href=#188 id=188 data-nosnippet>188</a>        bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>buffer_slice.get_mapped_range().unwrap()[..]);
 <a href=#189 id=189 data-nosnippet>189</a>    output.copy_from_slice(<span class="kw-2">&amp;</span>data);
 <a href=#190 id=190 data-nosnippet>190</a>    staging_buffer.unmap();
 <a href=#191 id=191 data-nosnippet>191</a>}

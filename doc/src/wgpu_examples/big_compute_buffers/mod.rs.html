@@ -85,7 +85,7 @@
 <a href=#85 id=85 data-nosnippet>85</a>    <span class="kw">let </span><span class="kw-2">mut </span>data = Vec::new();
 <a href=#86 id=86 data-nosnippet>86</a>    <span class="kw">for </span>staging_buffer <span class="kw">in </span><span class="kw-2">&amp;</span>staging_buffers {
 <a href=#87 id=87 data-nosnippet>87</a>        <span class="kw">let </span>slice = staging_buffer.slice(..);
-<a href=#88 id=88 data-nosnippet>88</a>        <span class="kw">let </span>mapped = slice.get_mapped_range();
+<a href=#88 id=88 data-nosnippet>88</a>        <span class="kw">let </span>mapped = slice.get_mapped_range().unwrap();
 <a href=#89 id=89 data-nosnippet>89</a>        <span class="kw">let </span>chunk: Vec&lt;f32&gt; = bytemuck::allocation::pod_collect_to_vec(<span class="kw-2">&amp;</span>mapped);
 <a href=#90 id=90 data-nosnippet>90</a>        data.extend_from_slice(<span class="kw-2">&amp;</span>chunk);
 <a href=#91 id=91 data-nosnippet>91</a>        drop(mapped);

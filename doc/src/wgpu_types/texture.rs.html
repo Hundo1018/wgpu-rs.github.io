@@ -971,7 +971,7 @@
 <a href=#971 id=971 data-nosnippet>971</a>    </span><span class="attr">#[must_use]
 <a href=#972 id=972 data-nosnippet>972</a>    </span><span class="kw">pub fn </span>mip_range(<span class="kw-2">&amp;</span><span class="self">self</span>, mip_level_count: u32) -&gt; Range&lt;u32&gt; {
 <a href=#973 id=973 data-nosnippet>973</a>        <span class="self">self</span>.base_mip_level..<span class="kw">match </span><span class="self">self</span>.mip_level_count {
-<a href=#974 id=974 data-nosnippet>974</a>            <span class="prelude-val">Some</span>(mip_level_count) =&gt; <span class="self">self</span>.base_mip_level + mip_level_count,
+<a href=#974 id=974 data-nosnippet>974</a>            <span class="prelude-val">Some</span>(mip_level_count) =&gt; <span class="self">self</span>.base_mip_level.saturating_add(mip_level_count),
 <a href=#975 id=975 data-nosnippet>975</a>            <span class="prelude-val">None </span>=&gt; mip_level_count,
 <a href=#976 id=976 data-nosnippet>976</a>        }
 <a href=#977 id=977 data-nosnippet>977</a>    }
@@ -980,7 +980,7 @@
 <a href=#980 id=980 data-nosnippet>980</a>    </span><span class="attr">#[must_use]
 <a href=#981 id=981 data-nosnippet>981</a>    </span><span class="kw">pub fn </span>layer_range(<span class="kw-2">&amp;</span><span class="self">self</span>, array_layer_count: u32) -&gt; Range&lt;u32&gt; {
 <a href=#982 id=982 data-nosnippet>982</a>        <span class="self">self</span>.base_array_layer..<span class="kw">match </span><span class="self">self</span>.array_layer_count {
-<a href=#983 id=983 data-nosnippet>983</a>            <span class="prelude-val">Some</span>(array_layer_count) =&gt; <span class="self">self</span>.base_array_layer + array_layer_count,
+<a href=#983 id=983 data-nosnippet>983</a>            <span class="prelude-val">Some</span>(array_layer_count) =&gt; <span class="self">self</span>.base_array_layer.saturating_add(array_layer_count),
 <a href=#984 id=984 data-nosnippet>984</a>            <span class="prelude-val">None </span>=&gt; array_layer_count,
 <a href=#985 id=985 data-nosnippet>985</a>        }
 <a href=#986 id=986 data-nosnippet>986</a>    }

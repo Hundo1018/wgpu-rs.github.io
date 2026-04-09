@@ -187,46 +187,48 @@
 <a href=#187 id=187 data-nosnippet>187</a>    limits.max_compute_workgroup_size_z = z.min(m);
 <a href=#188 id=188 data-nosnippet>188</a>    limits.max_compute_invocations_per_workgroup = m.min(x.saturating_mul(y).saturating_mul(z));
 <a href=#189 id=189 data-nosnippet>189</a>
-<a href=#190 id=190 data-nosnippet>190</a>    limits
-<a href=#191 id=191 data-nosnippet>191</a>}
-<a href=#192 id=192 data-nosnippet>192</a>
-<a href=#193 id=193 data-nosnippet>193</a><span class="doccomment">/// Evenly allocates space to each limit,
-<a href=#194 id=194 data-nosnippet>194</a>/// capping them only if strictly necessary.
-<a href=#195 id=195 data-nosnippet>195</a></span><span class="kw">pub fn </span>cap_limits_to_be_under_the_sum_limit&lt;<span class="kw">const </span>N: usize&gt;(
-<a href=#196 id=196 data-nosnippet>196</a>    <span class="kw-2">mut </span>limits: [<span class="kw-2">&amp;mut </span>u32; N],
-<a href=#197 id=197 data-nosnippet>197</a>    sum_limit: u32,
-<a href=#198 id=198 data-nosnippet>198</a>) {
-<a href=#199 id=199 data-nosnippet>199</a>    limits.sort();
-<a href=#200 id=200 data-nosnippet>200</a>
-<a href=#201 id=201 data-nosnippet>201</a>    <span class="kw">let </span><span class="kw-2">mut </span>rem_limit = sum_limit;
-<a href=#202 id=202 data-nosnippet>202</a>    <span class="kw">let </span><span class="kw-2">mut </span>divisor = limits.len() <span class="kw">as </span>u32;
-<a href=#203 id=203 data-nosnippet>203</a>    <span class="kw">for </span>limit_to_adjust <span class="kw">in </span>limits {
-<a href=#204 id=204 data-nosnippet>204</a>        <span class="kw">let </span>limit = rem_limit / divisor;
-<a href=#205 id=205 data-nosnippet>205</a>        <span class="kw-2">*</span>limit_to_adjust = (<span class="kw-2">*</span>limit_to_adjust).min(limit);
-<a href=#206 id=206 data-nosnippet>206</a>        rem_limit -= <span class="kw-2">*</span>limit_to_adjust;
-<a href=#207 id=207 data-nosnippet>207</a>        divisor -= <span class="number">1</span>;
-<a href=#208 id=208 data-nosnippet>208</a>    }
-<a href=#209 id=209 data-nosnippet>209</a>}
-<a href=#210 id=210 data-nosnippet>210</a>
-<a href=#211 id=211 data-nosnippet>211</a><span class="attr">#[cfg(test)]
-<a href=#212 id=212 data-nosnippet>212</a></span><span class="kw">mod </span>tests {
-<a href=#213 id=213 data-nosnippet>213</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-<a href=#214 id=214 data-nosnippet>214</a>
-<a href=#215 id=215 data-nosnippet>215</a>    <span class="attr">#[test]
-<a href=#216 id=216 data-nosnippet>216</a>    </span><span class="kw">fn </span>test_cap_limits_to_be_under_the_sum_limit() {
-<a href=#217 id=217 data-nosnippet>217</a>        test([<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], <span class="number">3</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
-<a href=#218 id=218 data-nosnippet>218</a>        test([<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>], <span class="number">3</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
-<a href=#219 id=219 data-nosnippet>219</a>        test([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">6</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
-<a href=#220 id=220 data-nosnippet>220</a>        test([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">3</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
-<a href=#221 id=221 data-nosnippet>221</a>        test([<span class="number">1</span>, <span class="number">8</span>, <span class="number">100</span>], <span class="number">6</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
-<a href=#222 id=222 data-nosnippet>222</a>        test([<span class="number">2</span>, <span class="number">80</span>, <span class="number">80</span>], <span class="number">6</span>, [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]);
-<a href=#223 id=223 data-nosnippet>223</a>        test([<span class="number">2</span>, <span class="number">80</span>, <span class="number">80</span>], <span class="number">12</span>, [<span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>]);
-<a href=#224 id=224 data-nosnippet>224</a>
-<a href=#225 id=225 data-nosnippet>225</a>        <span class="attr">#[track_caller]
-<a href=#226 id=226 data-nosnippet>226</a>        </span><span class="kw">fn </span>test&lt;<span class="kw">const </span>N: usize&gt;(<span class="kw-2">mut </span>input: [u32; N], limit: u32, output: [u32; N]) {
-<a href=#227 id=227 data-nosnippet>227</a>            cap_limits_to_be_under_the_sum_limit(input.each_mut(), limit);
-<a href=#228 id=228 data-nosnippet>228</a>            <span class="macro">assert_eq!</span>(input, output);
-<a href=#229 id=229 data-nosnippet>229</a>        }
-<a href=#230 id=230 data-nosnippet>230</a>    }
-<a href=#231 id=231 data-nosnippet>231</a>}
+<a href=#190 id=190 data-nosnippet>190</a>    limits.max_immediate_size = limits.max_immediate_size.min(<span class="number">256</span>);
+<a href=#191 id=191 data-nosnippet>191</a>
+<a href=#192 id=192 data-nosnippet>192</a>    limits
+<a href=#193 id=193 data-nosnippet>193</a>}
+<a href=#194 id=194 data-nosnippet>194</a>
+<a href=#195 id=195 data-nosnippet>195</a><span class="doccomment">/// Evenly allocates space to each limit,
+<a href=#196 id=196 data-nosnippet>196</a>/// capping them only if strictly necessary.
+<a href=#197 id=197 data-nosnippet>197</a></span><span class="kw">pub fn </span>cap_limits_to_be_under_the_sum_limit&lt;<span class="kw">const </span>N: usize&gt;(
+<a href=#198 id=198 data-nosnippet>198</a>    <span class="kw-2">mut </span>limits: [<span class="kw-2">&amp;mut </span>u32; N],
+<a href=#199 id=199 data-nosnippet>199</a>    sum_limit: u32,
+<a href=#200 id=200 data-nosnippet>200</a>) {
+<a href=#201 id=201 data-nosnippet>201</a>    limits.sort();
+<a href=#202 id=202 data-nosnippet>202</a>
+<a href=#203 id=203 data-nosnippet>203</a>    <span class="kw">let </span><span class="kw-2">mut </span>rem_limit = sum_limit;
+<a href=#204 id=204 data-nosnippet>204</a>    <span class="kw">let </span><span class="kw-2">mut </span>divisor = limits.len() <span class="kw">as </span>u32;
+<a href=#205 id=205 data-nosnippet>205</a>    <span class="kw">for </span>limit_to_adjust <span class="kw">in </span>limits {
+<a href=#206 id=206 data-nosnippet>206</a>        <span class="kw">let </span>limit = rem_limit / divisor;
+<a href=#207 id=207 data-nosnippet>207</a>        <span class="kw-2">*</span>limit_to_adjust = (<span class="kw-2">*</span>limit_to_adjust).min(limit);
+<a href=#208 id=208 data-nosnippet>208</a>        rem_limit -= <span class="kw-2">*</span>limit_to_adjust;
+<a href=#209 id=209 data-nosnippet>209</a>        divisor -= <span class="number">1</span>;
+<a href=#210 id=210 data-nosnippet>210</a>    }
+<a href=#211 id=211 data-nosnippet>211</a>}
+<a href=#212 id=212 data-nosnippet>212</a>
+<a href=#213 id=213 data-nosnippet>213</a><span class="attr">#[cfg(test)]
+<a href=#214 id=214 data-nosnippet>214</a></span><span class="kw">mod </span>tests {
+<a href=#215 id=215 data-nosnippet>215</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#216 id=216 data-nosnippet>216</a>
+<a href=#217 id=217 data-nosnippet>217</a>    <span class="attr">#[test]
+<a href=#218 id=218 data-nosnippet>218</a>    </span><span class="kw">fn </span>test_cap_limits_to_be_under_the_sum_limit() {
+<a href=#219 id=219 data-nosnippet>219</a>        test([<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], <span class="number">3</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
+<a href=#220 id=220 data-nosnippet>220</a>        test([<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>], <span class="number">3</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
+<a href=#221 id=221 data-nosnippet>221</a>        test([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">6</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
+<a href=#222 id=222 data-nosnippet>222</a>        test([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">3</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]);
+<a href=#223 id=223 data-nosnippet>223</a>        test([<span class="number">1</span>, <span class="number">8</span>, <span class="number">100</span>], <span class="number">6</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);
+<a href=#224 id=224 data-nosnippet>224</a>        test([<span class="number">2</span>, <span class="number">80</span>, <span class="number">80</span>], <span class="number">6</span>, [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]);
+<a href=#225 id=225 data-nosnippet>225</a>        test([<span class="number">2</span>, <span class="number">80</span>, <span class="number">80</span>], <span class="number">12</span>, [<span class="number">2</span>, <span class="number">5</span>, <span class="number">5</span>]);
+<a href=#226 id=226 data-nosnippet>226</a>
+<a href=#227 id=227 data-nosnippet>227</a>        <span class="attr">#[track_caller]
+<a href=#228 id=228 data-nosnippet>228</a>        </span><span class="kw">fn </span>test&lt;<span class="kw">const </span>N: usize&gt;(<span class="kw-2">mut </span>input: [u32; N], limit: u32, output: [u32; N]) {
+<a href=#229 id=229 data-nosnippet>229</a>            cap_limits_to_be_under_the_sum_limit(input.each_mut(), limit);
+<a href=#230 id=230 data-nosnippet>230</a>            <span class="macro">assert_eq!</span>(input, output);
+<a href=#231 id=231 data-nosnippet>231</a>        }
+<a href=#232 id=232 data-nosnippet>232</a>    }
+<a href=#233 id=233 data-nosnippet>233</a>}
 </code></pre></div></section></main></body></html>

@@ -392,7 +392,7 @@ allocate a distinct synchronization object for each fence value one is
 able to wait for.)</p>
 <p>Calling <code>wait</code> with a lower <a href="type.FenceValue.html" title="type wgpu_hal::FenceValue"><code>FenceValue</code></a> than <code>fence</code>’s current value
 returns immediately.</p>
-<p>If <code>timeout</code> is provided, the function will block indefinitely or until
+<p>If <code>timeout</code> is not provided, the function will block indefinitely or until
 an error is encountered.</p>
 <p>Returns <code>Ok(true)</code> on success and <code>Ok(false)</code> on timeout.</p>
 </div></details><details class="toggle method-toggle" open><summary><section id="tymethod.start_graphics_debugger_capture" class="method"><a class="src rightside" href="../src/wgpu_hal/lib.rs.html#1125">Source</a><h4 class="code-header">unsafe fn <a href="#tymethod.start_graphics_debugger_capture" class="fn">start_graphics_debugger_capture</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/1.93.1/std/primitive.bool.html">bool</a></h4></section></summary><div class="docblock"><p>Start a graphics debugger capture.</p>

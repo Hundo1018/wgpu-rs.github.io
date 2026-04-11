@@ -277,7 +277,7 @@
 <a href=#277 id=277 data-nosnippet>277</a>// are to avoid introducing platform or backend dependencies.
 <a href=#278 id=278 data-nosnippet>278</a>//
 <a href=#279 id=279 data-nosnippet>279</a>// **`max_vertex_attributes`:** While there is broad support for 32, Intel hardware with
-<a href=#280 id=280 data-nosnippet>280</a>// Vulkan only supports 29.
+<a href=#280 id=280 data-nosnippet>280</a>// Vulkan only supports 29; the D3D12 backend is also limited to 30.
 <a href=#281 id=281 data-nosnippet>281</a>// See &lt;https://gitlab.freedesktop.org/mesa/mesa/-/blob/465c186fc5f72c51bda943ac0e19f6512f8e6262/src/intel/vulkan/anv_private.h#L188&gt;.
 <a href=#282 id=282 data-nosnippet>282</a>//
 <a href=#283 id=283 data-nosnippet>283</a>// **`max_dynamic_{storage,uniform}_buffers_per_pipeline_layout`:** These are limited to
@@ -389,7 +389,7 @@
 <a href=#389 id=389 data-nosnippet>389</a>        </span>max_sampled_textures_per_shader_stage: <span class="number">48</span>,
 <a href=#390 id=390 data-nosnippet>390</a>        max_storage_buffer_binding_size: <span class="number">1 </span>&lt;&lt; <span class="number">30</span>, <span class="comment">// 1 GB,
 <a href=#391 id=391 data-nosnippet>391</a>        </span>max_storage_buffers_per_shader_stage: <span class="number">16</span>,
-<a href=#392 id=392 data-nosnippet>392</a>        max_vertex_attributes: <span class="number">32</span>,
+<a href=#392 id=392 data-nosnippet>392</a>        max_vertex_attributes: <span class="number">30</span>,
 <a href=#393 id=393 data-nosnippet>393</a>        ..UPLEVEL.limits
 <a href=#394 id=394 data-nosnippet>394</a>    },
 <a href=#395 id=395 data-nosnippet>395</a>    info: BucketedAdapterInfo {
@@ -427,7 +427,7 @@
 <a href=#427 id=427 data-nosnippet>427</a>        </span>max_sampled_textures_per_shader_stage: <span class="number">48</span>,
 <a href=#428 id=428 data-nosnippet>428</a>        max_storage_buffer_binding_size: <span class="number">1 </span>&lt;&lt; <span class="number">30</span>, <span class="comment">// 1 GB,
 <a href=#429 id=429 data-nosnippet>429</a>        </span>max_storage_buffers_per_shader_stage: <span class="number">16</span>,
-<a href=#430 id=430 data-nosnippet>430</a>        max_vertex_attributes: <span class="number">32</span>,
+<a href=#430 id=430 data-nosnippet>430</a>        max_vertex_attributes: <span class="number">30</span>,
 <a href=#431 id=431 data-nosnippet>431</a>        ..UPLEVEL.limits
 <a href=#432 id=432 data-nosnippet>432</a>    },
 <a href=#433 id=433 data-nosnippet>433</a>    info: BucketedAdapterInfo {
@@ -446,7 +446,7 @@
 <a href=#446 id=446 data-nosnippet>446</a>        max_sampled_textures_per_shader_stage: <span class="number">48</span>,
 <a href=#447 id=447 data-nosnippet>447</a>        max_storage_buffer_binding_size: <span class="number">1 </span>&lt;&lt; <span class="number">30</span>, <span class="comment">// 1 GB,
 <a href=#448 id=448 data-nosnippet>448</a>        </span>max_storage_buffers_per_shader_stage: <span class="number">16</span>,
-<a href=#449 id=449 data-nosnippet>449</a>        max_vertex_attributes: <span class="number">32</span>,
+<a href=#449 id=449 data-nosnippet>449</a>        max_vertex_attributes: <span class="number">30</span>,
 <a href=#450 id=450 data-nosnippet>450</a>        ..UPLEVEL.limits
 <a href=#451 id=451 data-nosnippet>451</a>    },
 <a href=#452 id=452 data-nosnippet>452</a>    info: BucketedAdapterInfo {
@@ -466,7 +466,7 @@
 <a href=#466 id=466 data-nosnippet>466</a>        </span>max_sampled_textures_per_shader_stage: <span class="number">48</span>,
 <a href=#467 id=467 data-nosnippet>467</a>        max_storage_buffer_binding_size: <span class="number">1 </span>&lt;&lt; <span class="number">30</span>, <span class="comment">// 1 GB
 <a href=#468 id=468 data-nosnippet>468</a>        </span>max_storage_buffers_per_shader_stage: <span class="number">16</span>,
-<a href=#469 id=469 data-nosnippet>469</a>        max_vertex_attributes: <span class="number">32</span>,
+<a href=#469 id=469 data-nosnippet>469</a>        max_vertex_attributes: <span class="number">30</span>,
 <a href=#470 id=470 data-nosnippet>470</a>        ..UPLEVEL.limits
 <a href=#471 id=471 data-nosnippet>471</a>    },
 <a href=#472 id=472 data-nosnippet>472</a>    info: BucketedAdapterInfo {
@@ -504,7 +504,7 @@
 <a href=#504 id=504 data-nosnippet>504</a>        max_color_attachment_bytes_per_sample: <span class="number">128</span>,
 <a href=#505 id=505 data-nosnippet>505</a>        max_sampled_textures_per_shader_stage: <span class="number">48</span>,
 <a href=#506 id=506 data-nosnippet>506</a>        max_storage_buffers_per_shader_stage: <span class="number">16</span>,
-<a href=#507 id=507 data-nosnippet>507</a>        max_vertex_attributes: <span class="number">32</span>,
+<a href=#507 id=507 data-nosnippet>507</a>        max_vertex_attributes: <span class="number">30</span>,
 <a href=#508 id=508 data-nosnippet>508</a>        ..UPLEVEL.limits
 <a href=#509 id=509 data-nosnippet>509</a>    },
 <a href=#510 id=510 data-nosnippet>510</a>    info: BucketedAdapterInfo {

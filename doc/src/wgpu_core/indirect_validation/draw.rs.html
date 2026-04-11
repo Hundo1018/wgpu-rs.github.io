@@ -447,7 +447,7 @@
 <a href=#447 id=447 data-nosnippet>447</a>            }
 <a href=#448 id=448 data-nosnippet>448</a>
 <a href=#449 id=449 data-nosnippet>449</a>            <span class="kw">unsafe </span>{
-<a href=#450 id=450 data-nosnippet>450</a>                encoder.dispatch([(batch.entries.len() <span class="kw">as </span>u32).div_ceil(<span class="number">64</span>), <span class="number">1</span>, <span class="number">1</span>]);
+<a href=#450 id=450 data-nosnippet>450</a>                encoder.dispatch_workgroups([(batch.entries.len() <span class="kw">as </span>u32).div_ceil(<span class="number">64</span>), <span class="number">1</span>, <span class="number">1</span>]);
 <a href=#451 id=451 data-nosnippet>451</a>            }
 <a href=#452 id=452 data-nosnippet>452</a>        }
 <a href=#453 id=453 data-nosnippet>453</a>

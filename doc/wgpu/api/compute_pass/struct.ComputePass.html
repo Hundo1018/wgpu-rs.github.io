@@ -26,7 +26,7 @@ regardless of the lifetime constraint or its absence.</p>
     offsets: &amp;[<a class="type" href="../../type.DynamicOffset.html" title="type wgpu::DynamicOffset">DynamicOffset</a>],
 )<div class="where">where
     <a class="enum" href="https://doc.rust-lang.org/1.93.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="struct" href="../../struct.BindGroup.html" title="struct wgpu::BindGroup">BindGroup</a>&gt;: <a class="trait" href="https://doc.rust-lang.org/1.93.1/core/convert/trait.From.html" title="trait core::convert::From">From</a>&lt;BG&gt;,</div></h4></section></summary><div class="docblock"><p>Sets the active bind group for a given bind group index. The bind group layout
-in the active pipeline when the <code>dispatch()</code> function is called must match the layout of this bind group.</p>
+in the active pipeline when the <code>dispatch_workgroups()</code> function is called must match the layout of this bind group.</p>
 <p>If the bind group have dynamic offsets, provide them in the binding order.
 These offsets have to be aligned to <a href="../../struct.Limits.html#structfield.min_uniform_buffer_offset_alignment" title="field wgpu::Limits::min_uniform_buffer_offset_alignment"><code>Limits::min_uniform_buffer_offset_alignment</code></a>
 or <a href="../../struct.Limits.html#structfield.min_storage_buffer_offset_alignment" title="field wgpu::Limits::min_storage_buffer_offset_alignment"><code>Limits::min_storage_buffer_offset_alignment</code></a> appropriately.</p>

@@ -2273,7 +2273,7 @@
 <a href=#2273 id=2273 data-nosnippet>2273</a>                            };
 <a href=#2274 id=2274 data-nosnippet>2274</a>                            <span class="comment">// Check if the required capability is supported
 <a href=#2275 id=2275 data-nosnippet>2275</a>                            </span><span class="kw">let </span>required_capability = extension.capability();
-<a href=#2276 id=2276 data-nosnippet>2276</a>                            <span class="kw">if </span>!options.capabilities.contains(required_capability) {
+<a href=#2276 id=2276 data-nosnippet>2276</a>                            <span class="kw">if </span>!options.capabilities.intersects(required_capability) {
 <a href=#2277 id=2277 data-nosnippet>2277</a>                                <span class="kw">return </span><span class="prelude-val">Err</span>(Box::new(Error::EnableExtensionNotSupported {
 <a href=#2278 id=2278 data-nosnippet>2278</a>                                    kind,
 <a href=#2279 id=2279 data-nosnippet>2279</a>                                    span,

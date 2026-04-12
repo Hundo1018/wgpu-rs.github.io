@@ -516,6 +516,14 @@ function __wbg_get_imports() {
         __wbg_disconnect_99bdd53252c1a923: function(arg0) {
             arg0.disconnect();
         },
+        __wbg_displayHeight_6a09027747b2839c: function(arg0) {
+            const ret = arg0.displayHeight;
+            return ret;
+        },
+        __wbg_displayWidth_969bcee30c9ba96e: function(arg0) {
+            const ret = arg0.displayWidth;
+            return ret;
+        },
         __wbg_document_a28a21ae315de4ea: function(arg0) {
             const ret = arg0.document;
             return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);

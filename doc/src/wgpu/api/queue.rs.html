@@ -343,17 +343,32 @@
 <a href=#343 id=343 data-nosnippet>343</a>        <span class="kw">unsafe </span>{ queue.context.queue_as_hal::&lt;A&gt;(queue) }
 <a href=#344 id=344 data-nosnippet>344</a>    }
 <a href=#345 id=345 data-nosnippet>345</a>
-<a href=#346 id=346 data-nosnippet>346</a>    <span class="doccomment">/// Compact a BLAS, it must have had [`Blas::prepare_compaction_async`] called on it and had the
-<a href=#347 id=347 data-nosnippet>347</a>    /// callback provided called.
-<a href=#348 id=348 data-nosnippet>348</a>    ///
-<a href=#349 id=349 data-nosnippet>349</a>    /// The returned BLAS is more restricted than a normal BLAS because it may not be rebuilt or
-<a href=#350 id=350 data-nosnippet>350</a>    /// compacted.
-<a href=#351 id=351 data-nosnippet>351</a>    </span><span class="kw">pub fn </span>compact_blas(<span class="kw-2">&amp;</span><span class="self">self</span>, blas: <span class="kw-2">&amp;</span>Blas) -&gt; Blas {
-<a href=#352 id=352 data-nosnippet>352</a>        <span class="kw">let </span>(handle, dispatch) = <span class="self">self</span>.inner.compact_blas(<span class="kw-2">&amp;</span>blas.inner);
-<a href=#353 id=353 data-nosnippet>353</a>        Blas {
-<a href=#354 id=354 data-nosnippet>354</a>            handle,
-<a href=#355 id=355 data-nosnippet>355</a>            inner: dispatch,
-<a href=#356 id=356 data-nosnippet>356</a>        }
-<a href=#357 id=357 data-nosnippet>357</a>    }
-<a href=#358 id=358 data-nosnippet>358</a>}
+<a href=#346 id=346 data-nosnippet>346</a>    <span class="doccomment">/// Schedule a surface texture to be presented on the owning surface.
+<a href=#347 id=347 data-nosnippet>347</a>    ///
+<a href=#348 id=348 data-nosnippet>348</a>    /// Should be called after any work on the texture is submitted via [`Queue::submit`].
+<a href=#349 id=349 data-nosnippet>349</a>    /// If no work was submitted, the texture will be cleared automatically before presenting.
+<a href=#350 id=350 data-nosnippet>350</a>    ///
+<a href=#351 id=351 data-nosnippet>351</a>    /// # Platform dependent behavior
+<a href=#352 id=352 data-nosnippet>352</a>    ///
+<a href=#353 id=353 data-nosnippet>353</a>    /// On Wayland, `present` will attach a `wl_buffer` to the underlying `wl_surface` and commit the new surface
+<a href=#354 id=354 data-nosnippet>354</a>    /// state. If it is desired to do things such as request a frame callback, scale the surface using the viewporter
+<a href=#355 id=355 data-nosnippet>355</a>    /// or synchronize other double buffered state, then these operations should be done before the call to `present`.
+<a href=#356 id=356 data-nosnippet>356</a>    </span><span class="kw">pub fn </span>present(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut </span>surface_texture: SurfaceTexture) {
+<a href=#357 id=357 data-nosnippet>357</a>        surface_texture.presented = <span class="bool-val">true</span>;
+<a href=#358 id=358 data-nosnippet>358</a>        <span class="self">self</span>.inner.present(<span class="kw-2">&amp;</span>surface_texture.detail);
+<a href=#359 id=359 data-nosnippet>359</a>    }
+<a href=#360 id=360 data-nosnippet>360</a>
+<a href=#361 id=361 data-nosnippet>361</a>    <span class="doccomment">/// Compact a BLAS, it must have had [`Blas::prepare_compaction_async`] called on it and had the
+<a href=#362 id=362 data-nosnippet>362</a>    /// callback provided called.
+<a href=#363 id=363 data-nosnippet>363</a>    ///
+<a href=#364 id=364 data-nosnippet>364</a>    /// The returned BLAS is more restricted than a normal BLAS because it may not be rebuilt or
+<a href=#365 id=365 data-nosnippet>365</a>    /// compacted.
+<a href=#366 id=366 data-nosnippet>366</a>    </span><span class="kw">pub fn </span>compact_blas(<span class="kw-2">&amp;</span><span class="self">self</span>, blas: <span class="kw-2">&amp;</span>Blas) -&gt; Blas {
+<a href=#367 id=367 data-nosnippet>367</a>        <span class="kw">let </span>(handle, dispatch) = <span class="self">self</span>.inner.compact_blas(<span class="kw-2">&amp;</span>blas.inner);
+<a href=#368 id=368 data-nosnippet>368</a>        Blas {
+<a href=#369 id=369 data-nosnippet>369</a>            handle,
+<a href=#370 id=370 data-nosnippet>370</a>            inner: dispatch,
+<a href=#371 id=371 data-nosnippet>371</a>        }
+<a href=#372 id=372 data-nosnippet>372</a>    }
+<a href=#373 id=373 data-nosnippet>373</a>}
 </code></pre></div></section></main></body></html>
